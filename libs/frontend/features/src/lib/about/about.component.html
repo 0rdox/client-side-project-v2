@@ -1,0 +1,120 @@
+<div class="border-solid border-2 border-black  rounded-lg p-3 m-3">
+
+    <h1 class="text-3xl font-bold">Angular ProjectCasus</h1>
+    <p>Deze webapplicatie is gemaakt in het kader van hete van Client-Side Web Development, individueel project.</p>
+
+    <p>Beschrijving</p>
+
+
+    <h2 class="text-xl font-bold">Functional Requirements</h2>
+    <p>De applicatie biedt de onderstaande functionaliteiten:</p>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <td>Nr.</td>
+                <td>Requirement</td>
+                <td>Toelichting</td>
+                <td>Moscow</td>
+            </tr>
+        </thead>
+        <tr>
+            <td>1</td>
+            <td>De gebruiker kan een lijst van gallerijen inzien.</td>
+            <td>Als de gebruiker op een gallerij klikt, dan gaat hij naar de details-pagina van de gekozen gallerij.</td>
+            <td>M</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>De gebruiker kan de details van een gallerij inzien, dit omvat alle kunstwerken en informatie erover.</td>
+            <td>Als de gebruiker op een kunstwerk klikt, dan krijgt hij een groter beeld van het kunstwerk te zien, met extra informatie</td>
+            <td>M</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>De gebruiker kan de details van een kunstwerk inzien, dit omvat informatie over de kunstwerken</td>
+            <td>Beschrijving</td>
+            <td>M</td>
+        </tr>
+    </table>
+
+
+    <h2 class="text-xl font-bold">Non-Functional Requirements</h2>
+    <p>korte toelichting</p>
+
+    <table>
+        <thead>
+            <tr>
+                <td>Nr.</td>
+                <td>Requirement</td>
+                <td>Toelichting</td>
+                <td>Moscow</td>
+            </tr>
+        </thead>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+
+
+    <h2 class="text-xl font-bold">Datamodel / ERD</h2>
+    <p>korte toelichting</p>
+
+
+    <section class="hero container max-w-screen-lg mx-auto pb-10 flex justify-center">
+        <img src="./assets/images/erd.png" alt="">
+    </section>
+</div>
+
+
+
+<!-- 
+        user
+            - heeft een gallerij
+                - heeft een adres
+                - heeft kunstwerken
+            - heeft een adres
+    
+     -->
+
+<!-- Entiteiten
+        User
+    
+    
+    
+        Adres? - user heeft een adres - locatie heeft een adres --  1 op 1
+        
+        Gallerij - Fysiek (1 op veel met kunstwerk) 
+        
+        Kunstwerk
+    
+        Lijst - user heeft veel lijsten, lijsten behoren tot 1 user.
+        Lijsten kunnen veel kunstwerken hebben, kunstwerken kunnen behoren tot veel lijsten.
+        
+    
+        Je kan online de gallerijen zien en de kunstwerken die erin zitten. Als je op een gallerij klikt, kan je op een kunstwerk klikken en vervolgens toevoegen aan lijst (zelf gemaakte lijsten (favorites, genre, etc)), dit is vergelijkbaar met likes. Eventueel een optie om een kunstwerk een hartje te geven -> dit wordt vervolgens geadd aan een ge-generate lijst 'Likes', denk aan spotify
+    -->
+
+
+
+<!-- als je een gallerij aanmaakt zie je twee vlakken
+    bootstrap 
+    <div class="row">
+        <div class="col md-6">vlak1</div>
+        <div class="col md-6">vlak2</div>
+    </div>
+    
+    user kan image rechts of links en beschrijving rechts of links. Zodra beide vlakken vol zijn komt er een nieuwe row 
+    waarin de user onderdelen kan toevoegen
+    
+    
+    -->
