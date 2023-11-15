@@ -1,7 +1,7 @@
 import { Route } from '@angular/router';
 
 import { NxWelcomeComponent } from './nx-welcome.component';
-import { MealListComponent, MealDetailComponent } from '@client-side-project/frontend/features';
+import { MealListComponent, MealDetailComponent, UserListComponent } from '@client-side-project/frontend/features';
 import { AboutComponent } from '@client-side-project/frontend/features';
 
 
@@ -26,13 +26,18 @@ export const appRoutes: Route[] = [
             (esModule) => (esModule.FeaturesModule)
         )
     },
+    // {
+    //     path:'user',
+    //    // pathMatch:'full',
+    //     loadChildren:() =>
+    //     import('@client-side-project/frontend/features').then(
+    //         (esModule) => (esModule.FeaturesModule)
+    //     )
+    // },
     {
         path:'user',
-       // pathMatch:'full',
-        loadChildren:() =>
-        import('@client-side-project/frontend/features').then(
-            (esModule) => (esModule.FeaturesModule)
-        )
+        pathMatch:'full',
+        component: UserListComponent,
     },
     {
         path:'about', 
