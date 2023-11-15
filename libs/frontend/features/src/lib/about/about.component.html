@@ -1,70 +1,254 @@
 <div class="border-solid border-2 border-black  rounded-lg p-3 m-3">
 
     <h1 class="text-3xl font-bold">Angular ProjectCasus</h1>
-    <p>Deze webapplicatie is gemaakt in het kader van hete van Client-Side Web Development, individueel project.</p>
+    <p>Deze webapplicatie is gemaakt in het kader van Client-Side Web Development, individueel project</p>
 
-    <p>Beschrijving</p>
+    <p>In deze applicatie hebben kunstenaars de mogelijkheid om een galerij te huren, waardoor ze hun
+        kunstwerken zowel op locatie als online kunnen presenteren. Wanneer een kunstenaar een galerij
+        huurt, krijgen ze de optie om hun kunstwerken binnen de app toe te voegen aan de gehuurde galerij.
+        Ook zijn gebruikers in staat om andermans kunstwerken op te slaan in zelf gemaakte lijsten om ze
+        gemakkelijk terug te kunnen vinden. Het doel van deze applicatie is om kunstenaars de mogelijkheid
+        te geven hun kunstwerken op nieuwe manieren te delen met anderen
+        </p>
 
 
     <h2 class="text-xl font-bold">Functional Requirements</h2>
     <p>De applicatie biedt de onderstaande functionaliteiten:</p>
 
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <td>Nr.</td>
-                <td>Requirement</td>
-                <td>Toelichting</td>
-                <td>Moscow</td>
-            </tr>
-        </thead>
-        <tr>
-            <td>1</td>
-            <td>De gebruiker kan een lijst van gallerijen inzien.</td>
-            <td>Als de gebruiker op een gallerij klikt, dan gaat hij naar de details-pagina van de gekozen gallerij.</td>
-            <td>M</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>De gebruiker kan de details van een gallerij inzien, dit omvat alle kunstwerken en informatie erover.</td>
-            <td>Als de gebruiker op een kunstwerk klikt, dan krijgt hij een groter beeld van het kunstwerk te zien, met extra informatie</td>
-            <td>M</td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>De gebruiker kan de details van een kunstwerk inzien, dit omvat informatie over de kunstwerken</td>
-            <td>Beschrijving</td>
-            <td>M</td>
-        </tr>
-    </table>
-
+    <div class="overflow-x-auto">
+        <table class="table-auto border-collapse border border-gray-400 mt-4 mb-4">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="px-4 py-2">#</th>
+                    <th class="px-4 py-2">Requirement</th>
+                    <th class="px-4 py-2">Toelichting</th>
+                    <th class="px-4 py-2">Moscow</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">1</td>
+                    <td class="border px-4 py-2">Gebruikersregistratie</td>
+                    <td class="border px-4 py-2">Gebruikers moeten zich kunnen registreren.</td>
+                    <td class="border px-4 py-2">M</td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">2</td>
+                    <td class="border px-4 py-2">Galerijen bekijken</td>
+                    <td class="border px-4 py-2">Gebruikers moeten alle galerijen kunnen bekijken, als ze op een galerij klikken zien ze alle kunstwerken.</td>
+                    <td class="border px-4 py-2">M</td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">3</td>
+                    <td class="border px-4 py-2">Galerij huren</td>
+                    <td class="border px-4 py-2">Gebruikers moeten een galerij kunnen huren binnen de app.</td>
+                    <td class="border px-4 py-2">M</td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">4</td>
+                    <td class="border px-4 py-2">Galerij beheer</td>
+                    <td class="border px-4 py-2">De gebruiker kan zijn eigen galerij bekijken en kan daar vervolgens zijn eigen kunstwerken aan toevoegen. De gebruiker kan zich ook afmelden van een galerij.</td>
+                    <td class="border px-4 py-2">M</td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">5</td>
+                    <td class="border px-4 py-2">Kunstwerken bekijken</td>
+                    <td class="border px-4 py-2">Als een gebruiker op een kunstwerk klikt, moet er informatie over dat kunstwerk worden getoond.</td>
+                    <td class="border px-4 py-2">M</td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">6</td>
+                    <td class="border px-4 py-2">Lijsten aanmaken</td>
+                    <td class="border px-4 py-2">Een gebruiker moet in staat zijn meerdere lijsten aan te kunnen maken.</td>
+                    <td class="border px-4 py-2">M</td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">7</td>
+                    <td class="border px-4 py-2">Aan lijsten toevoegen</td>
+                    <td class="border px-4 py-2">Een gebruiker moet kunstwerken kunnen toevoegen aan lijsten.</td>
+                    <td class="border px-4 py-2">M</td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">8</td>
+                    <td class="border px-4 py-2">Splitsing galerijen</td>
+                    <td class="border px-4 py-2">De galerijen moeten gesplitst worden op basis van of ze gehuurd zijn of niet.</td>
+                    <td class="border px-4 py-2">S</td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">9</td>
+                    <td class="border px-4 py-2">Dashboard</td>
+                    <td class="border px-4 py-2">De opstartpagina moet een dashboard zijn waarmee de gebruiker de applicatie kan navigeren.</td>
+                    <td class="border px-4 py-2">S</td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">10</td>
+                    <td class="border px-4 py-2">Delen</td>
+                    <td class="border px-4 py-2">Een gebruiker kan de gemaakte lijsten delen met andere gebruikers.</td>
+                    <td class="border px-4 py-2">C</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
     <h2 class="text-xl font-bold">Non-Functional Requirements</h2>
-    <p>korte toelichting</p>
+    <div class="overflow-x-auto">
+        <table class="table-auto border-collapse border border-gray-400 mt-4 mb-4">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="px-4 py-2">#</th>
+                    <th class="px-4 py-2">Requirement</th>
+                    <th class="px-4 py-2">Toelichting</th>
+                    <th class="px-4 py-2">Moscow</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">1</td>
+                    <td class="border px-4 py-2">Prestaties</td>
+                    <td class="border px-4 py-2">De applicatie moet responsief en snel zijn.</td>
+                    <td class="border px-4 py-2">M</td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">2</td>
+                    <td class="border px-4 py-2">Gebruikersvriendelijkheid</td>
+                    <td class="border px-4 py-2">Het gebruikersinterface moet intuïtief zijn, door een duidelijke navigatie te gebruiken.</td>
+                    <td class="border px-4 py-2">M</td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">3</td>
+                    <td class="border px-4 py-2">Design</td>
+                    <td class="border px-4 py-2">De applicatie moet een aantrekkelijke vormgeving hebben.</td>
+                    <td class="border px-4 py-2">M</td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">4</td>
+                    <td class="border px-4 py-2">Beschikbaarheid</td>
+                    <td class="border px-4 py-2">De applicatie moet beschikbaar zijn op browsers.</td>
+                    <td class="border px-4 py-2">M</td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">5</td>
+                    <td class="border px-4 py-2">Security</td>
+                    <td class="border px-4 py-2">Gebruikersgegevens moeten veilig worden opgeslagen en overgedragen.</td>
+                    <td class="border px-4 py-2">M</td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">6</td>
+                    <td class="border px-4 py-2">Swagger</td>
+                    <td class="border px-4 py-2">Er moet een swagger documentatie zijn over de API</td>
+                    <td class="border px-4 py-2">S</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-    <table>
-        <thead>
-            <tr>
-                <td>Nr.</td>
-                <td>Requirement</td>
-                <td>Toelichting</td>
-                <td>Moscow</td>
-            </tr>
-        </thead>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-    </table>
+    <h2 class="text-xl font-bold">Entiteiten</h2>
+    <div class="overflow-x-auto flex ">
+        <table class="table-auto border-collapse border border-gray-400 mt-4 mb-4 mx-4">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="px-4 py-2">User</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4">_id : int</td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4">GebruikersNaam : string</td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4">Email : string</td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4">Wachtwoord : string</td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4">Profielfoto : string</td>
+                </tr>
+            </tbody>
+        </table>
 
+        <table class="table-auto border-collapse border border-gray-400 mt-4 mb-4 mx-4">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="px-4 py-2">Gallerij</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">_id : int</td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">GallerijNaam : string</td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">Locatie : string</td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">Afbeelding : image</td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">UserId : int</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table-auto table-fixed border-collapse border border-gray-400 mt-4 mb-4 mx-4">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="px-4 py-2">Kunstwerk</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">_id : int</td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">KunstwerkNaam : string</td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">Beschrijving : string</td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">Type : enum</td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">CreatieDatum : dateTime</td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">Afbeelding : image</td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">GallerijId : int</td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">UserId : int</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table-auto table-fixed border-collapse border border-gray-400 mt-4 mb-4 mx-4">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="px-4 py-2">Lijst</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">Titel : string</td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">Beschrijving : string</td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">UserId : int</td>
+                </tr>
+              
+            </tbody>
+        </table>
+    </div>
+   
 
     <h2 class="text-xl font-bold">Datamodel / ERD</h2>
     <p>korte toelichting</p>
