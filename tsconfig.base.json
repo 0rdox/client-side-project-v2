@@ -26,6 +26,7 @@
         "libs/frontend/features/src/index.ts"
       ],
       "@client-side-project/frontend/ui": ["libs/frontend/ui/src/index.ts"],
+      "@client-side-project/frontend/user": ["libs/frontend/user/src/index.ts"],
       "@client-side-project/shared/api": ["libs/shared/api/src/index.ts"]
     }
   },

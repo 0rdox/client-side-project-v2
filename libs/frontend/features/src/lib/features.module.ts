@@ -4,9 +4,9 @@ import { CommonModule } from '@angular/common';
 import { MealListComponent } from './meal/meal-list/meal-list.component';
 import { MealDetailComponent } from './meal/meal-detail/meal-detail.component';
 import { MealService } from './meal/meal.service';
-//user
-import { UserListComponent } from './user/user-list/user-list.component';
-import { UserService } from './user/user.service';
+// //user
+// import { UserListComponent } from './user/user-list/user-list.component';
+// import { UserService } from './user/user.service';
 
 //
 import { HttpClientModule } from '@angular/common/http';
@@ -14,15 +14,10 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'meal',
+    path: '',
     pathMatch: 'full',
     component: MealListComponent,
   },
-  // {
-  //   path: 'user',
-  //   pathMatch: 'full',
-  //   component: UserListComponent,
-  // },
   {
     path: ':id',
     pathMatch: 'full',
@@ -36,9 +31,9 @@ const routes: Routes = [
   declarations: [
     MealListComponent,
     MealDetailComponent,
-    UserListComponent
+    //UserListComponent
   ],
-  providers: [MealService, UserService],
-  exports: [MealListComponent, MealDetailComponent, UserListComponent],
+  providers: [MealService, /*UserService*/],
+  exports: [MealListComponent, MealDetailComponent, /*UserListComponent*/],
 })
 export class FeaturesModule { }

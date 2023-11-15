@@ -1,7 +1,7 @@
 import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { map, catchError, tap } from 'rxjs/operators';
-import { ApiResponse, IMeal } from '@client-side-project/shared/api';
+import { ApiResponse, IUser } from '@client-side-project/shared/api';
 import { Injectable } from '@angular/core';
 
 /**
@@ -17,8 +17,8 @@ export const httpOptions = {
  *
  */
 @Injectable()
-export class MealService {
-    endpoint = 'http://localhost:3000/api/meal';
+export class UserService {
+    endpoint = 'http://localhost:3000/api/user';
 
     constructor(private readonly http: HttpClient) {}
 
@@ -27,16 +27,16 @@ export class MealService {
      *
      * @options options - optional URL queryparam options
      */
-    public list(options?: any): Observable<IMeal[] | null> {
+    public list(options?: any): Observable<IUser[] | null> {
         console.log(`list ${this.endpoint}`);
 
         return this.http
-            .get<ApiResponse<IMeal[]>>(this.endpoint, {
+            .get<ApiResponse<IUser[]>>(this.endpoint, {
                 ...options,
                 ...httpOptions,
             })
             .pipe(
-                map((response: any) => response.results as IMeal[]),
+                map((response: any) => response.results as IUser[]),
                 tap(console.log),
                 catchError(this.handleError)
             );
@@ -46,25 +46,27 @@ export class MealService {
      * Get a single item from the service.
      *
      */
-    public read(id: string | null, options?: any): Observable<IMeal> {
+    public read(id: string | null, options?: any): Observable<IUser> {
         console.log(`read ${this.endpoint}/${id}`);
         return this.http
-            .get<ApiResponse<IMeal>>(`${this.endpoint}/${id}`, {
+            .get<ApiResponse<IUser>>(`${this.endpoint}/${id}`,  {
                 ...options,
                 ...httpOptions,
             })
             .pipe(
                 tap(console.log),
-                map((response: any) => response.results as IMeal),
+                map((response: any) => response.results as IUser),
                 catchError(this.handleError)
             );
     }
+
+
 
     /**
      * Handle errors.
      */
     public handleError(error: HttpErrorResponse): Observable<any> {
-        console.log('handleError in MealService', error);
+        console.log('handleError in UserService', error);
 
         return throwError(() => new Error(error.message));
     }

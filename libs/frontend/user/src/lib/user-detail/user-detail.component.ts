@@ -1,20 +1,20 @@
 import { Component } from '@angular/core';
 import { OnInit, OnDestroy } from '@angular/core';
-import { IMeal } from '@client-side-project/shared/api';
-import { MealService } from '../meal.service';
+import { IUser } from '@client-side-project/shared/api';
+import { UserService } from '../user.service';
 import { Subscription, switchMap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'client-side-project-meal-detail',
-  templateUrl: './meal-detail.component.html',
-  styleUrls: ['./meal-detail.component.css'],
+  selector: 'client-side-project-user-detail',
+  templateUrl: './user-detail.component.html',
+  styleUrls: ['./user-detail.component.css'],
 })
-export class MealDetailComponent implements OnInit, OnDestroy {
-  meals: IMeal | null = null;
+export class UserDetailComponent implements OnInit, OnDestroy {
+  users: IUser | null = null;
   subscription: Subscription | undefined = undefined;
 
-  constructor(private route: ActivatedRoute, private mealService: MealService) { }
+  constructor(private route: ActivatedRoute, private UserService: UserService) { }
 
 
 
@@ -23,11 +23,11 @@ export class MealDetailComponent implements OnInit, OnDestroy {
     this.subscription = this.route.params.pipe(
       switchMap(params => {
         console.log(`switchMap params: ${JSON.stringify(params)}`);
-        return this.mealService.read(params['id']);
+        return this.UserService.read(params['id']);
       })
     ).subscribe((results) => {
       console.log(`results: ${JSON.stringify(results)}`);
-      this.meals = results;
+      this.users = results;
     });
   }
 
