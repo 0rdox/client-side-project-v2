@@ -3,7 +3,7 @@ import { OnInit, OnDestroy } from '@angular/core';
 import { IUser } from '@client-side-project/shared/api';
 import { UserService } from '../user.service';
 import { Subscription, switchMap } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'client-side-project-user-detail',
@@ -14,7 +14,11 @@ export class UserDetailComponent implements OnInit, OnDestroy {
   users: IUser | null = null;
   subscription: Subscription | undefined = undefined;
 
-  constructor(private route: ActivatedRoute, private UserService: UserService) { }
+  constructor(
+    private route: ActivatedRoute, 
+    private UserService: UserService,
+    private router: Router,
+    ) { }
 
 
 
@@ -39,5 +43,8 @@ export class UserDetailComponent implements OnInit, OnDestroy {
     if (this.users) {
       this.UserService.removeUser(this.users.id);   
     }
+
+    this.router.navigate(['/user']);
+    
   }
 }

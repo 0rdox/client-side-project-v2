@@ -251,7 +251,11 @@
    
 
     <h2 class="text-xl font-bold">Datamodel / ERD</h2>
-    <p>korte toelichting</p>
+    <p>Hier onder is mijn ERD te zien. Deze applicatie heeft de entiteiten User, Galerij, Kunstwerk en Lijst.
+        In dit geval zijn Galerij en Kunstwerk beide sterke entiteiten. Ik had overwogen om Kunstwerk een zwakke entiteit te maken, maar ik heb uiteindelijk besloten om het zijn eigen ID te geven voor gemak tijdens het ontwikkelen. Lijst daarentegen is wel een zwakke entiteit, aangezien dit afhankelijk is van de UserId. De lijst kan niet bestaan zonder een User, een user moet in dit geval ook unieke namen hebben voor hun lijsten.
+        
+        De veel op veel relatie ligt tussen Lijst en Kunstwerk. Binnen een lijst kunnen zich meerdere kunstwerken bevinden en een kunstwerk kan in meerdere lijsten voorkomen.
+        </p>
 
 
     <section class="hero container max-w-screen-lg mx-auto pb-10 flex justify-center">
