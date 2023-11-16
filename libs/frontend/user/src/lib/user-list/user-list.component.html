@@ -1,4 +1,6 @@
-<div *ngFor="let user of users" class="user-box">
-    <h2>{{user.name}} [{{user.id}}]</h2>
-    <p>Email: {{ user.email }}</p>
-</div>
+<a *ngFor="let user of users" [routerLink]="['/user', user.id]">
+    <div class="user-box bg-white rounded-lg shadow-lg p-6 mb-4">
+        <h2 class="text-xl font-bold">{{user.name}} [{{user.id}}]</h2>
+        <p class="text-gray-600">{{ user.email }}</p>
+    </div>
+</a>

@@ -1,4 +1,4 @@
-import { Observable, throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { map, catchError, tap } from 'rxjs/operators';
 import { ApiResponse, IUser, ICreateUser } from '@client-side-project/shared/api';
@@ -92,47 +92,63 @@ private users$ = new BehaviorSubject<IUser[]>([]);
 
 
 
-    public createUser(user : IUser | null) : boolean{
+    public createUser(user: ICreateUser | null): boolean {
         if (user == null) {
             return false;
         }
 
-        //TODO: random ID geration
+        //LASTUSER
+        const lastUser = this.users$.value[this.users$.value.length - 1];
 
-        //random id of oplopend
-        user.id = "randomGetal"
+        // Create a new user object with the provided properties
+        const newUser: IUser = {
+            id: String(Number(lastUser.id) + 1),
+            name: user.name,
+            email: user.email,
+            password: user.password,
+        };
 
-        this.users$.next([...this.users$.value, user]);
+        this.users$.next([...this.users$.value, newUser]);
         return true;
     }
 
+    public updateUser(user: IUser | null): Observable<void> {
+        console.log("Updating User", "TAG");
+        console.log(user, "TAG");
 
-    public updateUser(user : IUser | null) : void {
         if (user == null) {
+            return of(undefined);
+        }
+
+        // remove the old user
+        const userList = this.users$.value;
+        console.log(userList, "UserList");
+
+        const index = userList.findIndex((u) => u.id === user.id);
+
+        console.log(index, "Index");
+        if (index !== -1) {
+            userList.splice(index, 1);
+        }
+
+        // add the updated user
+        this.users$.next([...userList, user]);
+        return of(undefined);
+    }
+
+    public removeUser(id: string | null): void {
+        if (id == null) {
             return;
         }
 
-        //delete
-        this.removeUser(user);
+        const userList = this.users$.value;
+        const index = userList.findIndex((user) => user.id === id);
 
-        //create
-        this.users$.next([...this.users$.value, user]);
-      
-    
-    }
-
-    public removeUser(user : IUser | null) : void {
-        if (user == null) {
-            return;
+        if (index !== -1) {
+           userList.splice(index, 1)[0];
         }
-
-        // //delete
-        // this.users$.forEach((user, index) => {
-        //     if (item === data) { roomArr.splice(index, 1); }
-        //   });
-    
-    
     }
+
 
     /**
      * Handle errors.

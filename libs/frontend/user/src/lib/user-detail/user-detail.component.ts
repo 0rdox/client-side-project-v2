@@ -34,4 +34,10 @@ export class UserDetailComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.subscription) this.subscription.unsubscribe();
   }
+
+  onDelete() {
+    if (this.users) {
+      this.UserService.removeUser(this.users.id);   
+    }
+  }
 }

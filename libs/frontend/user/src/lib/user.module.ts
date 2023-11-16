@@ -6,6 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { UserService } from './user.service';
 import { UserDetailComponent } from './user-detail/user-detail.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
+import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {
@@ -31,9 +32,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes), CommonModule, HttpClientModule],
+  imports: [RouterModule.forChild(routes), CommonModule, HttpClientModule, FormsModule],
   declarations: [UserListComponent, UserDetailComponent, UserEditComponent],
   providers: [UserService],
-  exports: [UserListComponent],
+  exports: [UserListComponent, RouterModule],
 })
 export class UserModule {}
