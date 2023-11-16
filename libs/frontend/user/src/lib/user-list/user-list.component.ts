@@ -13,10 +13,10 @@ export class UserListComponent implements OnInit, OnDestroy {
   users: IUser[] | null = null;
   subscription: Subscription | undefined = undefined;
 
-  constructor(private UserService: UserService) {}
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-      this.subscription = this.UserService.list().subscribe((results) => {
+      this.subscription = this.userService.list().subscribe((results) => {
           console.log(`results: ${results}`);
           this.users = results;
       });
@@ -24,5 +24,9 @@ export class UserListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
       if (this.subscription) this.subscription.unsubscribe();
+  }
+
+  resetUsers(){
+    this.userService.resetArray();
   }
 }

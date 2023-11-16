@@ -149,7 +149,23 @@ private users$ = new BehaviorSubject<IUser[]>([]);
         }
     }
 
-
+    public resetArray(): void {
+        const initialUsers: IUser[] = [
+            {
+                id: '0',
+                name: 'John Smith',
+                email: 'j.smith@mail.com',
+                password: 'Secret123'
+            },
+            {
+                id: '1',
+                name: 'Katie Smith',
+                email: 'k.smith@mail.com',
+                password: 'Secret123'
+            }
+        ];
+        this.users$.next(initialUsers);
+    }
     /**
      * Handle errors.
      */
@@ -159,3 +175,4 @@ private users$ = new BehaviorSubject<IUser[]>([]);
         return throwError(() => new Error(error.message));
     }
 }
+
