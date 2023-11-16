@@ -4,7 +4,7 @@
     "license": "MIT",
     "scripts": {
         "build": "nx b data-api && nx b client-side-project && echo 'Build!'",
-        "test": "echo 'Test'"
+        "dev": "nx run-many --target=serve -all"
     },
     "private": true,
     "dependencies": {
