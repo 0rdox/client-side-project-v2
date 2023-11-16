@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { IGallery, galleriesort } from '@client-side-project/shared/api';
+import { IGallery } from '@client-side-project/shared/api';
 import { BehaviorSubject } from 'rxjs';
 import { Logger } from '@nestjs/common';
 
@@ -10,21 +10,17 @@ export class GalleryService {
     private galleries$ = new BehaviorSubject<IGallery[]>([
         {
             id: '0',
-            title: 'Spaghetti con funghi',
-            description: 'Vega version of the famous spaghetti recipe.',
-            isVega: true,
-            dateServed: new Date(),
-            cook: "Gordon Ramsey",
-            sort: galleriesort.Dinner,
+            name: 'Spaghetti con funghi',
+            email: '',
+            password: '',
+           
         },
         {
             id: '1',
-            title: 'Hamburger',
-            description: 'Hamburger with cheese',
-            isVega: false,
-            dateServed: new Date(),
-            cook: "Jamie Oliver",
-            sort: galleriesort.Dinner,
+            name: 'Spaghetti con funghi',
+            email: '',
+            password: '',
+      
         }
     ]);
 
@@ -47,17 +43,17 @@ export class GalleryService {
      * return signature - we still want to respond with the complete
      * object
      */
-    create(meal: Pick<IGallery, 'title' | 'description'>): IGallery {
+    create(meal: Pick<IGallery, 'name' | 'email'>): IGallery {
         Logger.log('create', this.TAG);
         const current = this.galleries$.value;
         // Use the incoming data, a randomized ID, and a default value of `false` to create the new to-do
         const newMeal: IGallery = {
             ...meal,
             id: `meal-${Math.floor(Math.random() * 10000)}`,
-            isVega: false,
-            dateServed: new Date(),
-            cook: "Janko Seremak",
-            sort: galleriesort.Breakfast,
+            name: 'Spaghetti con funghi',
+            email: '',
+            password: '',
+           
         };
         this.galleries$.next([...current, newMeal]);
         return newMeal;
