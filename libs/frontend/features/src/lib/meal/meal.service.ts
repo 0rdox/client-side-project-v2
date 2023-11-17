@@ -77,17 +77,21 @@ export class MealService {
         };
 
 
-    public create(meal: IMeal, options?:any): Observable<IMeal> {
+    public create(meal: IMeal, options?: any): Observable<IMeal> {
+        console.log("Meal Create mealService", "tag");
+        console.log(this.endpoint, "endpoint");
+        console.log(meal, "meal");
+
         return this.http
-        .post<ApiResponse<IMeal>>(`${this.endpoint}`, {
-            ...options,
-            ...httpOptions,
-        })
-        .pipe(
-            map((response:any) => response.results),
-            catchError(this.handleError)
-        )
-        }
+            .post<ApiResponse<IMeal>>(`${this.endpoint}`, meal, {
+                ...options,
+                ...httpOptions,
+            })
+            .pipe(
+                map((response: any) => response.results),
+                catchError(this.handleError)
+            );
+    }
     /**
      * Handle errors.
      */

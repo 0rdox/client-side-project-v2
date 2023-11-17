@@ -39,41 +39,36 @@ export class UserEditComponent implements OnInit {
   }
   
   saveUser() {
-    console.log("Save user clicked", "tag");
-    console.log(this.isEditing, "tag");
-    if (this.isEditing) {
-      this.updateUser();
-    } else {
-      this.createUser();
-    }
+    // if (this.isEditing) {
+    //   this.updateUser();
+    // } else {
+    //   this.createUser();
+    // }
   }
 
-  updateUser() {
-console.log("updating user clicked in user-edit.component.ts", "TAG");
+//   updateUser() {
+//     const updatedUser: IUser = {
+//       id: this.user.id,
+//       name: this.name,
+//       email: this.email,
+//       password: this.user.password
+//     };
+//     this.userService.updateUser(updatedUser).subscribe(() => {
+//       this.router.navigate(['/user']);
+//     });
+//   }
 
-    const updatedUser: IUser = {
-      id: this.user.id,
-      name: this.name,
-      email: this.email,
-      password: this.user.password
-    };
-    this.userService.updateUser(updatedUser).subscribe(() => {
-      this.router.navigate(['/user']);
-    });
-  }
-
-  createUser() {
-console.log("creating user clicked in user-edit.component.ts", "TAG");
-    const newUser: IUser = {
-      id:'undefined',
-      name: this.name,
-      email: this.email,
-      password: 'Secret123!' // Set a default password for new users
-    };
-    this.userService.createUser(newUser).subscribe(() => {
-      this.router.navigate(['/user']);
-    });
-  }
+//   createUser() {
+//     const newUser: IUser = {
+//       id:'undefined',
+//       name: this.name,
+//       email: this.email,
+//       password: 'Secret123!' // Set a default password for new users
+//     };
+//     this.userService.createUser(newUser).subscribe(() => {
+//       this.router.navigate(['/user']);
+//     });
+  //}
 }
 //     const userId = this.route.snapshot.paramMap.get('id');
 //     console.log(userId, "ID");

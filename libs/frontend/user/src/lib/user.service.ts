@@ -93,6 +93,8 @@ private users$ = new BehaviorSubject<IUser[]>([]);
 
 
     public createUser(user: ICreateUser | null): Observable<boolean> {
+       console.log("CREATE USER CLICKED", "TAG");
+       
         if (user == null) {
             return of(false);
         }
