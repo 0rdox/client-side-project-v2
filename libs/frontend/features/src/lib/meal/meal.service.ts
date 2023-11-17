@@ -19,9 +19,11 @@ export const httpOptions = {
  */
 @Injectable()
 export class MealService {
-    endpoint = environment.dataApiUrl;
+    endpoint = environment.dataApiUrl + '/meal';
 
-    constructor(private readonly http: HttpClient) {}
+    constructor(private readonly http: HttpClient) {
+        
+    }
 
     /**
      * Get all items.
@@ -61,6 +63,31 @@ export class MealService {
             );
     }
 
+    public update(meal: IMeal, options?:any): Observable<IMeal> {
+
+        return this.http
+        .put<ApiResponse<IMeal>>(`${this.endpoint}/${meal.id}`, {
+            ...options,
+            ...httpOptions,
+        })
+        .pipe(
+            map((response:any) => response.results),
+            catchError(this.handleError)
+        )
+        };
+
+
+    public create(meal: IMeal, options?:any): Observable<IMeal> {
+        return this.http
+        .post<ApiResponse<IMeal>>(`${this.endpoint}`, {
+            ...options,
+            ...httpOptions,
+        })
+        .pipe(
+            map((response:any) => response.results),
+            catchError(this.handleError)
+        )
+        }
     /**
      * Handle errors.
      */
