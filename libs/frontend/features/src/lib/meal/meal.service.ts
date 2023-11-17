@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { map, catchError, tap } from 'rxjs/operators';
 import { ApiResponse, IMeal } from '@client-side-project/shared/api';
 import { Injectable } from '@angular/core';
+import { environment } from '@client-side-project/shared/util-env'
 
 /**
  * See https://angular.io/guide/http#requesting-data-from-a-server
@@ -18,7 +19,7 @@ export const httpOptions = {
  */
 @Injectable()
 export class MealService {
-    endpoint = 'http://localhost:3000/api/meal';
+    endpoint = environment.dataApiUrl;
 
     constructor(private readonly http: HttpClient) {}
 
