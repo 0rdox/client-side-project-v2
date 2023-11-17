@@ -24,7 +24,9 @@ SwaggerModule.setup(globalPrefix, app, document);
 
 
 
-const corsOptions: CorsOptions = {};
+const corsOptions: CorsOptions = {
+  origin:'*',
+};
 app.enableCors(corsOptions);
 
 app.useGlobalInterceptors(new ApiResponseInterceptor)
