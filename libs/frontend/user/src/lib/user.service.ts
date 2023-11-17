@@ -92,9 +92,9 @@ private users$ = new BehaviorSubject<IUser[]>([]);
 
 
 
-    public createUser(user: ICreateUser | null): boolean {
+    public createUser(user: ICreateUser | null): Observable<boolean> {
         if (user == null) {
-            return false;
+            return of(false);
         }
 
         //LASTUSER
@@ -109,7 +109,7 @@ private users$ = new BehaviorSubject<IUser[]>([]);
         };
 
         this.users$.next([...this.users$.value, newUser]);
-        return true;
+        return of(true);
     }
 
     public updateUser(user: IUser | null): Observable<void> {

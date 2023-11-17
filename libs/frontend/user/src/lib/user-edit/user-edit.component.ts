@@ -13,24 +13,39 @@ import { UserService } from '../user.service';
 export class UserEditComponent implements OnInit {
   name = '';
   email = '';
+  isEditing = false; // Add a flag to track if editing or creating
 
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
- private router: Router,
+    private router: Router,
   ) { }
- 
+
   private user!: IUser;
 
   ngOnInit() {
     const userId = this.route.snapshot.paramMap.get('id');
-    this.userService.read(userId).subscribe((user: IUser) => {
-      this.user = user;
-      this.name = user.name;
-      this.email = user.email;
-    });
+    
+    if (userId) {
+      this.isEditing = true;
+      this.userService.read(userId).subscribe((user: IUser) => {
+        this.user = user;
+        this.name = user.name;
+        this.email = user.email;
+      });
+    }
+
+
   }
   
+  saveUser() {
+    if (this.isEditing) {
+      this.updateUser();
+    } else {
+      this.createUser();
+    }
+  }
+
   updateUser() {
     const updatedUser: IUser = {
       id: this.user.id,
@@ -43,7 +58,18 @@ export class UserEditComponent implements OnInit {
     });
   }
 
-//   ngOnInit() {
+  createUser() {
+    const newUser: IUser = {
+      id:'undefined',
+      name: this.name,
+      email: this.email,
+      password: 'Secret123!' // Set a default password for new users
+    };
+    this.userService.createUser(newUser).subscribe(() => {
+      this.router.navigate(['/user']);
+    });
+  }
+}
 //     const userId = this.route.snapshot.paramMap.get('id');
 //     console.log(userId, "ID");
 //     this.userService.read(userId).subscribe((user: IUser) => {
@@ -69,4 +95,4 @@ export class UserEditComponent implements OnInit {
 //       console.log("Navigated", "TAG");
 //     });
 //   }
-}
+//}
