@@ -3,7 +3,7 @@ import { OnInit, OnDestroy } from '@angular/core';
 import { IMeal } from '@client-side-project/shared/api';
 import { MealService } from '../meal.service';
 import { Subscription, switchMap } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'client-side-project-meal-detail',
@@ -11,10 +11,14 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./meal-detail.component.css'],
 })
 export class MealDetailComponent implements OnInit, OnDestroy {
-  meals: IMeal | null = null;
+  meal: IMeal | null = null;
   subscription: Subscription | undefined = undefined;
 
-  constructor(private route: ActivatedRoute, private mealService: MealService) { }
+  constructor(
+    private route: ActivatedRoute, 
+    private mealService: MealService, 
+    private router: Router,) 
+    { }
 
 
 
@@ -27,11 +31,23 @@ export class MealDetailComponent implements OnInit, OnDestroy {
       })
     ).subscribe((results) => {
       console.log(`results: ${JSON.stringify(results)}`);
-      this.meals = results;
+      this.meal = results;
+
     });
   }
 
   ngOnDestroy(): void {
     if (this.subscription) this.subscription.unsubscribe();
+  }
+
+  onDelete() {
+    console.log("Called on delete")
+    if (this.meal) {
+      this.mealService.delete(this.meal.id).subscribe(() => console.log("meal deleted"));
+    }
+
+
+    this.router.navigate(['/meal']);
+
   }
 }

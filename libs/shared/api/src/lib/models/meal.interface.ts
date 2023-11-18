@@ -11,19 +11,18 @@ export enum MealSort {
 type User = string;
 
 export interface IMeal {
-    id: Id;
+    id: string;
     title: string;
     description: string;
     isVega: boolean;
     dateServed: Date;
     sort: MealSort;
-    // Naam van de persoon die de maaltijd aanmaakt en kookt.
-    cook: User;
+    cook: User | null;
 }
 
 export type ICreateMeal = Pick<
     IMeal,
-    'title' | 'description' | 'sort' | 'cook'
+    'title' | 'description' | 'sort' 
 >;
 export type IUpdateMeal = Partial<Omit<IMeal, 'id'>>;
 export type IUpsertMeal = IMeal;

@@ -6,70 +6,72 @@ import {
     IsDate
 } from 'class-validator';
 import {
-    ICreateUser,
-    IUpdateUser,
-    IUpsertUser,
+    ICreateMeal,
+    IUpdateMeal,
+    IUpsertMeal,
+    MealSort
 } from '@client-side-project/shared/api';
 
 /**
  * Use the `Pick` utility type to extract only the properties we want for
  * new to-do items
  */
-export class CreateUserDto implements ICreateUser {
+export class CreateMealDto implements ICreateMeal {
     @IsString()
     @IsNotEmpty()
-    name!: string;
+    title!: string;
 
     @IsString()
     @IsNotEmpty()
-    email!: string;
-
+    description!: string;
 
     @IsString()
     @IsNotEmpty()
-    password!: string;
+    sort!: MealSort;
+
+
+     cook!: string;
 }
 
-// export class UpsertUserDto implements IUpsertUser {
-//     @IsString()
-//     @IsNotEmpty()
-//     title!: string;
+export class UpsertMealDto implements IUpsertMeal {
+    @IsString()
+    @IsNotEmpty()
+    title!: string;
 
-//     @IsString()
-//     @IsNotEmpty()
-//     description!: string;
+    @IsString()
+    @IsNotEmpty()
+    description!: string;
 
-//     @IsString()
-//     @IsNotEmpty()
-//     id!: string;
+    @IsString()
+    @IsNotEmpty()
+    id!: string;
 
-//     @IsBoolean()
-//     @IsNotEmpty()
-//     isVega!: boolean;
+    @IsBoolean()
+    @IsNotEmpty()
+    isVega!: boolean;
 
-//     @IsDate()
-//     @IsNotEmpty()
-//     dateServed!: Date;
+    @IsDate()
+    @IsNotEmpty()
+    dateServed!: Date;
 
-//     @IsString()
-//     @IsNotEmpty()
-//     sort!: UserSort;
+    @IsString()
+    @IsNotEmpty()
+    sort!: MealSort;
 
-//     @IsString()
-//     @IsNotEmpty()
-//     cook!: string;
-// }
+    @IsNotEmpty()
+    cook!: string;
+}
 
-// export class UpdateUserDto implements IUpdateUser {
-//     @IsString()
-//     @IsOptional()
-//     title!: string;
+export class UpdateMealDto implements IUpdateMeal {
+    @IsString()
+    @IsOptional()
+    title!: string;
 
-//     @IsString()
-//     @IsOptional()
-//     description!: string;
+    @IsString()
+    @IsOptional()
+    description!: string;
 
-//     @IsBoolean()
-//     @IsOptional()
-//     completed!: boolean;
-// }
+    @IsBoolean()
+    @IsOptional()
+    completed!: boolean;
+}

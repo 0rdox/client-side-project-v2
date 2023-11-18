@@ -9,7 +9,7 @@ export interface IGallery {
     galleryName: string;
     location: string;
     image: string;
-    userId?: Id | null;
+    userId?: Id| null;
 }
 export type ICreateGallery = Pick<
     IGallery,

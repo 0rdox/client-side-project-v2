@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { UserListComponent } from './user-list.component';
+import { GalleryEditComponent } from './gallery-edit.component';
 
-describe('UserListComponent', () => {
-  let component: UserListComponent;
-  let fixture: ComponentFixture<UserListComponent>;
+describe('GalleryEditComponent', () => {
+  let component: GalleryEditComponent;
+  let fixture: ComponentFixture<GalleryEditComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [UserListComponent],
+      declarations: [GalleryEditComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(UserListComponent);
+    fixture = TestBed.createComponent(GalleryEditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

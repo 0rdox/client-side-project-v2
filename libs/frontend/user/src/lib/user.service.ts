@@ -6,21 +6,14 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 
-/**
- * See https://angular.io/guide/http#requesting-data-from-a-server
- */
 export const httpOptions = {
     observe: 'body',
     responseType: 'json',
 };
 
-
-/**
- *
- *
- */
 @Injectable()
 export class UserService {
+
     endpoint = 'http://localhost:3000/api/user';
 
 private users$ = new BehaviorSubject<IUser[]>([]);
@@ -40,9 +33,35 @@ private users$ = new BehaviorSubject<IUser[]>([]);
                 name: 'Katie Smith',
                 email: 'k.smith@mail.com',
                 password: 'Secret123'
+            },
+            {
+                id: '2',
+                name: 'Michael Johnson',
+                email: 'm.johnson@mail.com',
+                password: 'Secret123'
+            },
+            {
+                id: '3',
+                name: 'Emily Davis',
+                email: 'e.davis@mail.com',
+                password: 'Secret123'
+            },
+            {
+                id: '4',
+                name: 'Daniel Wilson',
+                email: 'd.wilson@mail.com',
+                password: 'Secret123'
+            },
+            {
+                id: '5',
+                name: 'Sophia Thompson',
+                email: 's.thompson@mail.com',
+                password: 'Secret123'
             }
         ];
         
+
+    
         this.users$.next([...this.users$.value, ...users]);
 
     }
@@ -75,16 +94,16 @@ private users$ = new BehaviorSubject<IUser[]>([]);
      */
     public read(id: string | null, options?: any): Observable<IUser> {
         console.log(`read ${this.endpoint}/${id}`);
-        // return this.http
-        //     .get<ApiResponse<IUser>>(`${this.endpoint}/${id}`,  {
-        //         ...options,
-        //         ...httpOptions,
-        //     })
-        //     .pipe(
-        //         tap(console.log),
-        //         map((response: any) => response.results as IUser),
-        //         catchError(this.handleError)
-        //     );
+        return this.http
+            .get<ApiResponse<IUser>>(`${this.endpoint}/${id}`,  {
+                ...options,
+                ...httpOptions,
+            })
+            .pipe(
+                tap(console.log),
+                map((response: any) => response.results as IUser),
+                catchError(this.handleError)
+            );
         return this.users$.pipe(
             map((userList) => userList.find((user) => user.id === id)),
         ) as Observable<IUser>;

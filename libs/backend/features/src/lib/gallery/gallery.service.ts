@@ -21,6 +21,27 @@ export class GalleryService {
             location: 'Breda',
             image:'test',
             userId: '1',
+        },
+        {
+            id: '2',
+            galleryName: 'Modern Art Gallery',
+            location: 'New York',
+            image: 'test',
+            userId: null,
+        },
+        {
+            id: '3',
+            galleryName: 'Nature Gallery',
+            location: 'Paris',
+            image: 'test',
+            userId: null,
+        },
+        {
+            id: '4',
+            galleryName: 'Contemporary Gallery',
+            location: 'London',
+            image: 'test',
+            userId: null,
         }
     ]);
 
@@ -31,31 +52,53 @@ export class GalleryService {
 
     getOne(id: string): IGallery {
         Logger.log(`getOne(${id})`, this.TAG);
-        const meal = this.galleries$.value.find((td) => td.id === id);
-        if (!meal) {
+        const gallery = this.galleries$.value.find((td) => td.id === id);
+        if (!gallery) {
             throw new NotFoundException(`Gallery could not be found!`);
         }
-        return meal;
+        return gallery;
     }
 
-    /**
-     * Update the arg signature to match the DTO, but keep the
-     * return signature - we still want to respond with the complete
-     * object
-     */
-    create(meal: Pick<IGallery, 'galleryName' | 'location'>): IGallery {
+    create(gallery: Pick<IGallery, 'galleryName' | 'location'>): IGallery {
         Logger.log('create', this.TAG);
         const current = this.galleries$.value;
-        // Use the incoming data, a randomized ID, and a default value of `false` to create the new to-do
-        const newMeal: IGallery = {
-            ...meal,
+        const newGallery: IGallery = {
+            ...gallery,
             id: `gallery-${Math.floor(Math.random() * 10000)}`,
-            galleryName:'Art Gallery',
-            location:'Undefined',
             image:'Undefined',
             userId: null,
         };
-        this.galleries$.next([...current, newMeal]);
-        return newMeal;
+        this.galleries$.next([...current, newGallery]);
+        return newGallery;
+    }
+
+    update(id: string, gallery: Partial<IGallery>): IGallery {
+        Logger.log(`update(${id})`, this.TAG);
+        const current = this.galleries$.value;
+        const index = current.findIndex((g) => g.id === id);
+        if (index === -1) {
+            throw new NotFoundException(`Gallery could not be found!`);
+        }
+        const updatedGallery = {
+            ...current[index],
+            ...gallery,
+        };
+        current[index] = updatedGallery;
+        this.galleries$.next(current);
+        return updatedGallery;
+    }
+
+    delete(id: string): void {
+        Logger.log(`delete(${id})`, this.TAG);
+        const current = this.galleries$.value;
+        const index = current.findIndex((g) => g.id === id);
+        if (index === -1) {
+            throw new NotFoundException(`Gallery could not be found!`);
+        }
+        current.splice(index, 1);
+        this.galleries$.next(current);
     }
 }
+
+    
+

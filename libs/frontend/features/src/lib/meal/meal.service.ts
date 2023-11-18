@@ -22,7 +22,7 @@ export class MealService {
     endpoint = environment.dataApiUrl + '/meal';
 
     constructor(private readonly http: HttpClient) {
-        
+
     }
 
     /**
@@ -62,19 +62,19 @@ export class MealService {
                 catchError(this.handleError)
             );
     }
-
-    public update(meal: IMeal, options?:any): Observable<IMeal> {
-
+    public update(meal: IMeal, options?: any): Observable<IMeal> {
+        console.log(meal, "meal");
         return this.http
-        .put<ApiResponse<IMeal>>(`${this.endpoint}/${meal.id}`, {
-            ...options,
-            ...httpOptions,
-        })
-        .pipe(
-            map((response:any) => response.results),
-            catchError(this.handleError)
-        )
-        };
+            .put<ApiResponse<IMeal>>(`${this.endpoint}/${meal.id}`, meal, {
+                ...options,
+                ...httpOptions,
+            })
+            .pipe(
+                tap(console.log),
+                map((response: any) => response.results),
+                catchError(this.handleError)
+            );
+    }
 
 
     public create(meal: IMeal, options?: any): Observable<IMeal> {
@@ -88,13 +88,27 @@ export class MealService {
                 ...httpOptions,
             })
             .pipe(
+                tap(console.log),
                 map((response: any) => response.results),
                 catchError(this.handleError)
             );
     }
-    /**
-     * Handle errors.
-     */
+
+    public delete(id: string, options?: any): Observable<void> {
+        console.log(`delete ${this.endpoint}/${id}`);
+
+        return this.http
+            .delete(`${this.endpoint}/${id}`, {
+                ...options,
+                ...httpOptions
+            })
+            .pipe(
+                tap(console.log),
+                map((response: any) => response.result),
+                catchError(this.handleError)
+            );
+    }
+
     public handleError(error: HttpErrorResponse): Observable<any> {
         console.log('handleError in MealService', error);
 

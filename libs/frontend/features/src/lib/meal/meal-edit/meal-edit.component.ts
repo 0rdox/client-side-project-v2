@@ -18,6 +18,7 @@ export class MealEditComponent implements OnInit {
   isVega = false;
   dateServed = new Date();
   sort = MealSort.Breakfast;
+//change to gallery:IGallery 
 
   isEditing = false; // Add a flag to track if editing or creating
 
@@ -70,16 +71,17 @@ export class MealEditComponent implements OnInit {
     });
   }
 
+
   createMeal() {
     console.log("creating meal", "TAG");
     const newMeal: IMeal = {
-      id: 'undefined',
+      id: '',
       title: this.title,
       description: this.description,
       isVega: false,
       dateServed: new Date(),
       sort: MealSort.Breakfast,
-      cook: ''
+      cook: this.cook,
     };
     this.mealService.create(newMeal).subscribe(() => {
       this.router.navigate(['/meal']);

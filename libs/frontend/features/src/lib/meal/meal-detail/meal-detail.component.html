@@ -1,3 +1,19 @@
-<p>Meal With Id: {{ meals?.id }}</p>
-<p>Title: {{ meals?.title }}</p>
-<p>test</p>
+
+
+<div class="bg-gray-100 p-4 rounded-lg mx-80 mt-10">
+    <div class="bg-white p-4 rounded-lg shadow-md">
+        <p class="text-lg font-bold mb-2">{{ meal?.title }} [{{meal?.id}}]</p>
+        <p class="text-gray-700">{{ meal?.cook }}</p>
+        <p class="text-gray-700">{{ meal?.sort }}</p>
+        <p class="text-gray-700">{{ meal?.dateServed }}</p>
+    </div>
+</div>
+
+<div class="flex justify-center space-x-4">
+    <button class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">
+        <a routerLink="/meal/{{meal?.id}}/edit">Edit Meal</a>
+    </button>
+    <button class="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md" (click)="onDelete()">
+        Delete Meal
+    </button>
+</div>

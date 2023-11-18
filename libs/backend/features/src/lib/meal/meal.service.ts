@@ -25,6 +25,42 @@ export class MealService {
             dateServed: new Date(),
             cook: "Jamie Oliver",
             sort: MealSort.Dinner,
+        },
+        {
+            id: '2',
+            title: 'Chicken Curry',
+            description: 'Delicious chicken curry with aromatic spices.',
+            isVega: false,
+            dateServed: new Date(),
+            cook: "Sanjeev Kapoor",
+            sort: MealSort.Lunch,
+        },
+        {
+            id: '3',
+            title: 'Margherita Pizza',
+            description: 'Classic pizza with tomato sauce, mozzarella cheese, and basil.',
+            isVega: true,
+            dateServed: new Date(),
+            cook: "Antonio Carluccio",
+            sort: MealSort.Dinner,
+        },
+        {
+            id: '4',
+            title: 'Sushi',
+            description: 'Fresh and delicious sushi rolls.',
+            isVega: false,
+            dateServed: new Date(),
+            cook: "Jiro Ono",
+            sort: MealSort.Lunch,
+        },
+        {
+            id: '5',
+            title: 'Pancakes',
+            description: 'Fluffy pancakes with maple syrup.',
+            isVega: true,
+            dateServed: new Date(),
+            cook: "Julia Child",
+            sort: MealSort.Breakfast,
         }
     ]);
 
@@ -42,15 +78,10 @@ export class MealService {
         return meal;
     }
 
-    /**
-     * Update the arg signature to match the DTO, but keep the
-     * return signature - we still want to respond with the complete
-     * object
-     */
     create(meal: Pick<IMeal, 'title' | 'description'>): IMeal {
         Logger.log('create', this.TAG);
         const current = this.meals$.value;
-        // Use the incoming data, a randomized ID, and a default value of `false` to create the new to-do
+
         const newMeal: IMeal = {
             ...meal,
             id: `meal-${Math.floor(Math.random() * 10000)}`,
@@ -61,5 +92,41 @@ export class MealService {
         };
         this.meals$.next([...current, newMeal]);
         return newMeal;
+    }
+
+    delete(id: string): IMeal {
+        Logger.log(`delete(${id})`, this.TAG);
+        const current = this.meals$.value;
+        const mealIndex = current.findIndex((meal) => meal.id === id);
+
+        if (mealIndex === -1) {
+            throw new NotFoundException(`Meal could not be found!`);
+        }
+
+        const deletedMeal = current.splice(mealIndex, 1)[0];
+        this.meals$.next(current);
+        return deletedMeal;
+    }
+      
+    
+    update(id: string, meal: Partial<IMeal>): IMeal {
+        Logger.log(`update(${id})`, this.TAG);
+        const current = this.meals$.value;
+        
+        const mealIndex = current.findIndex((meal) => meal.id === id);
+
+        if (mealIndex === -1) {
+            throw new NotFoundException(`Meal could not be found!`);
+        }
+
+        const updatedMeal = {
+            ...current[mealIndex],
+            ...meal,
+        };
+
+        console.log(updatedMeal, "updatedMeal");    
+        current[mealIndex] = updatedMeal;
+        this.meals$.next(current);
+        return updatedMeal;
     }
 }

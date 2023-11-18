@@ -10,14 +10,38 @@ export class UserService {
     private Users$ = new BehaviorSubject<IUser[]>([
         {
             id: '0',
-          name: 'John Smith',
-          email: 'j.smith@mail.com',
-          password: 'Secret123'
+            name: 'John Smith',
+            email: 'j.smith@mail.com',
+            password: 'Secret123'
         },
         {
             id: '1',
             name: 'Katie Smith',
             email: 'k.smith@mail.com',
+            password: 'Secret123'
+        },
+        {
+            id: '2',
+            name: 'Michael Johnson',
+            email: 'm.johnson@mail.com',
+            password: 'Secret123'
+        },
+        {
+            id: '3',
+            name: 'Emily Davis',
+            email: 'e.davis@mail.com',
+            password: 'Secret123'
+        },
+        {
+            id: '4',
+            name: 'Daniel Wilson',
+            email: 'd.wilson@mail.com',
+            password: 'Secret123'
+        },
+        {
+            id: '5',
+            name: 'Sophia Thompson',
+            email: 's.thompson@mail.com',
             password: 'Secret123'
         }
     ]);
