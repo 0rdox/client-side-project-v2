@@ -36,6 +36,9 @@ component:MealEditComponent,
     component: MealEditComponent,
   }
 
+
+
+  //Gallery en User in Features Model routing --> Children
   
 
 ];

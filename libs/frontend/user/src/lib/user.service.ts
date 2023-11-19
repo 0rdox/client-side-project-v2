@@ -16,6 +16,7 @@ export class UserService {
 
     endpoint = 'http://localhost:3000/api/user';
 
+    //users is op het moment hardcoded, maar dit is makkelijk over te zetten (zie meal en gallery)
 private users$ = new BehaviorSubject<IUser[]>([]);
 
 
