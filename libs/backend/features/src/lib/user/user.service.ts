@@ -77,4 +77,42 @@ export class UserService {
         this.Users$.next([...current, newUser]);
         return newUser;
     }
+
+
+    //todo: double check if this is correct
+    delete(id: string): IUser {
+        Logger.log(`delete(${id})`, this.TAG);
+        const current = this.Users$.value;
+        const userIndex = current.findIndex((user) => user.id === id);
+
+        if (userIndex === -1) {
+            throw new NotFoundException(`User could not be found!`);
+        }
+
+        const deletedUser = current.splice(userIndex, 1)[0];
+        this.Users$.next(current);
+        return deletedUser;
+    }
+      
+     //todo: double check if this is correct
+    update(id: string, user: Partial<IUser>): IUser {
+        Logger.log(`update(${id})`, this.TAG);
+        const current = this.Users$.value;
+        
+        const userIndex = current.findIndex((user) => user.id === id);
+
+        if (userIndex === -1) {
+            throw new NotFoundException(`User could not be found!`);
+        }
+
+        const updatedUser = {
+            ...current[userIndex],
+            ...user,
+        };
+
+        console.log(updatedUser, "updatedUser");    
+        current[userIndex] = updatedUser;
+        this.Users$.next(current);
+        return updatedUser;
+    }
 }

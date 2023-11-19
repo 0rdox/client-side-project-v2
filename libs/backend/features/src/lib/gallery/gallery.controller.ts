@@ -5,6 +5,8 @@ import { IGallery } from '@client-side-project/shared/api';
 import { CreateGalleryDto, UpdateGalleryDto } from '@client-side-project/backend/dto';
 import { ApiTags, ApiResponse, ApiParam, ApiBody, ApiHeader, ApiOperation } from '@nestjs/swagger';
 
+
+@ApiTags('gallery')
 @Controller('gallery')
 export class GalleryController {
 

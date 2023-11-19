@@ -95,16 +95,16 @@ private users$ = new BehaviorSubject<IUser[]>([]);
      */
     public read(id: string | null, options?: any): Observable<IUser> {
         console.log(`read ${this.endpoint}/${id}`);
-        return this.http
-            .get<ApiResponse<IUser>>(`${this.endpoint}/${id}`,  {
-                ...options,
-                ...httpOptions,
-            })
-            .pipe(
-                tap(console.log),
-                map((response: any) => response.results as IUser),
-                catchError(this.handleError)
-            );
+        // return this.http
+        //     .get<ApiResponse<IUser>>(`${this.endpoint}/${id}`,  {
+        //         ...options,
+        //         ...httpOptions,
+        //     })
+        //     .pipe(
+        //         tap(console.log),
+        //         map((response: any) => response.results as IUser),
+        //         catchError(this.handleError)
+        //     );
         return this.users$.pipe(
             map((userList) => userList.find((user) => user.id === id)),
         ) as Observable<IUser>;
