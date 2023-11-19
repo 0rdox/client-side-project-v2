@@ -60,16 +60,15 @@ export class CreateUserDto implements ICreateUser {
 //     cook!: string;
 // }
 
-// export class UpdateUserDto implements IUpdateUser {
-//     @IsString()
-//     @IsOptional()
-//     title!: string;
+export class UpdateUserDto implements IUpdateUser {
+    @IsString()
+    @IsNotEmpty()
+    name!: string;
 
-//     @IsString()
-//     @IsOptional()
-//     description!: string;
+    @IsString()
+    @IsNotEmpty()
+    email!: string;
 
-//     @IsBoolean()
-//     @IsOptional()
-//     completed!: boolean;
-// }
+
+ 
+}
