@@ -15,42 +15,70 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
+  // {
+  //   path: '',
+  //   pathMatch: 'full',
+  //   component: MealListComponent,
+  // },
+  // {
+  //   path: 'new',
+  //   pathMatch: 'full',
+  //   component: MealEditComponent,
+  // },
+  // {
+  //   path: ':id',
+  //   pathMatch: 'full',
+  //   component: MealDetailComponent,
+  // },
+  // {
+  //   path: ':id/edit',
+  //   pathMatch: 'full',
+  //   component: MealEditComponent,
+  // },
   {
     path: '',
     pathMatch: 'full',
-    component: MealListComponent,
+    redirectTo: '/home',
   },
   {
-path:'new',
-pathMatch:'full',
-component:MealEditComponent,
-  },
-  {
-    path: ':id',
+    path: 'meal',
     pathMatch: 'full',
-    component: MealDetailComponent,
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        component: MealListComponent,
+      },
+      {
+        path: 'new',
+        pathMatch: 'full',
+        component: MealEditComponent,
+      },
+      {
+        path: ':id',
+        pathMatch: 'full',
+        component: MealDetailComponent,
+      },
+      {
+        path: ':id/edit',
+        pathMatch: 'full',
+        component: MealEditComponent,
+      },
+    ],
   },
-  {
-    path: ':id/edit',
-    pathMatch: 'full',
-    component: MealEditComponent,
-  }
-
-
 
   //Gallery en User in Features Model routing --> Children
-  
-
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes), CommonModule, HttpClientModule, FormsModule],
-  declarations: [
-    MealListComponent,
-    MealDetailComponent,
-   MealEditComponent,
+  imports: [
+    RouterModule.forChild(routes),
+    CommonModule,
+    HttpClientModule,
+    FormsModule,
   ],
-  providers: [MealService, ],
-  exports: [MealListComponent, MealDetailComponent, ],
+  declarations: [MealListComponent, MealDetailComponent, MealEditComponent],
+  providers: [MealService],
+  exports: [MealListComponent, MealDetailComponent],
 })
-export class FeaturesModule { }
+export class FeaturesModule {}

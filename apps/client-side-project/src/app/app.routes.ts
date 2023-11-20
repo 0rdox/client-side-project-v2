@@ -18,7 +18,7 @@ export const appRoutes: Route[] = [
         component:NxWelcomeComponent,
     },
     {
-        path:'meal',
+        path:'',
         // pathMatch:'full',
         loadChildren:() =>
         import('@client-side-project/frontend/features').then(
