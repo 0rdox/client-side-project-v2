@@ -10,7 +10,7 @@ import { IGallery } from '@client-side-project/shared/api';
   styleUrls: ['./gallery-edit.component.css'],
 })
 export class GalleryEditComponent implements OnInit {
-  galleryName = '';
+  name = '';
   email = '';
   location = '';
   userId = '';
@@ -33,7 +33,7 @@ export class GalleryEditComponent implements OnInit {
       this.isEditing = true;
       this.galleryService.read(galleryId).subscribe((gallery: IGallery) => {
         this.gallery = gallery;
-        this.galleryName = gallery.galleryName;
+        this.name = gallery.name;
         this.location = gallery.location;
         this.userId = gallery.userId ?? '';
         this.image = gallery.image ?? '';
@@ -55,7 +55,7 @@ export class GalleryEditComponent implements OnInit {
     console.log("creating gallery clicked in gallery-edit.component.ts", "TAG");
     const newGallery: IGallery = {
       id: 'undefined',
-      galleryName: this.galleryName, 
+      name: this.name, 
       location: this.location, 
       userId: this.userId, 
       image: this.image
@@ -68,10 +68,10 @@ export class GalleryEditComponent implements OnInit {
   updateGallery() {
     console.log("updating gallery clicked in gallery-edit.component.ts", "TAG");
 
-    console.log(this.galleryName);
+    console.log(this.name);
     const updatedGallery: IGallery = {
       id: this.gallery.id,
-      galleryName: this.galleryName,
+      name: this.name,
       location: this.location, 
       userId: this.userId,
       image: this.image,

@@ -18,7 +18,7 @@ import {
 export class CreateGalleryDto implements ICreateGallery {
     @IsString()
     @IsNotEmpty()
-    galleryName!: string;
+    name!: string;
     
     @IsString()
     @IsNotEmpty()
@@ -40,7 +40,7 @@ export class UpsertGalleryDto implements IUpsertGallery {
  
     @IsString()
     @IsNotEmpty()
-    galleryName!: string;
+    name!: string;
     
     @IsString()
     @IsNotEmpty()
@@ -54,7 +54,7 @@ export class UpsertGalleryDto implements IUpsertGallery {
 export class UpdateGalleryDto implements IUpdateGallery {
     @IsString()
     @IsNotEmpty()
-    galleryName!: string;
+    name!: string;
     
     @IsString()
     @IsNotEmpty()

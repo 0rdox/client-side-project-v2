@@ -10,35 +10,35 @@ export class GalleryService {
     private galleries$ = new BehaviorSubject<IGallery[]>([
         {
             id: '0',
-            galleryName: 'Art Gallery',
+            name: 'Art Gallery',
             location: 'Amsterdam',
             image: 'test',
             userId: null,
         },
         {
             id: '1',
-            galleryName: "Katie's gallery",
+            name: "Katie's gallery",
             location: 'Breda',
             image:'test',
             userId: '1',
         },
         {
             id: '2',
-            galleryName: 'Modern Art Gallery',
+            name: 'Modern Art Gallery',
             location: 'New York',
             image: 'test',
             userId: null,
         },
         {
             id: '3',
-            galleryName: 'Nature Gallery',
+            name: 'Nature Gallery',
             location: 'Paris',
             image: 'test',
             userId: null,
         },
         {
             id: '4',
-            galleryName: 'Contemporary Gallery',
+            name: 'Contemporary Gallery',
             location: 'London',
             image: 'test',
             userId: null,
@@ -59,7 +59,7 @@ export class GalleryService {
         return gallery;
     }
 
-    create(gallery: Pick<IGallery, 'galleryName' | 'location'>): IGallery {
+    create(gallery: Pick<IGallery, 'name' | 'location'>): IGallery {
         Logger.log('create', this.TAG);
         const current = this.galleries$.value;
         const newGallery: IGallery = {

@@ -89,7 +89,7 @@ private galleries$ = new BehaviorSubject<IGallery[]>([]);
         // Create a new Gallery object with the provided properties
         const newGallery: IGallery = {
             id: String(Number(lastGallery.id) + 1),
-            galleryName: '',
+            name: '',
             location: '',
             image: ''
         };

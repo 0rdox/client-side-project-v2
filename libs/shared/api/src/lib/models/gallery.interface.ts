@@ -6,14 +6,14 @@ type Gallery = string;
 
 export interface IGallery {
     id: Id;
-    galleryName: string;
+    name: string;
     location: string;
     image: string;
     userId?: Id| null;
 }
 export type ICreateGallery = Pick<
     IGallery,
-    'galleryName' | 'location' | 'image' 
+    'name' | 'location' | 'image' 
 >;
 export type IUpdateGallery = Partial<Omit<IGallery, 'id'>>;
 export type IUpsertGallery = IGallery;
