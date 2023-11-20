@@ -33,14 +33,14 @@ export const appRoutes: Route[] = [
     //         (esModule) => (esModule.UserModule)
     //     )
     // },
-    {
-        path:'gallery',
-       // pathMatch:'full',
-        loadChildren:() =>
-        import('@client-side-project/frontend/gallery').then(
-            (esModule) => (esModule.GalleryModule)
-        )
-    },
+    // {
+    //     path:'gallery',
+    //    // pathMatch:'full',
+    //     loadChildren:() =>
+    //     import('@client-side-project/frontend/gallery').then(
+    //         (esModule) => (esModule.GalleryModule)
+    //     )
+    // },
     {
         path:'about', 
         component:AboutComponent,
