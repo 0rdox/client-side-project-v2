@@ -25,14 +25,14 @@ export const appRoutes: Route[] = [
             (esModule) => (esModule.FeaturesModule)
         )
     },
-    {
-        path:'user',
-       // pathMatch:'full',
-        loadChildren:() =>
-        import('@client-side-project/frontend/user').then(
-            (esModule) => (esModule.UserModule)
-        )
-    },
+    // {
+    //     path:'user',
+    //    // pathMatch:'full',
+    //     loadChildren:() =>
+    //     import('@client-side-project/frontend/user').then(
+    //         (esModule) => (esModule.UserModule)
+    //     )
+    // },
     {
         path:'gallery',
        // pathMatch:'full',

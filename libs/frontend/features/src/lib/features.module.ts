@@ -13,6 +13,10 @@ import { MealService } from './meal/meal.service';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
+import { UserListComponent } from './user/user-list/user-list.component';
+import { UserDetailComponent } from './user/user-detail/user-detail.component';
+import { UserService } from './user/user.service';
+import { UserEditComponent } from './user/user-edit/user-edit.component';
 
 const routes: Routes = [
   // {
@@ -42,7 +46,6 @@ const routes: Routes = [
   },
   {
     path: 'meal',
-    pathMatch: 'full',
     children: [
       {
         path: '',
@@ -66,6 +69,27 @@ const routes: Routes = [
       },
     ],
   },
+  {
+    path: 'user',
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        component: UserListComponent,
+      },
+      {
+        path: 'new',
+        pathMatch: 'full',
+        component: UserEditComponent,
+      },
+      {
+        path: ':id',
+        pathMatch: 'full',
+        component: UserDetailComponent,
+      },
+
+    ],
+  },
 
   //Gallery en User in Features Model routing --> Children
 ];
@@ -75,10 +99,10 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     CommonModule,
     HttpClientModule,
-    FormsModule,
+    FormsModule
   ],
-  declarations: [MealListComponent, MealDetailComponent, MealEditComponent],
-  providers: [MealService],
-  exports: [MealListComponent, MealDetailComponent],
+  declarations: [MealListComponent, MealDetailComponent, MealEditComponent, UserListComponent, UserDetailComponent, UserEditComponent],
+  providers: [MealService, UserService],
+  exports: [MealListComponent, MealDetailComponent, UserListComponent,UserDetailComponent, UserEditComponent],
 })
 export class FeaturesModule {}
