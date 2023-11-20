@@ -4,4 +4,5 @@ export * from './lib/meal/meal-list/meal-list.component';
 export * from './lib/about/about.component';
 
 
+export * from './lib/user/user.service';
 

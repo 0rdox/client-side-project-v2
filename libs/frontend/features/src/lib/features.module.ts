@@ -87,6 +87,11 @@ const routes: Routes = [
         pathMatch: 'full',
         component: UserDetailComponent,
       },
+      {
+        path: ':id/edit',
+        pathMatch: 'full',
+        component: UserEditComponent,
+      }
 
     ],
   },

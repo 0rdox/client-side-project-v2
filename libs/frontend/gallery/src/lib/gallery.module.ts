@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { GalleryService } from './gallery.service';
 import { GalleryEditComponent } from './gallery-edit/gallery-edit.component';
 import { GalleryDetailComponent } from './gallery-detail/gallery-detail.component';
-import { UserService } from '@client-side-project/frontend/user';
+import { UserService } from '@client-side-project/frontend/features';
 
 
 const routes: Routes = [

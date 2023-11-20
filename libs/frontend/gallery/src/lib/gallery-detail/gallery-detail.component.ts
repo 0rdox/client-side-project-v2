@@ -4,7 +4,7 @@ import { Subscription, switchMap } from 'rxjs';
 
 import { IGallery } from '@client-side-project/shared/api';
 import { GalleryService } from '../gallery.service';
-import { UserService } from '@client-side-project/frontend/user';
+import { UserService } from '@client-side-project/frontend/features';
 import { IUser } from '@client-side-project/shared/api';
 import { Observable } from 'rxjs';
 
