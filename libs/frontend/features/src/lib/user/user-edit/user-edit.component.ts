@@ -8,23 +8,22 @@ import { UserService } from '../user.service';
   templateUrl: './user-edit.component.html',
   styleUrls: ['./user-edit.component.css'],
 })
-
 export class UserEditComponent implements OnInit {
-  name = '' ;
+  name = '';
   email = '';
   isEditing = false; // Add a flag to track if editing or creating
 
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
-    private router: Router,
-  ) { }
+    private router: Router
+  ) {}
 
   private user!: IUser;
 
   ngOnInit() {
     const userId = this.route.snapshot.paramMap.get('id');
-    
+
     if (userId) {
       this.isEditing = true;
       this.userService.read(userId).subscribe((user: IUser) => {
@@ -33,13 +32,11 @@ export class UserEditComponent implements OnInit {
         this.email = user.email;
       });
     }
-
-
   }
-  
+
   saveUser() {
-    console.log("Save user clicked", "tag");
-    console.log(this.isEditing, "tag");
+    console.log('Save user clicked', 'tag');
+    console.log(this.isEditing, 'tag');
     if (this.isEditing) {
       this.updateUser();
     } else {
@@ -48,13 +45,13 @@ export class UserEditComponent implements OnInit {
   }
 
   updateUser() {
-console.log("updating user clicked in user-edit.component.ts", "TAG");
+    console.log('updating user clicked in user-edit.component.ts', 'TAG');
 
     const updatedUser: IUser = {
       id: this.user.id,
       name: this.name,
       email: this.email,
-      password: this.user.password
+      password: this.user.password,
     };
     this.userService.updateUser(updatedUser).subscribe(() => {
       this.router.navigate(['/user']);
@@ -62,12 +59,12 @@ console.log("updating user clicked in user-edit.component.ts", "TAG");
   }
 
   createUser() {
-console.log("creating user clicked in user-edit.component.ts", "TAG");
+    console.log('creating user clicked in user-edit.component.ts', 'TAG');
     const newUser: IUser = {
-      id:'undefined',
+      id: 'undefined',
       name: this.name,
       email: this.email,
-      password: 'Secret123!' // Set a default password for new users
+      password: 'Secret123!', // Set a default password for new users
     };
     this.userService.createUser(newUser).subscribe(() => {
       this.router.navigate(['/user']);

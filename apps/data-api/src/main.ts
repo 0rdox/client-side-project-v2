@@ -5,8 +5,6 @@ import { AppModule } from './app/app.module';
 import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
 import { ApiResponseInterceptor } from '@client-side-project/backend/dto'
 
-
-
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const globalPrefix = 'api';
@@ -20,9 +18,6 @@ async function bootstrap() {
 
 const document = SwaggerModule.createDocument(app, config);
 SwaggerModule.setup(globalPrefix, app, document);
-
-
-
 
 const corsOptions: CorsOptions = {
   origin:'*',
