@@ -16,9 +16,11 @@ export class GalleryController {
     @ApiOperation({ summary: 'Get all Galleries' })
     @ApiResponse({ status: 200, description: 'Returns all Galleries.'})
     @ApiResponse({ status: 400, description: 'Bad Request.'})
-    getAll(): IGallery[] {
+    getAll(): Promise<IGallery[]> {
         return this.galleryService.getAll();
     }
+
+    //remove promise for not db connection
 
     @Get(':id')
     @ApiOperation({ summary: 'Get a Gallery by ID' })

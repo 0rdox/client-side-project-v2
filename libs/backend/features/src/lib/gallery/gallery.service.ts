@@ -2,10 +2,15 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { IGallery } from '@client-side-project/shared/api';
 import { BehaviorSubject } from 'rxjs';
 import { Logger } from '@nestjs/common';
+import { Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class GalleryService {
     TAG = 'GalleryService';
+
+    //db connection in service
+    constructor(@InjectModel('gallery') private readonly galleryModel: Model<IGallery>) { }
 
     private galleries$ = new BehaviorSubject<IGallery[]>([
         {
@@ -45,9 +50,16 @@ export class GalleryService {
         }
     ]);
 
-    getAll(): IGallery[] {
-        Logger.log('getAll', this.TAG);
-        return this.galleries$.value;
+    // getAll(): IGallery[] {
+    //     Logger.log('getAll', this.TAG);
+    //     return this.galleries$.value;
+    // }
+    
+
+    //db 
+    getAll(): Promise<IGallery[]> {
+        Logger.log('getAll DataBase', this.TAG);
+        return this.galleryModel.find().exec();
     }
 
     getOne(id: string): IGallery {
