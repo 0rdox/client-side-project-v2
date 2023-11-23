@@ -12,7 +12,7 @@ export interface IArtwork {
     creationDate: Date;
     image: string;
     userId: Id | null;
-    GalleryId?: Id | null;
+    galleryId?: Id | null;
 }
 
 export type ICreateArtwork = Pick<
