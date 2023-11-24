@@ -81,6 +81,7 @@ export class UserService {
 
     //todo: double check if this is correct
     delete(id: string): IUser {
+        
         Logger.log(`delete(${id})`, this.TAG);
         const current = this.Users$.value;
         const userIndex = current.findIndex((user) => user.id === id);

@@ -21,6 +21,8 @@ import { GalleryService } from './gallery/gallery.service';
 
 import { UiModule } from '@client-side-project/frontend/ui';
 
+import { ArtworkEditComponent } from './artwork/artwork-edit/artwork-edit.component';
+import { ArtworkService } from './artwork/artwork.service';
 
   const routes: Routes = [
     {
@@ -101,6 +103,11 @@ import { UiModule } from '@client-side-project/frontend/ui';
           pathMatch: 'full',
           component: GalleryEditComponent,
         },
+        {
+          path: ':id/add',
+          pathMatch: 'full',
+          component: ArtworkEditComponent,
+        },
       ],
     },
   ];
@@ -122,12 +129,14 @@ import { UiModule } from '@client-side-project/frontend/ui';
     UserEditComponent,
     GalleryListComponent,
     GalleryDetailComponent,
-    GalleryEditComponent
+    GalleryEditComponent,
+    ArtworkEditComponent
   ],
   providers: [
     MealService,
     UserService,
-    GalleryService
+    GalleryService,
+    ArtworkService
   ],
   exports: [
     MealListComponent,
@@ -137,7 +146,8 @@ import { UiModule } from '@client-side-project/frontend/ui';
     UserEditComponent,
     GalleryListComponent,
     GalleryDetailComponent,
-    GalleryEditComponent
+    GalleryEditComponent,
+    ArtworkEditComponent
   ],
 })
 export class FeaturesModule {}

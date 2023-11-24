@@ -41,6 +41,7 @@ export class UserController {
     @ApiParam({ name: 'id', description: 'The ID of the User to delete', type: 'string'})
     @ApiResponse({ status: 200, description: 'Deletes a User by ID.'})
     delete(@Param('id') id: string): void {
+        console.log("USER DELETION USER.CONTROLLER");
         this.UserService.delete(id);
     }
 

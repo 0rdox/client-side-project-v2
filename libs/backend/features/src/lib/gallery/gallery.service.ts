@@ -13,7 +13,7 @@ export class GalleryService {
             name: 'Art Gallery',
             location: 'Amsterdam',
             image: 'test',
-            userId: null,
+            userId: '3',
         },
         {
             id: '1',
