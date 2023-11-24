@@ -70,15 +70,17 @@ export class ArtworkService {
         return Artwork;
     }
 
-    create(Artwork: Pick<IArtwork, 'title' | 'description'>): IArtwork {
+    create(Artwork: Pick<IArtwork, 'title' | 'description' | 'type' | 'image'>): IArtwork {
         Logger.log('create', this.TAG);
         const current = this.artworks$.value;
+        console.log(Artwork, "Artwork");
+
+
+        
         const newArtwork: IArtwork = {
             ...Artwork,
             id: `Artwork-${Math.floor(Math.random() * 10000)}`,
-            image: 'Undefined',
             user: null,
-            type: ArtworkType.painting,
             creationDate: new Date(),
         };
         this.artworks$.next([...current, newArtwork]);

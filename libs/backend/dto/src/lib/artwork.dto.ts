@@ -14,8 +14,10 @@ export class CreateArtworkDto implements ICreateArtwork {
     @IsNotEmpty()
     type!: ArtworkType;
 
-    @IsString()
+
     user!: IUser | null;
+
+    image!: string;
  
 }
 

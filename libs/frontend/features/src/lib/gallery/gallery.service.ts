@@ -79,23 +79,23 @@ private galleries$ = new BehaviorSubject<IGallery[]>([]);
     public createGallery(Gallery: ICreateGallery | null): Observable<boolean> {
        console.log("CREATE Gallery CLICKED", "TAG");
        
-        if (Gallery == null) {
-            return of(false);
-        }
+        // if (Gallery == null) {
+        //     return of(false);
+        // }
 
-        //LASTGallery
-        const lastGallery = this.galleries$.value[this.galleries$.value.length - 1];
+        // //LASTGallery
+        // const lastGallery = this.galleries$.value[this.galleries$.value.length - 1];
 
-        // Create a new Gallery object with the provided properties
-        const newGallery: IGallery = {
-            id: String(Number(lastGallery.id) + 1),
-            name: '',
-            location: '',
-            image: ''
-        };
+        // // Create a new Gallery object with the provided properties
+        // const newGallery: IGallery = {
+        //     id: String(Number(lastGallery.id) + 1),
+        //     name: '',
+        //     location: '',
+        //     image: ''
+        // };
 
-        this.galleries$.next([...this.galleries$.value, newGallery]);
-        return of(true);
+        // this.galleries$.next([...this.galleries$.value, newGallery]);
+         return of(true);
     }
    
     public updateGallery(gallery: IGallery, options?: any): Observable<IGallery> {
