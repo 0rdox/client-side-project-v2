@@ -12,7 +12,7 @@ export interface IArtwork {
     type: ArtworkType;
     creationDate: Date;
     image: string;
-    user: IUser;
+    user: IUser | null;
     galleryId?: Id;
 }
 

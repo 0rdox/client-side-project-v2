@@ -15,7 +15,7 @@ export class ArtworkService {
             type: ArtworkType.painting,
             creationDate: new Date(),
             image: 'image1.jpg',
-            userId: null,
+            user: null,
         },
         {
             id: '2',
@@ -24,7 +24,7 @@ export class ArtworkService {
             type: ArtworkType.painting,
             creationDate: new Date(),
             image: 'image2.jpg',
-            userId: null,
+            user: null,
         },
         {
             id: '3',
@@ -33,7 +33,7 @@ export class ArtworkService {
             type: ArtworkType.painting,
             creationDate: new Date(),
             image: 'image3.jpg',
-            userId: null,
+            user: null,
         },
         {
             id: '4',
@@ -42,7 +42,7 @@ export class ArtworkService {
             type: ArtworkType.painting,
             creationDate: new Date(),
             image: 'image4.jpg',
-            userId: null,
+            user: null,
         },
         {
             id: '5',
@@ -51,7 +51,7 @@ export class ArtworkService {
             type: ArtworkType.painting,
             creationDate: new Date(),
             image: 'image5.jpg',
-            userId: null,
+            user: null,
         },
     ]);
 
@@ -77,7 +77,7 @@ export class ArtworkService {
             ...Artwork,
             id: `Artwork-${Math.floor(Math.random() * 10000)}`,
             image: 'Undefined',
-            userId: null,
+            user: null,
             type: ArtworkType.painting,
             creationDate: new Date(),
         };

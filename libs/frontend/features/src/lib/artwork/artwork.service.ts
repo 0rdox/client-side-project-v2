@@ -68,7 +68,7 @@ export class ArtworkService {
             type: ArtworkType.painting,
             creationDate: new Date(),
             image: '',
-            userId: null
+            user: null
         };
         this.artworks$.next([...this.artworks$.value, newArtwork]);
         return of(true);
