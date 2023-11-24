@@ -19,6 +19,8 @@ import { GalleryDetailComponent } from './gallery/gallery-detail/gallery-detail.
 import { GalleryEditComponent } from './gallery/gallery-edit/gallery-edit.component';
 import { GalleryService } from './gallery/gallery.service';
 
+import { UiModule } from '@client-side-project/frontend/ui';
+
 
   const routes: Routes = [
     {
@@ -108,7 +110,8 @@ import { GalleryService } from './gallery/gallery.service';
     RouterModule.forChild(routes),
     CommonModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    UiModule,
   ],
   declarations: [
     MealListComponent,
