@@ -41,10 +41,10 @@ export class UserDetailComponent implements OnInit, OnDestroy {
 
   onDelete() {
     if (this.users) {
-      this.UserService.removeUser(this.users.id);   
+      this.UserService.removeUser(this.users.id).subscribe(() => console.log("user deleted"));   
     }
 
-    this.router.navigate(['/user']);
+   this.router.navigate(['/user']);
     
   }
 }

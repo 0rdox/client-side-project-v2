@@ -18,6 +18,7 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
   subscription: Subscription | undefined = undefined;
 
   user: IUser | undefined;
+  
   constructor(
     private route: ActivatedRoute,
     private galleryService: GalleryService,

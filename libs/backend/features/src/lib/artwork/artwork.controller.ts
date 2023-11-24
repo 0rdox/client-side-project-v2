@@ -13,7 +13,7 @@ export class ArtworkController {
     constructor(private readonly artworkService: ArtworkService) {}
     
     @Get('')
-    @ApiOperation({ summary: 'Get all Galleries' })
+    @ApiOperation({ summary: 'Get all artwork' })
     @ApiResponse({ status: 200, description: 'Returns all Galleries.'})
     @ApiResponse({ status: 400, description: 'Bad Request.'})
     getAll(): IArtwork[] {

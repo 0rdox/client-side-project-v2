@@ -44,7 +44,6 @@ export class MealDetailComponent implements OnInit, OnDestroy {
     console.log("Called on delete")
     if (this.meal) {
       this.mealService.delete(this.meal.id).subscribe(() => console.log("meal deleted"));
-      
     }
 
 

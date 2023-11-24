@@ -27,6 +27,6 @@ export class UserListComponent implements OnInit, OnDestroy {
   }
 
   resetUsers(){
-    this.userService.resetArray();
+   // this.userService.resetArray();
   }
 }
