@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ArtworkService } from '../artwork.service';
 import { ArtworkType, IArtwork } from '@client-side-project/shared/api';
 import { IUser } from '@client-side-project/shared/api';
+import { GalleryService } from '../../gallery/gallery.service';
 
 @Component({
   selector: 'client-side-project-artwork-edit',
@@ -22,6 +23,7 @@ export class ArtworkEditComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private artworkService: ArtworkService,
+    private galleryService: GalleryService,
     private router: Router,
   ) { }
 
@@ -67,11 +69,17 @@ export class ArtworkEditComponent implements OnInit {
       creationDate: new Date(),
       image: this.image,
       user: null,
-      galleryId: this.route.snapshot.paramMap.get('id')?.toString(),
     };
     
     this.artworkService.createArtwork(newArtwork).subscribe(() => {
-      this.router.navigate(['/gallery', newArtwork.galleryId]); 
+      const galleryId = this.route.snapshot.paramMap.get('id');
+      if (galleryId) {
+        //get gallery by id? 
+        
+        // this.galleryService.updateGallery(newArtwork.id, galleryId).subscribe(() => {
+          this.router.navigate(['/gallery', galleryId]);
+        // });
+      }
     });
   }
 

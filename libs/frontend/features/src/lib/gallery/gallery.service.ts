@@ -55,6 +55,8 @@ private galleries$ = new BehaviorSubject<IGallery[]>([]);
 
     }
 
+ 
+
     /**
      * Get a single item from the service.
      *
@@ -98,6 +100,9 @@ private galleries$ = new BehaviorSubject<IGallery[]>([]);
          return of(true);
     }
    
+
+
+
     public updateGallery(gallery: IGallery, options?: any): Observable<IGallery> {
     console.log(gallery, "gallery in galleryService");
         return this.http
@@ -111,6 +116,8 @@ private galleries$ = new BehaviorSubject<IGallery[]>([]);
                 catchError(this.handleError)
             )
     };
+
+ 
 
     public removeGallery(id: string, options?: any): Observable<void> {
         console.log(`delete ${this.endpoint}/${id}`);
