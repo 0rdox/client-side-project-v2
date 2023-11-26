@@ -14,4 +14,6 @@ import { NxWelcomeComponent } from './nx-welcome.component';
 })
 export class AppComponent {
   title = 'client-side-project';
+
+  
 }

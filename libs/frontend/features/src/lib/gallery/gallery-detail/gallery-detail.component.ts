@@ -52,6 +52,14 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
     this.router.navigate(['/gallery']);
   }
 
+  onClaim() {
+    if (this.gallery) {
+      this.gallery.userId = '1';
+      this.galleryService.updateGallery(this.gallery).subscribe(() => console.log("Gallery updated"));
+    }
+    this.router.navigate(['/gallery']);
+  }
+
   getUserById(id: string): Observable<IUser> {
     return this.userService.read(id);
   }

@@ -13,19 +13,20 @@ import { IGallery } from '@client-side-project/shared/api';
 export class GalleryListComponent implements OnInit, OnDestroy {
   galleries: IGallery[] | null = null;
   subscription: Subscription | undefined = undefined;
+  isLoading: boolean = false; // Add isLoading property
 
   constructor(private galleryService: GalleryService) {}
 
   ngOnInit(): void {
-      this.subscription = this.galleryService.list().subscribe((results) => {
-          console.log(`results: ${results}`);
-          this.galleries = results;
-      });
+    this.isLoading = true; // Set isLoading to true before making the request
+    this.subscription = this.galleryService.list().subscribe((results) => {
+      console.log(`results: ${results}`);
+      this.galleries = results;
+      this.isLoading = false; // Set isLoading to false after receiving the response
+    });
   }
 
   ngOnDestroy(): void {
-      if (this.subscription) this.subscription.unsubscribe();
+    if (this.subscription) this.subscription.unsubscribe();
   }
-
-
 }

@@ -19,6 +19,8 @@ import { GalleryDetailComponent } from './gallery/gallery-detail/gallery-detail.
 import { GalleryEditComponent } from './gallery/gallery-edit/gallery-edit.component';
 import { GalleryService } from './gallery/gallery.service';
 
+import { UiModule } from '@client-side-project/frontend/ui';
+
 import { ArtworkEditComponent } from './artwork/artwork-edit/artwork-edit.component';
 import { ArtworkService } from './artwork/artwork.service';
 
@@ -115,7 +117,8 @@ import { ArtworkService } from './artwork/artwork.service';
     RouterModule.forChild(routes),
     CommonModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    UiModule,
   ],
   declarations: [
     MealListComponent,

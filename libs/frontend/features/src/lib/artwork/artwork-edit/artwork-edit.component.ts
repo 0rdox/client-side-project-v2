@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ArtworkService } from '../artwork.service';
 import { ArtworkType, IArtwork } from '@client-side-project/shared/api';
 import { IUser } from '@client-side-project/shared/api';
+import { GalleryService } from '../../gallery/gallery.service';
 
 @Component({
   selector: 'client-side-project-artwork-edit',
@@ -17,37 +18,34 @@ export class ArtworkEditComponent implements OnInit {
   creationDate = '';
   image = '';
 
-
-
   isEditing = false; // Add a flag to track if editing or creating
 
   constructor(
     private route: ActivatedRoute,
     private artworkService: ArtworkService,
+    private galleryService: GalleryService,
     private router: Router,
   ) { }
 
   private artwork!: IArtwork;
 
   ngOnInit() {
-    const artworkId = null //this.route.snapshot.paramMap.get('id');
+    const galleryId = this.route.snapshot.paramMap.get('id');
+    console.log(galleryId, "galleryId");
     
     const url = window.location.protocol + '//' + window.location.host + window.location.pathname;
     
-    
     if (url.includes("artwork")) {
       this.isEditing = true;
-      this.artworkService.read(artworkId).subscribe((artwork: IArtwork) => {
-        this.artwork = artwork;
-        this.title = artwork.title;
-        this.description = artwork.description;
-        this.type = artwork.type;
-        this.creationDate = artwork.creationDate.toString();
-        this.image = artwork.image;
-      });
+      // this.artworkService.read(artworkId).subscribe((artwork: IArtwork) => {
+      //   this.artwork = artwork;
+      //   this.title = artwork.title;
+      //   this.description = artwork.description;
+      //   this.type = artwork.type;
+      //   this.creationDate = artwork.creationDate.toString();
+      //   this.image = artwork.image;
+      // });
     }
-
-    
   }
   
   saveArtwork() {
@@ -62,17 +60,26 @@ export class ArtworkEditComponent implements OnInit {
 
   createArtwork() {
     console.log("creating artwork clicked in artwork-edit.component.ts", "TAG");
+    
     const newArtwork: IArtwork = {
       id: 'undefined',
-      title: 'aoipwdj',
-      description: '',
-      type: ArtworkType.painting,
+      title: this.title,
+      description: this.description,
+      type: this.type as ArtworkType,
       creationDate: new Date(),
-      image: '',
-      user: null
+      image: this.image,
+      user: null,
     };
+    
     this.artworkService.createArtwork(newArtwork).subscribe(() => {
-      this.router.navigate(['/artwork']);
+      const galleryId = this.route.snapshot.paramMap.get('id');
+      if (galleryId) {
+        //get gallery by id? 
+        
+        // this.galleryService.updateGallery(newArtwork.id, galleryId).subscribe(() => {
+          this.router.navigate(['/gallery', galleryId]);
+        // });
+      }
     });
   }
 
@@ -92,8 +99,8 @@ export class ArtworkEditComponent implements OnInit {
 
     console.log(updatedArtwork)
     this.artworkService.updateArtwork(updatedArtwork).subscribe(() => {
-      this.router.navigate(['/artwork']);
+      this.router.navigate(['/gallery']);
     });
   }
- 
+
 }

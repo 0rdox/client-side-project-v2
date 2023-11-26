@@ -55,23 +55,18 @@ export class ArtworkService {
             );
     }
 
-    public createArtwork(artwork: ICreateArtwork | null): Observable<boolean> {
+    public createArtwork(artwork: ICreateArtwork, options?: any): Observable<boolean> {
         console.log("CREATE Artwork CLICKED", "TAG");
-        if (artwork == null) {
-            return of(false);
-        }
-        const lastArtwork = this.artworks$.value[this.artworks$.value.length - 1];
-        const newArtwork: IArtwork = {
-            id: String(Number(lastArtwork.id) + 1),
-            title: '',
-            description: '',
-            type: ArtworkType.painting,
-            creationDate: new Date(),
-            image: '',
-            user: null
-        };
-        this.artworks$.next([...this.artworks$.value, newArtwork]);
-        return of(true);
+        return this.http
+            .post<ApiResponse<IArtwork>>(`${this.endpoint}`, artwork, {
+                ...options,
+                ...httpOptions,
+            })
+            .pipe(
+                tap(console.log),
+                map((response: any) => response.results),
+                catchError(this.handleError)
+            );
     }
 
     public updateArtwork(artwork: IArtwork, options?: any): Observable<IArtwork> {
