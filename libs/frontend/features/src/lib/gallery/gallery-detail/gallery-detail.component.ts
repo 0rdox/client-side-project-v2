@@ -18,6 +18,7 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
   subscription: Subscription | undefined = undefined;
 
   user: IUser | undefined;
+  
   constructor(
     private route: ActivatedRoute,
     private galleryService: GalleryService,
@@ -47,6 +48,14 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
   onDelete() {
     if (this.gallery) {
       this.galleryService.removeGallery(this.gallery.id).subscribe(() => console.log("Gallery Deleted"));
+    }
+    this.router.navigate(['/gallery']);
+  }
+
+  onClaim() {
+    if (this.gallery) {
+      this.gallery.userId = '1';
+      this.galleryService.updateGallery(this.gallery).subscribe(() => console.log("Gallery updated"));
     }
     this.router.navigate(['/gallery']);
   }

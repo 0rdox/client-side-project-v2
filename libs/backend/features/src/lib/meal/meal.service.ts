@@ -81,7 +81,7 @@ export class MealService {
     create(meal: Pick<IMeal, 'title' | 'description'>): IMeal {
         Logger.log('create', this.TAG);
         const current = this.meals$.value;
-
+        
         const newMeal: IMeal = {
             ...meal,
             id: `meal-${Math.floor(Math.random() * 10000)}`,

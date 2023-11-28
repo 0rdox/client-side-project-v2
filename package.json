@@ -4,7 +4,9 @@
     "license": "MIT",
     "scripts": {
         "build": "nx b data-api && nx b client-side-project && echo 'Build!'",
-        "dev": "nx run-many --target=serve -all"
+        "dev": "nx run-many --target=serve -all",
+        "start:debug": "nest start --debug --watch",
+        "test": "jest"
     },
     "private": true,
     "dependencies": {

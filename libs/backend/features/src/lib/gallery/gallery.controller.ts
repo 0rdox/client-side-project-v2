@@ -1,18 +1,15 @@
-import { Controller, Delete } from '@nestjs/common';
+import { Controller, Delete, Get, Param, Post, Body, Put } from '@nestjs/common';
+import { ApiTags, ApiResponse, ApiParam, ApiBody, ApiOperation } from '@nestjs/swagger';
 import { GalleryService } from './gallery.service';
-import { Get, Param, Post, Body, Put } from '@nestjs/common';
 import { IGallery } from '@client-side-project/shared/api';
 import { CreateGalleryDto, UpdateGalleryDto } from '@client-side-project/backend/dto';
-import { ApiTags, ApiResponse, ApiParam, ApiBody, ApiHeader, ApiOperation } from '@nestjs/swagger';
-
 
 @ApiTags('gallery')
 @Controller('gallery')
 export class GalleryController {
-
     constructor(private readonly galleryService: GalleryService) {}
-    
-    @Get('')
+
+    @Get()
     @ApiOperation({ summary: 'Get all Galleries' })
     @ApiResponse({ status: 200, description: 'Returns all Galleries.'})
     @ApiResponse({ status: 400, description: 'Bad Request.'})
@@ -30,7 +27,7 @@ export class GalleryController {
         return this.galleryService.getOne(id);
     }
 
-    @Post('')
+    @Post()
     @ApiOperation({ summary: 'Create a new Gallery' })
     @ApiBody({ type: CreateGalleryDto })
     @ApiResponse({ status: 201, description: 'Creates a new Gallery.'})

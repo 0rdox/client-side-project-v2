@@ -1,3 +1,4 @@
+import { IArtwork } from './artwork.interface';
 import { Id } from './id.type';
 
 
@@ -10,6 +11,7 @@ export interface IGallery {
     location: string;
     image: string;
     userId?: Id| null;
+    artworks?: IArtwork[] | null;
 }
 export type ICreateGallery = Pick<
     IGallery,
