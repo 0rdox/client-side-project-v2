@@ -106,7 +106,7 @@ private galleries$ = new BehaviorSubject<IGallery[]>([]);
     public updateGallery(gallery: IGallery, options?: any): Observable<IGallery> {
     console.log(gallery, "gallery in galleryService");
         return this.http
-            .put<ApiResponse<IGallery>>(`${this.endpoint}/${gallery.id}`, gallery, {
+            .put<ApiResponse<IGallery>>(`${this.endpoint}/${gallery._id}`, gallery, {
                 ...options,
                 ...httpOptions,
             })

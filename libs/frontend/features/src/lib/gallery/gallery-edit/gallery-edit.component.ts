@@ -54,7 +54,7 @@ export class GalleryEditComponent implements OnInit {
   createGallery() {
     console.log("creating gallery clicked in gallery-edit.component.ts", "TAG");
     const newGallery: IGallery = {
-      id: 'undefined',
+      _id: 'undefined',
       name: this.name, 
       location: this.location, 
       userId: this.userId, 
@@ -70,7 +70,7 @@ export class GalleryEditComponent implements OnInit {
 
     console.log(this.name);
     const updatedGallery: IGallery = {
-      id: this.gallery.id,
+      _id: this.gallery._id,
       name: this.name,
       location: this.location, 
       userId: this.userId,

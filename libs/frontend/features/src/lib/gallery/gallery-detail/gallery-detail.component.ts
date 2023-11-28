@@ -8,6 +8,8 @@ import { UserService } from '@client-side-project/frontend/features';
 import { IUser } from '@client-side-project/shared/api';
 import { Observable } from 'rxjs';
 
+import  mongoose  from 'mongoose';
+
 @Component({
   selector: 'client-side-project-gallery-detail',
   templateUrl: './gallery-detail.component.html',
@@ -47,14 +49,17 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
 
   onDelete() {
     if (this.gallery) {
-      this.galleryService.removeGallery(this.gallery.id).subscribe(() => console.log("Gallery Deleted"));
+      this.galleryService.removeGallery(this.gallery._id).subscribe(() => console.log("Gallery Deleted"));
     }
     this.router.navigate(['/gallery']);
   }
 
   onClaim() {
     if (this.gallery) {
-      this.gallery.userId = '1';
+
+  
+      
+      //this.gallery.userId = new mongoose.Types.ObjectId().toString();
       this.galleryService.updateGallery(this.gallery).subscribe(() => console.log("Gallery updated"));
     }
     this.router.navigate(['/gallery']);
