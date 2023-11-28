@@ -23,7 +23,7 @@ export class GalleryController {
     @ApiOperation({ summary: 'Get a Gallery by ID' })
     @ApiParam({ name: 'id', description: 'The ID of the Gallery to retrieve', type: 'string'})
     @ApiResponse({ status: 200, description: 'Returns a Gallery by ID.'})
-    getOne(@Param('id') id: string): IGallery {
+    async getOne(@Param('id') id: string): Promise<IGallery> {
         return this.galleryService.getOne(id);
     }
 
@@ -31,7 +31,7 @@ export class GalleryController {
     @ApiOperation({ summary: 'Create a new Gallery' })
     @ApiBody({ type: CreateGalleryDto })
     @ApiResponse({ status: 201, description: 'Creates a new Gallery.'})
-    create(@Body() data: CreateGalleryDto): IGallery {
+    async create(@Body() data: CreateGalleryDto): Promise<IGallery> {
         return this.galleryService.create(data);
     }
 
@@ -40,15 +40,15 @@ export class GalleryController {
     @ApiParam({ name: 'id', description: 'The ID of the Gallery to update', type: 'string'})
     @ApiBody({ type: UpdateGalleryDto })
     @ApiResponse({ status: 200, description: 'Updates a Gallery by ID.'})
-    update(@Param('id') id: string, @Body() data: UpdateGalleryDto): IGallery {
-        return this.galleryService.update(id, data);
+    async update(@Param('id') id: string, @Body() data: UpdateGalleryDto): Promise<IGallery> {
+        return await this.galleryService.update(id, data);
     }
 
     @Delete(':id')
     @ApiOperation({ summary: 'Delete a Gallery by ID' })
     @ApiParam({ name: 'id', description: 'The ID of the Gallery to delete', type: 'string'})
     @ApiResponse({ status: 200, description: 'Deletes a Gallery by ID.'})
-    delete(@Param('id') id: string): void {
-        this.galleryService.delete(id);
+    async delete(@Param('id') id: string): Promise<void> {
+        await this.galleryService.delete(id);
     }
 }

@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { IGallery } from '@client-side-project/shared/api';
 import { BehaviorSubject } from 'rxjs';
 import { Logger } from '@nestjs/common';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
@@ -13,41 +13,41 @@ export class GalleryService {
     constructor(@InjectModel('gallery') private readonly galleryModel: Model<IGallery>) { }
 
     private galleries$ = new BehaviorSubject<IGallery[]>([
-        {
-            id: '0',
-            name: 'Art Gallery',
-            location: 'Amsterdam',
-            image: 'test',
-            userId: '3',
-        },
-        {
-            id: '1',
-            name: "Katie's gallery",
-            location: 'Breda',
-            image:'test',
-            userId: '1',
-        },
-        {
-            id: '2',
-            name: 'Modern Art Gallery',
-            location: 'New York',
-            image: 'test',
-            userId: null,
-        },
-        {
-            id: '3',
-            name: 'Nature Gallery',
-            location: 'Paris',
-            image: 'test',
-            userId: null,
-        },
-        {
-            id: '4',
-            name: 'Contemporary Gallery',
-            location: 'London',
-            image: 'test',
-            userId: null,
-        }
+        // {
+        //     id: '0',
+        //     name: 'Art Gallery',
+        //     location: 'Amsterdam',
+        //     image: 'test',
+        //     userId: '3',
+        // },
+        // {
+        //     id: '1',
+        //     name: "Katie's gallery",
+        //     location: 'Breda',
+        //     image:'test',
+        //     userId: '1',
+        // },
+        // {
+        //     id: '2',
+        //     name: 'Modern Art Gallery',
+        //     location: 'New York',
+        //     image: 'test',
+        //     userId: null,
+        // },
+        // {
+        //     id: '3',
+        //     name: 'Nature Gallery',
+        //     location: 'Paris',
+        //     image: 'test',
+        //     userId: null,
+        // },
+        // {
+        //     id: '4',
+        //     name: 'Contemporary Gallery',
+        //     location: 'London',
+        //     image: 'test',
+        //     userId: null,
+        // }
     ]);
 
     // getAll(): IGallery[] {
@@ -57,58 +57,49 @@ export class GalleryService {
     
 
     //db 
-    getAll(): Promise<IGallery[]> {
+   async getAll(): Promise<IGallery[]> {
         Logger.log('getAll DataBase', this.TAG);
-        return this.galleryModel.find().exec();
+        return await this.galleryModel.find().exec();
     }
 
-    getOne(id: string): IGallery {
-        Logger.log(`getOne(${id})`, this.TAG);
-        const gallery = this.galleries$.value.find((td) => td.id === id);
+    async getOne(_id: string): Promise<IGallery> {
+        Logger.log(`getOne(${_id})`, this.TAG);
+        const gallery = await this.galleryModel.findOne({ _id }).exec();
         if (!gallery) {
-            throw new NotFoundException(`Gallery could not be found!`);
+            throw new NotFoundException(`Gallery not found!`);
         }
         return gallery;
     }
 
-    create(gallery: Pick<IGallery, 'name' | 'location'>): IGallery {
+    async create(gallery: Pick<IGallery, 'name' | 'location' | 'image'>): Promise<IGallery> {
         Logger.log('create', this.TAG);
-        const current = this.galleries$.value;
+        var id = new mongoose.Types.ObjectId();
+        
         const newGallery: IGallery = {
             ...gallery,
-            id: `gallery-${Math.floor(Math.random() * 10000)}`,
-            image:'Undefined',
             userId: null,
+            _id: id.toString(),
         };
-        this.galleries$.next([...current, newGallery]);
-        return newGallery;
+        const createdGallery = await this.galleryModel.create(newGallery);
+        return createdGallery;
     }
 
-    update(id: string, gallery: Partial<IGallery>): IGallery {
+    async update(id: string, gallery: Partial<IGallery>): Promise<IGallery> {
         Logger.log(`update(${id})`, this.TAG);
-        const current = this.galleries$.value;
-        const index = current.findIndex((g) => g.id === id);
-        if (index === -1) {
+        const updatedGallery = await this.galleryModel.findOneAndUpdate({ _id: id }, gallery, { new: true }).exec();
+        if (!updatedGallery) {
             throw new NotFoundException(`Gallery could not be found!`);
         }
-        const updatedGallery = {
-            ...current[index],
-            ...gallery,
-        };
-        current[index] = updatedGallery;
-        this.galleries$.next(current);
         return updatedGallery;
     }
 
-    delete(id: string): void {
+    async delete(id: string): Promise<void> {
         Logger.log(`delete(${id})`, this.TAG);
-        const current = this.galleries$.value;
-        const index = current.findIndex((g) => g.id === id);
-        if (index === -1) {
+        const gallery = await this.galleryModel.findOne({ _id: id }).exec();
+        if (!gallery) {
             throw new NotFoundException(`Gallery could not be found!`);
         }
-        current.splice(index, 1);
-        this.galleries$.next(current);
+        await this.galleryModel.deleteOne({ _id: id }).exec();
     }
 }
 

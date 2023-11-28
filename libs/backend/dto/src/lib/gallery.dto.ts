@@ -33,7 +33,7 @@ export class CreateGalleryDto implements ICreateGallery {
 export class UpsertGalleryDto implements IUpsertGallery {
  
  
-    id!: string;
+    _id!: string;
  
     userId?: string | null | undefined;
  
