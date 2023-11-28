@@ -3,6 +3,7 @@ import { Route } from '@angular/router';
 import { NxWelcomeComponent } from './nx-welcome.component';
 import { AboutComponent } from '@client-side-project/frontend/features';
 
+import { UserEditComponent } from 'libs/frontend/features/src/lib/user/user-edit/user-edit.component';
 
 export const appRoutes: Route[] = [
     {
@@ -25,22 +26,6 @@ export const appRoutes: Route[] = [
             (esModule) => (esModule.FeaturesModule)
         )
     },
-    // {
-    //     path:'user',
-    //    // pathMatch:'full',
-    //     loadChildren:() =>
-    //     import('@client-side-project/frontend/user').then(
-    //         (esModule) => (esModule.UserModule)
-    //     )
-    // },
-    // {
-    //     path:'gallery',
-    //    // pathMatch:'full',
-    //     loadChildren:() =>
-    //     import('@client-side-project/frontend/gallery').then(
-    //         (esModule) => (esModule.GalleryModule)
-    //     )
-    // },
     {
         path:'about', 
         component:AboutComponent,
@@ -49,5 +34,13 @@ export const appRoutes: Route[] = [
         path:'contact',
         component:AboutComponent,
     },
+    {
+        path: 'create',
+        component: UserEditComponent,
+    },
+    {
+        path: 'login',
+        component: UserEditComponent,
+    }
 ]
 
