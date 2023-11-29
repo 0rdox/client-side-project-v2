@@ -7,10 +7,11 @@ import { HttpStatus } from '@nestjs/common/enums';
 import {
     User as UserModel,
     UserDocument
-} from '@avans-nx-workshop/backend/user';
+} from '@client-side-project/backend/features';
+
 import { JwtService } from '@nestjs/jwt';
-import { IUserCredentials, IUserIdentity } from '@avans-nx-workshop/shared/api';
-import { CreateUserDto } from '@avans-nx-workshop/backend/dto';
+import {IUser} from '@client-side-project/shared/api';
+import { CreateUserDto } from '@client-side-project/backend/dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
@@ -24,10 +25,10 @@ export class AuthService {
         private jwtService: JwtService
     ) {}
 
-    async validateUser(credentials: IUserCredentials): Promise<any> {
+    async validateUser(credentials: IUser): Promise<any> {
         this.logger.log('validateUser');
         const user = await this.userModel.findOne({
-            emailAddress: credentials.emailAddress
+            email: credentials.email,
         });
         if (user && user.password === credentials.password) {
             return user;
@@ -35,11 +36,11 @@ export class AuthService {
         return null;
     }
 
-    async login(credentials: IUserCredentials): Promise<IUserIdentity> {
-        this.logger.log('login ' + credentials.emailAddress);
+    async login(credentials: IUser): Promise<IUser> {
+        this.logger.log('login ' + credentials.email);
         return await this.userModel
             .findOne({
-                emailAddress: credentials.emailAddress
+                email: credentials.email
             })
             .select('+password')
             .exec()
@@ -51,8 +52,8 @@ export class AuthService {
                     return {
                         _id: user._id,
                         name: user.name,
-                        emailAddress: user.emailAddress,
-                        profileImgUrl: user.profileImgUrl,
+                        email: user.email,
+                        profilePicture: user.profilePicture,
                         token: this.jwtService.sign(payload)
                     };
                 } else {
@@ -66,9 +67,9 @@ export class AuthService {
             });
     }
 
-    async register(user: CreateUserDto): Promise<IUserIdentity> {
+    async register(user: CreateUserDto): Promise<IUser> {
         this.logger.log(`Register user ${user.name}`);
-        if (await this.userModel.findOne({ emailAddress: user.emailAddress })) {
+        if (await this.userModel.findOne({ email: user.email })) {
             this.logger.debug('user exists');
             throw new ConflictException('User already exist');
         }

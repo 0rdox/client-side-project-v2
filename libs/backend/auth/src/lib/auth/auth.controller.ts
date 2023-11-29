@@ -8,13 +8,9 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Public } from '../decorators/decorators';
-// import {
-//     IUserCredentials,
-//     IUserIdentity,
-//     IUserRegistration
-// } from '@avans-nx-workshop/shared/api';
+import { IUser } from '@client-side-project/shared/api';
 import { CreateUserDto } from '@client-side-project/backend/dto';
-//import { UserExistGuard } from '@client-side-project/backend/user';
+import { UserExistGuard } from '@client-side-project/backend/features';
 
 @Controller('auth')
 export class AuthController {
@@ -24,7 +20,7 @@ export class AuthController {
 
     @Public()
     @Post('login')
-    async login(@Body() credentials: IUserCredentials): Promise<IUserIdentity> {
+    async login(@Body() credentials: IUser): Promise<IUser> {
         this.logger.log('Login');
         return await this.authService.login(credentials);
     }
@@ -32,7 +28,7 @@ export class AuthController {
     @Public()
     @UseGuards(UserExistGuard)
     @Post('register')
-    async register(@Body() user: CreateUserDto): Promise<IUserIdentity> {
+    async register(@Body() user: CreateUserDto): Promise<IUser> {
         this.logger.log('Register');
         return await this.authService.register(user);
     }

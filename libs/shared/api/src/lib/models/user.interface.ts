@@ -13,6 +13,9 @@ export interface IUser {
     profilePicture?: string;
 }
 
+
+
+
 export type ICreateUser = Pick<
     IUser,
     'name' | 'email' | 'password'
