@@ -15,9 +15,15 @@ export class UserController {
     @ApiOperation({ summary: 'Get all Users' })
     @ApiResponse({ status: 200, description: 'Returns all Users.'})
     @ApiResponse({ status: 400, description: 'Bad Request.'})
-    getAll(): IUser[] {
-        return this.UserService.getAll();
+    getAll(): Promise<IUser[]> {
+        return this.UserService.findAll();
     }
+
+
+    // @Get()
+    // async findAll(): Promise<IUser[]> {
+    //     return this.UserService.findAll();
+    // }
 
 
     @Get(':id')

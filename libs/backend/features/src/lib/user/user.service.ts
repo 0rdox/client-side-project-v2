@@ -1,11 +1,19 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { IUser } from '@client-side-project/shared/api';
+
 import { BehaviorSubject } from 'rxjs';
 import { Logger } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { User as UserModel, UserDocument } from './user.schema';
 
 @Injectable()
 export class UserService {
     TAG = 'UserService';
+   
+    constructor(
+        @InjectModel(UserModel.name) private userModel: Model<UserDocument> // @InjectModel(Meal.name) private meetupModel: Model<MealDocument>
+    ) {}
 
     private Users$ = new BehaviorSubject<IUser[]>([
         {
@@ -50,6 +58,13 @@ export class UserService {
         Logger.log('getAll', this.TAG);
         return this.Users$.value;
     }
+    
+    async findAll(): Promise<IUser[]> {
+        // this.logger.log(`Finding all items`);
+        const items = await this.userModel.find();
+        return items;
+    }
+
 
     getOne(id: string): IUser {
         Logger.log(`getOne(${id})`, this.TAG);
