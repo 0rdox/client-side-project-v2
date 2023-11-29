@@ -23,6 +23,12 @@ export class UserEditComponent implements OnInit {
 
   ngOnInit() {
     const userId = this.route.snapshot.paramMap.get('id');
+    //userid means logged in
+    //i need a form for: name, email, password, age, profile image (create user)
+    //i need a form for: email, password (login)
+
+    //create a new component for login + create -> user-login
+
 
     if (userId) {
       this.isEditing = true;
