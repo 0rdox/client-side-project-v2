@@ -13,7 +13,7 @@ export type UserDocument = User & Document;
 export class User implements IUser {
 
     @IsMongoId()
-    id!: string;
+    _id!: string;
 
     @Prop({
         required: true,

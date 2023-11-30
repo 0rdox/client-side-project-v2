@@ -66,6 +66,7 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
   }
 
   getUserById(id: string): Observable<IUser> {
+    console.log(this.userService.read(id), "USER FROM GALLERY");
     return this.userService.read(id);
   }
 }

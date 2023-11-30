@@ -5,7 +5,7 @@ import { Id } from './id.type';
 type User = string;
 
 export interface IUser {
-    id: Id;
+    _id: Id;
     name: string;
     email: string;
     password: string;

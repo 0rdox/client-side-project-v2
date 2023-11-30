@@ -10,7 +10,7 @@ import {
 } from '@client-side-project/backend/features';
 
 import { JwtService } from '@nestjs/jwt';
-import {IUser} from '@client-side-project/shared/api';
+import {IUser, IUserCredentials} from '@client-side-project/shared/api';
 import { CreateUserDto } from '@client-side-project/backend/dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -36,11 +36,11 @@ export class AuthService {
         return null;
     }
 
-    async login(credentials: IUser): Promise<IUser> {
-        this.logger.log('login ' + credentials.email);
+    async login(credentials: IUserCredentials): Promise<IUser> {
+        this.logger.log('login ' + credentials.emailAddress);
         return await this.userModel
             .findOne({
-                email: credentials.email
+                email: credentials.emailAddress
             })
             .select('+password')
             .exec()

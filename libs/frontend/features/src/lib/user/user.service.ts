@@ -62,9 +62,21 @@ export class UserService {
       );
   }
 
+  public register(user: IUser, options?: any): Observable<boolean> {
+    return this.http
+      .post<ApiResponse<IUser>>(`${environment.dataApiUrl}/auth/register`, user, {
+        ...options,
+        ...httpOptions,
+      })
+      .pipe(
+        tap(console.log),
+        map((response: any) => response.results),
+        catchError(this.handleError)
+      );
+  }
   public updateUser(user: IUser, options?: any): Observable<void> {
     return this.http
-      .put<ApiResponse<IUser>>(`${this.endpoint}/${user.id}`, user, {
+      .put<ApiResponse<IUser>>(`${this.endpoint}/${user._id}`, user, {
         ...options,
         ...httpOptions,
       })

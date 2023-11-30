@@ -1,6 +1,7 @@
 import {
     Controller,
     Request,
+    Get,
     Post,
     UseGuards,
     Logger,
@@ -8,10 +9,12 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Public } from '../decorators/decorators';
-import { IUser } from '@client-side-project/shared/api';
+import { IUser, IUserCredentials } from '@client-side-project/shared/api';
 import { CreateUserDto } from '@client-side-project/backend/dto';
 import { UserExistGuard } from '@client-side-project/backend/features';
+import { ApiTags, ApiOperation } from '@nestjs/swagger';
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
     private readonly logger = new Logger(AuthController.name);
@@ -19,8 +22,16 @@ export class AuthController {
     constructor(private authService: AuthService) {}
 
     @Public()
+    @Get()
+    @ApiOperation({ summary: 'Get hello message' })
+    async hello(): Promise<string> {
+        return 'hello';
+    }
+
+    @Public()
     @Post('login')
-    async login(@Body() credentials: IUser): Promise<IUser> {
+    @ApiOperation({ summary: 'Login' })
+    async login(@Body() credentials: IUserCredentials): Promise<IUser> {
         this.logger.log('Login');
         return await this.authService.login(credentials);
     }
@@ -28,6 +39,7 @@ export class AuthController {
     @Public()
     @UseGuards(UserExistGuard)
     @Post('register')
+    @ApiOperation({ summary: 'Register' })
     async register(@Body() user: CreateUserDto): Promise<IUser> {
         this.logger.log('Register');
         return await this.authService.register(user);

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IUser } from '@client-side-project/shared/api';
 import { UserService } from '../user.service';
+import { AuthService } from '@client-side-project/backend/auth';
+import { Types } from 'mongoose';
 
 @Component({
   selector: 'client-side-project-user-edit',
@@ -17,6 +19,7 @@ export class UserEditComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+
     private userService: UserService,
     private router: Router
   ) {}
@@ -48,7 +51,7 @@ export class UserEditComponent implements OnInit {
     if (this.isEditing) {
       this.updateUser();
     } else {
-      this.createUser();
+     this.createUser();
     }
   }
 
@@ -56,7 +59,7 @@ export class UserEditComponent implements OnInit {
     console.log('updating user clicked in user-edit.component.ts', 'TAG');
 
     const updatedUser: IUser = {
-      id: this.user.id,
+      _id: this.user._id,
       name: this.name,
       email: this.email,
       password: this.user.password,
@@ -69,12 +72,14 @@ export class UserEditComponent implements OnInit {
   createUser() {
     console.log('creating user clicked in user-edit.component.ts', 'TAG');
     const newUser: IUser = {
-      id: 'undefined',
       name: this.name,
       email: this.email,
-      password: 'Secret123!', // Set a default password for new users
+      password: this.password,
+      profilePicture: this.profilePicture,
+      _id: new Types.ObjectId().toString(),
+//eerst callde dit userService.create, daar wordt _id omgezet naar valid mongoose id
     };
-    this.userService.createUser(newUser).subscribe(() => {
+    this.userService.register(newUser).subscribe(() => {
       this.router.navigate(['/user']);
     });
   }

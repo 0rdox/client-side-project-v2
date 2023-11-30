@@ -3,7 +3,7 @@ import { GalleryController } from './gallery.controller';
 import { GalleryService } from './gallery.service';
 import { MongooseModule } from '@nestjs/mongoose';
 
-import { GallerySchema } from './gallery.schema';
+import { GallerySchema } from './schemas/gallery.schema';
 
 @Module({
   imports: [

@@ -4,7 +4,7 @@ import { IUser } from '@client-side-project/shared/api';
 import { BehaviorSubject } from 'rxjs';
 import { Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { User as UserModel, UserDocument } from './user.schema';
 
 @Injectable()
@@ -17,37 +17,37 @@ export class UserService {
 
     private Users$ = new BehaviorSubject<IUser[]>([
         {
-            id: '0',
+            _id: '0',
             name: 'John Smith',
             email: 'j.smith@mail.com',
             password: 'Secret123'
         },
         {
-            id: '1',
+            _id: '1',
             name: 'Katie Smith',
             email: 'k.smith@mail.com',
             password: 'Secret123'
         },
         {
-            id: '2',
+            _id: '2',
             name: 'Michael Johnson',
             email: 'm.johnson@mail.com',
             password: 'Secret123'
         },
         {
-            id: '3',
+            _id: '3',
             name: 'Emily Davis',
             email: 'e.davis@mail.com',
             password: 'Secret123'
         },
         {
-            id: '4',
+            _id: '4',
             name: 'Daniel Wilson',
             email: 'd.wilson@mail.com',
             password: 'Secret123'
         },
         {
-            id: '5',
+            _id: '5',
             name: 'Sophia Thompson',
             email: 's.thompson@mail.com',
             password: 'Secret123'
@@ -101,18 +101,18 @@ export class UserService {
      * return signature - we still want to respond with the complete
      * object
      */
-    create(User: Pick<IUser, 'name' | 'email'>): IUser {
+    async create(user: Pick<IUser, 'name' | 'email' | 'password'>): Promise<IUser> {
         Logger.log('create', this.TAG);
-        const current = this.Users$.value;
-        // Use the incoming data, a randomized ID, and a default value of `false` to create the new to-do
+        var id = new mongoose.Types.ObjectId();
+        
         const newUser: IUser = {
-            ...User,
-            id: `User-${Math.floor(Math.random() * 10000)}`,
-            password: 'test123'
+            ...user,
+            _id: id.toString(),
         };
-        this.Users$.next([...current, newUser]);
-        return newUser;
+        const createdGallery = await this.userModel.create(newUser);
+        return createdGallery;
     }
+    
 
 
     //todo: double check if this is correct
@@ -120,7 +120,7 @@ export class UserService {
         
         Logger.log(`delete(${id})`, this.TAG);
         const current = this.Users$.value;
-        const userIndex = current.findIndex((user) => user.id === id);
+        const userIndex = current.findIndex((user) => user._id === id);
 
         if (userIndex === -1) {
             throw new NotFoundException(`User could not be found!`);
@@ -136,7 +136,7 @@ export class UserService {
         Logger.log(`update(${id})`, this.TAG);
         const current = this.Users$.value;
         
-        const userIndex = current.findIndex((user) => user.id === id);
+        const userIndex = current.findIndex((user) => user._id === id);
 
         if (userIndex === -1) {
             throw new NotFoundException(`User could not be found!`);

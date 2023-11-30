@@ -26,7 +26,5 @@ export class UserListComponent implements OnInit, OnDestroy {
       if (this.subscription) this.subscription.unsubscribe();
   }
 
-  resetUsers(){
-   // this.userService.resetArray();
-  }
+ 
 }
