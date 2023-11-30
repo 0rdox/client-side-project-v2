@@ -12,9 +12,12 @@ export interface IGallery {
     userId?: Id| null;
     artworks?: IArtwork[] | null;
 }
+
 export type ICreateGallery = Pick<
     IGallery,
-    'name' | 'location' | 'image' 
+    'name' | 'location' | 'image'  | 'description'
 >;
+
+
 export type IUpdateGallery = Partial<Omit<IGallery, 'id'>>;
 export type IUpsertGallery = IGallery;

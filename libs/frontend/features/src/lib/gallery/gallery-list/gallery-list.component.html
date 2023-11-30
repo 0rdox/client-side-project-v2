@@ -2,10 +2,12 @@
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-3">
     <a *ngFor="let gallery of galleries" [routerLink]="['/gallery', gallery._id]" class="gallery-box m-3">
-        <div class="max-w-sm rounded overflow-hidden shadow-lg" style="height: 400px; position: relative;">
-            <div class="" style="height: 45%;">
+        <div class="max-w-sm rounded overflow-hidden shadow-lg border border-gray" style="height: 400px; position: relative;">
+            <div class="flex items-center justify-center" style="height: 45%;">
                 <img class="w-full h-50 object-contain" [src]="gallery.image" alt="Sunset in the mountains">
             </div>
+            <hr>
+            <!-- Add this line to create a horizontal line -->
             <div class="px-6 py-4">
                 <div class="font-bold text-xl mb-2">{{gallery.name}}</div>
                 <p class="text-gray-700 text-base">

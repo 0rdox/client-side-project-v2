@@ -22,6 +22,7 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
   user: IUser | undefined;
   owned = false;
 
+  hasGallery = false
 
   constructor(
     private route: ActivatedRoute,
@@ -61,24 +62,30 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
     if (this.subscription) this.subscription.unsubscribe();
   }
 
-  onDelete() {
-    if (this.gallery) {
-      this.galleryService.removeGallery(this.gallery._id).subscribe(() => console.log("Gallery Deleted"));
+  // onDelete() {
+  //   if (this.gallery) {
+  //     this.galleryService.removeGallery(this.gallery._id).subscribe(() => console.log("Gallery Deleted"));
+  //   }
+  //   this.router.navigate(['/gallery']);
+  // }
+
+  onLeave() {
+    if (this.gallery) {      
+      this.gallery.userId = null;
+
+      this.owned=false;
+      console.log(this.gallery, "GALLERY")
+      this.galleryService.updateGallery(this.gallery).subscribe(() => console.log("Gallery updated"));
     }
-    this.router.navigate(['/gallery']);
+    // this.router.navigate(['/gallery']);
   }
 
   onClaim() {
-    if (this.gallery) {
-
-  
-      
+    if (this.gallery) {      
       this.gallery.userId = this.user?._id;
 
       this.owned=true;
       console.log(this.gallery, "GALLERY")
-
-
       this.galleryService.updateGallery(this.gallery).subscribe(() => console.log("Gallery updated"));
     }
     // this.router.navigate(['/gallery']);
