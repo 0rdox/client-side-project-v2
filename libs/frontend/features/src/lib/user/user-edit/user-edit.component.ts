@@ -11,6 +11,8 @@ import { UserService } from '../user.service';
 export class UserEditComponent implements OnInit {
   name = '';
   email = '';
+  password = '';
+  profilePicture = '';
   isEditing = false; // Add a flag to track if editing or creating
 
   constructor(
@@ -24,7 +26,7 @@ export class UserEditComponent implements OnInit {
   ngOnInit() {
     const userId = this.route.snapshot.paramMap.get('id');
     //userid means logged in
-    //i need a form for: name, email, password, age, profile image (create user)
+    //i need a form for: name, email, password, profile image (create user)
     //i need a form for: email, password (login)
 
     //create a new component for login + create -> user-login

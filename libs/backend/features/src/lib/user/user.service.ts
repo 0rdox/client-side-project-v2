@@ -54,25 +54,46 @@ export class UserService {
         }
     ]);
 
+    //non database
     getAll(): IUser[] {
         Logger.log('getAll', this.TAG);
         return this.Users$.value;
     }
     
+    //database
     async findAll(): Promise<IUser[]> {
         // this.logger.log(`Finding all items`);
         const items = await this.userModel.find();
         return items;
     }
 
+    //non database
+    // getOne(id: string): IUser {
+    //     Logger.log(`getOne(${id})`, this.TAG);
+    //     const User = this.Users$.value.find((td) => td.id === id);
+    //     if (!User) {
+    //         throw new NotFoundException(`User could not be found!`);
+    //     }
+    //     return User;
+    // }
 
-    getOne(id: string): IUser {
-        Logger.log(`getOne(${id})`, this.TAG);
-        const User = this.Users$.value.find((td) => td.id === id);
-        if (!User) {
-            throw new NotFoundException(`User could not be found!`);
+    //database
+    // async getOne(id: string): Promise<IUser> {
+    //     // this.logger.log(`Finding one item with id: ${id}`);
+    //     const item = await this.userModel.findOne({ _id });
+    //     if (!item) {
+    //         throw new NotFoundException(`Item with id: ${id} not found`);
+    //     }
+    //     return item;
+    // }
+
+    async getOne(_id: string): Promise<IUser> {
+        Logger.log(`getOne(${_id})`, this.TAG);
+        const user = await this.userModel.findOne({ _id }).exec();
+        if (!user) {
+            throw new NotFoundException(`User not found!`);
         }
-        return User;
+        return user;
     }
 
     /**

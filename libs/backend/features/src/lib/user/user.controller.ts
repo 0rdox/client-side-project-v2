@@ -30,7 +30,7 @@ export class UserController {
     @ApiOperation({ summary: 'Get a User by ID' })
     @ApiParam({ name: 'id', description: 'The ID of the User to retrieve', type: 'string'})
     @ApiResponse({ status: 200, description: 'Returns a User by ID.'})
-    getOne(@Param('id') id: string): IUser {
+    async getOne(@Param('id') id: string): Promise<IUser> {
         return this.UserService.getOne(id);
     }
 
