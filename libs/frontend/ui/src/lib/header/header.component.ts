@@ -24,6 +24,7 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     localStorage.removeItem('user');
-    this.router.navigate(['/about']);
+    //TODO: this
+    window.location.href = '/';
   }
 }

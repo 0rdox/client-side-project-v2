@@ -71,7 +71,7 @@ export class GalleryService {
         return gallery;
     }
 
-    async create(gallery: Pick<IGallery, 'name' | 'location' | 'image'>): Promise<IGallery> {
+    async create(gallery: Pick<IGallery, 'name' | 'location' | 'image' | 'description'>): Promise<IGallery> {
         Logger.log('create', this.TAG);
         var id = new mongoose.Types.ObjectId();
         

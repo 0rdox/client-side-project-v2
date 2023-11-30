@@ -31,15 +31,15 @@ export class UserEditComponent implements OnInit {
 
   ngOnInit() {
     const userId = this.route.snapshot.paramMap.get('id');
-    
+
     const login = window.location.href.includes('login');
-    console.log(login, 'login')
+    console.log(login, 'login');
     //userid means logged in
     //i need a form for: name, email, password, profile image (create user)
     //i need a form for: email, password (login)
 
     //create a new component for login + create -> user-login
-    if(login){
+    if (login) {
       this.isLogin = true;
     }
 
@@ -58,13 +58,12 @@ export class UserEditComponent implements OnInit {
     console.log(this.isEditing, 'tag');
     if (this.isEditing) {
       this.updateUser();
-    } else if(this.isLogin) {
-     this.login();
+    } else if (this.isLogin) {
+      this.login();
     } else {
       this.createUser();
     }
   }
-
 
   updateUser() {
     console.log('updating user clicked in user-edit.component.ts', 'TAG');
@@ -82,13 +81,14 @@ export class UserEditComponent implements OnInit {
 
   login() {
     console.log('logging in user clicked in user-edit.component.ts', 'TAG');
-const loginCred: IUserCredentials = {
-  emailAddress: this.email,
-  password: this.password,
-}
+    const loginCred: IUserCredentials = {
+      emailAddress: this.email,
+      password: this.password,
+    };
+    //TODO: this
+    //window.location.href = '/';
 
-localStorage.removeItem('user');
-
+    localStorage.removeItem('user');
 
     this.userService.login(loginCred).subscribe((user: IUser) => {
       localStorage.setItem('user', JSON.stringify(user));
@@ -104,7 +104,7 @@ localStorage.removeItem('user');
       password: this.password,
       profilePicture: this.profilePicture,
       _id: new Types.ObjectId().toString(),
-//eerst callde dit userService.create, daar wordt _id omgezet naar valid mongoose id
+      //eerst callde dit userService.create, daar wordt _id omgezet naar valid mongoose id
     };
     this.userService.register(newUser).subscribe(() => {
       this.router.navigate(['/user']);

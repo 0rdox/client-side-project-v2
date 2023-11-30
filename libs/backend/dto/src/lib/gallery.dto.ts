@@ -6,6 +6,7 @@ import {
     IsDate
 } from 'class-validator';
 import {
+    IArtwork,
     ICreateGallery,
     IUpdateGallery,
     IUpsertGallery,
@@ -21,6 +22,9 @@ export class CreateGalleryDto implements ICreateGallery {
     name!: string;
     
     @IsString()
+    description!: string;
+
+    @IsString()
     @IsNotEmpty()
     location!: string;
     
@@ -31,6 +35,10 @@ export class CreateGalleryDto implements ICreateGallery {
 }
 
 export class UpsertGalleryDto implements IUpsertGallery {
+    
+    description!: string;
+    
+    artworks?: IArtwork[] | null | undefined;
  
  
     _id!: string;

@@ -6,6 +6,7 @@ import { Id } from './id.type';
 export interface IGallery {
     _id: Id;
     name: string;
+    description:string;
     location: string;
     image: string;
     userId?: Id| null;

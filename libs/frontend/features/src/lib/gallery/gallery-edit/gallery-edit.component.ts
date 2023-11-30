@@ -15,6 +15,7 @@ export class GalleryEditComponent implements OnInit {
   location = '';
   userId = '';
   image = '';
+  description = '';
 
   isEditing = false; // Add a flag to track if editing or creating
 
@@ -37,6 +38,7 @@ export class GalleryEditComponent implements OnInit {
         this.location = gallery.location;
         this.userId = gallery.userId ?? '';
         this.image = gallery.image ?? '';
+        this.description = gallery.description ?? '';
       });
     }
   }
@@ -55,10 +57,11 @@ export class GalleryEditComponent implements OnInit {
     console.log("creating gallery clicked in gallery-edit.component.ts", "TAG");
     const newGallery: IGallery = {
       _id: 'undefined',
-      name: this.name, 
-      location: this.location, 
-      userId: this.userId, 
-      image: this.image
+      name: this.name,
+      location: this.location,
+      userId: this.userId,
+      image: this.image,
+      description: this.description,
     };
     this.galleryService.createGallery(newGallery).subscribe(() => {
       this.router.navigate(['/gallery']);
@@ -72,9 +75,10 @@ export class GalleryEditComponent implements OnInit {
     const updatedGallery: IGallery = {
       _id: this.gallery._id,
       name: this.name,
-      location: this.location, 
+      location: this.location,
       userId: this.userId,
       image: this.image,
+      description: this.description,
     };
 
     console.log(updatedGallery)

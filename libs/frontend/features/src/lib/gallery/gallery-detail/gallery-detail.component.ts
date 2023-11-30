@@ -20,7 +20,9 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
   subscription: Subscription | undefined = undefined;
 
   user: IUser | undefined;
-  
+  owned = false;
+
+
   constructor(
     private route: ActivatedRoute,
     private galleryService: GalleryService,
@@ -32,6 +34,7 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
     const userString = localStorage.getItem('user');
     this.user = userString ? JSON.parse(userString) : undefined;
     
+
     this.subscription = this.route.params.pipe(
       switchMap(params => {
         return this.galleryService.read(params['id']);
@@ -42,6 +45,14 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
         this.getUserById(this.gallery.userId).subscribe(user => {
           this.user = user;
         });
+
+        if (this.user?._id === this.gallery?.userId) {
+          this.owned = true;
+        }
+        console.log(this.user?._id, "USER ID")
+        console.log(this.gallery?.userId, "GALLERY USER ID")
+
+
       }
     });
   }
@@ -64,7 +75,10 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
       
       this.gallery.userId = this.user?._id;
 
+      this.owned=true;
       console.log(this.gallery, "GALLERY")
+
+
       this.galleryService.updateGallery(this.gallery).subscribe(() => console.log("Gallery updated"));
     }
     // this.router.navigate(['/gallery']);
