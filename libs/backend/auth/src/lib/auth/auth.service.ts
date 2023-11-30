@@ -9,21 +9,29 @@ import {
     UserDocument
 } from '@client-side-project/backend/features';
 
+//import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { JwtService } from '@nestjs/jwt';
 import {IUser, IUserCredentials} from '@client-side-project/shared/api';
 import { CreateUserDto } from '@client-side-project/backend/dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { BehaviorSubject } from 'rxjs';
+
 
 @Injectable()
 export class AuthService {
-    //
+    public currentUser$ = new BehaviorSubject<IUser | null>(null);
+    private readonly CURRENT_USER = 'currentUser';
+
+
     private readonly logger = new Logger(AuthService.name);
 
     constructor(
         @InjectModel(UserModel.name) private userModel: Model<UserDocument>,
-        private jwtService: JwtService
+        private jwtService: JwtService,
+    
     ) {}
+
 
     async validateUser(credentials: IUser): Promise<any> {
         this.logger.log('validateUser');
@@ -35,6 +43,8 @@ export class AuthService {
         }
         return null;
     }
+
+ 
 
     async login(credentials: IUserCredentials): Promise<IUser> {
         this.logger.log('login ' + credentials.emailAddress);
@@ -49,6 +59,7 @@ export class AuthService {
                     const payload = {
                         user_id: user._id
                     };
+                    this.currentUser$.next(user);
                     return {
                         _id: user._id,
                         name: user.name,

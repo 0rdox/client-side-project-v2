@@ -5,6 +5,8 @@ import { UserService } from '../user.service';
 import { AuthService } from '@client-side-project/backend/auth';
 import { Types } from 'mongoose';
 
+import { IUserCredentials } from '@client-side-project/shared/api';
+
 @Component({
   selector: 'client-side-project-user-edit',
   templateUrl: './user-edit.component.html',
@@ -16,6 +18,7 @@ export class UserEditComponent implements OnInit {
   password = '';
   profilePicture = '';
   isEditing = false; // Add a flag to track if editing or creating
+  isLogin = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,12 +31,17 @@ export class UserEditComponent implements OnInit {
 
   ngOnInit() {
     const userId = this.route.snapshot.paramMap.get('id');
+    
+    const login = window.location.href.includes('login');
+    console.log(login, 'login')
     //userid means logged in
     //i need a form for: name, email, password, profile image (create user)
     //i need a form for: email, password (login)
 
     //create a new component for login + create -> user-login
-
+    if(login){
+      this.isLogin = true;
+    }
 
     if (userId) {
       this.isEditing = true;
@@ -50,10 +58,13 @@ export class UserEditComponent implements OnInit {
     console.log(this.isEditing, 'tag');
     if (this.isEditing) {
       this.updateUser();
+    } else if(this.isLogin) {
+     this.login();
     } else {
-     this.createUser();
+      this.createUser();
     }
   }
+
 
   updateUser() {
     console.log('updating user clicked in user-edit.component.ts', 'TAG');
@@ -65,6 +76,22 @@ export class UserEditComponent implements OnInit {
       password: this.user.password,
     };
     this.userService.updateUser(updatedUser).subscribe(() => {
+      this.router.navigate(['/user']);
+    });
+  }
+
+  login() {
+    console.log('logging in user clicked in user-edit.component.ts', 'TAG');
+const loginCred: IUserCredentials = {
+  emailAddress: this.email,
+  password: this.password,
+}
+
+localStorage.removeItem('user');
+
+
+    this.userService.login(loginCred).subscribe((user: IUser) => {
+      localStorage.setItem('user', JSON.stringify(user));
       this.router.navigate(['/user']);
     });
   }

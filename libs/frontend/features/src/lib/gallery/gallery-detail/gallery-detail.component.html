@@ -1,7 +1,7 @@
 <div class="bg-gray-100 p-4 rounded-lg mx-80 mt-10">
     <div class="bg-white p-4 rounded-lg shadow-md">
         <p class="text-lg font-bold mb-2">{{ gallery?.name }} [{{gallery?._id}}]</p>
-        <p class="text-gray-700">User: {{ user?.name }} [{{gallery?.userId}}]</p>
+        <p class="text-gray-700">User: {{ gallery?.userId ? user?.name : 'No user found' }} <span *ngIf="gallery?.userId">[{{gallery?.userId}}]</span></p>
         <p class="text-gray-700">{{ gallery?.location }}</p>
 
 
@@ -11,19 +11,19 @@
 
 <!-- TODO: CHANGE '1' TO LOGGED IN USER -->
 <div class="flex justify-center space-x-4">
-    <button *ngIf="gallery?.userId === '1'" routerLink="/gallery/{{gallery?._id}}/edit" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">
+    <button *ngIf="gallery?.userId === '${user._id}'" routerLink="/gallery/{{gallery?._id}}/edit" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">
         Edit Gallery
     </button>
 
-    <button *ngIf="gallery?.userId === '1'" class="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md" (click)="onDelete()">
+    <button *ngIf="gallery?.userId === '${user._id}'" class="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md" (click)="onDelete()">
         Delete Gallery
     </button>
 
-    <button *ngIf="gallery?.userId === '1'" routerLink="/gallery/{{gallery?._id}}/add" class="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md">
+    <button *ngIf="gallery?.userId === '${user._id}'" routerLink="/gallery/{{gallery?._id}}/add" class="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md">
         Add Artwork
     </button>
 
-    <button *ngIf="gallery?.userId === null" class="mt-4 bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-md" (click)="onClaim()">
+    <button *ngIf="gallery?.userId === undefined" class="mt-4 bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-md" (click)="onClaim()">
         Claim
     </button>
 </div>

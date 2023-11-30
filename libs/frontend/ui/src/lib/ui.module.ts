@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { AuthService } from '@client-side-project/backend/auth';
 
 @NgModule({
   imports: [CommonModule, RouterModule], 

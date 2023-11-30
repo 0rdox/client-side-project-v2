@@ -29,6 +29,9 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    const userString = localStorage.getItem('user');
+    this.user = userString ? JSON.parse(userString) : undefined;
+    
     this.subscription = this.route.params.pipe(
       switchMap(params => {
         return this.galleryService.read(params['id']);
@@ -59,10 +62,12 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
 
   
       
-      //this.gallery.userId = new mongoose.Types.ObjectId().toString();
+      this.gallery.userId = this.user?._id;
+
+      console.log(this.gallery, "GALLERY")
       this.galleryService.updateGallery(this.gallery).subscribe(() => console.log("Gallery updated"));
     }
-    this.router.navigate(['/gallery']);
+    // this.router.navigate(['/gallery']);
   }
 
   getUserById(id: string): Observable<IUser> {

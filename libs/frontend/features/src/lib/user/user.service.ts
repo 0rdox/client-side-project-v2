@@ -5,10 +5,12 @@ import {
   ApiResponse,
   IUser,
   ICreateUser,
+  IUserCredentials,
 } from '@client-side-project/shared/api';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from '@client-side-project/shared/util-env';
+import { OperatorFunction } from 'rxjs';
 
 export const httpOptions = {
   observe: 'body',
@@ -62,6 +64,20 @@ export class UserService {
       );
   }
 
+
+
+  public login(user: IUserCredentials, options?: any): Observable<IUser> {
+    return this.http
+      .post<ApiResponse<IUser>>(`${environment.dataApiUrl}/auth/login`, user, {
+        ...options,
+        ...httpOptions,
+      })
+      .pipe(
+        tap(console.log),
+        map((response: ApiResponse<IUser>) => response.results as IUser),
+        catchError(this.handleError)
+      );
+  }
   public register(user: IUser, options?: any): Observable<boolean> {
     return this.http
       .post<ApiResponse<IUser>>(`${environment.dataApiUrl}/auth/register`, user, {
