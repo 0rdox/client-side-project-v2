@@ -11,7 +11,15 @@ export type UserDocument = User & Document;
 
 @Schema()
 export class User implements IUser {
-
+   
+    
+    @Prop({
+        required: true,
+        type: Boolean,
+        default: false
+    })
+    hasGallery!: boolean;
+    
     @IsMongoId()
     _id!: string;
 

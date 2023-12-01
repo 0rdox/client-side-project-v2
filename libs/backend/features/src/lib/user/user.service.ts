@@ -15,50 +15,50 @@ export class UserService {
         @InjectModel(UserModel.name) private userModel: Model<UserDocument> // @InjectModel(Meal.name) private meetupModel: Model<MealDocument>
     ) {}
 
-    private Users$ = new BehaviorSubject<IUser[]>([
-        {
-            _id: '0',
-            name: 'John Smith',
-            email: 'j.smith@mail.com',
-            password: 'Secret123'
-        },
-        {
-            _id: '1',
-            name: 'Katie Smith',
-            email: 'k.smith@mail.com',
-            password: 'Secret123'
-        },
-        {
-            _id: '2',
-            name: 'Michael Johnson',
-            email: 'm.johnson@mail.com',
-            password: 'Secret123'
-        },
-        {
-            _id: '3',
-            name: 'Emily Davis',
-            email: 'e.davis@mail.com',
-            password: 'Secret123'
-        },
-        {
-            _id: '4',
-            name: 'Daniel Wilson',
-            email: 'd.wilson@mail.com',
-            password: 'Secret123'
-        },
-        {
-            _id: '5',
-            name: 'Sophia Thompson',
-            email: 's.thompson@mail.com',
-            password: 'Secret123'
-        }
-    ]);
+    // private Users$ = new BehaviorSubject<IUser[]>([
+    //     {
+    //         _id: '0',
+    //         name: 'John Smith',
+    //         email: 'j.smith@mail.com',
+    //         password: 'Secret123'
+    //     },
+    //     {
+    //         _id: '1',
+    //         name: 'Katie Smith',
+    //         email: 'k.smith@mail.com',
+    //         password: 'Secret123'
+    //     },
+    //     {
+    //         _id: '2',
+    //         name: 'Michael Johnson',
+    //         email: 'm.johnson@mail.com',
+    //         password: 'Secret123'
+    //     },
+    //     {
+    //         _id: '3',
+    //         name: 'Emily Davis',
+    //         email: 'e.davis@mail.com',
+    //         password: 'Secret123'
+    //     },
+    //     {
+    //         _id: '4',
+    //         name: 'Daniel Wilson',
+    //         email: 'd.wilson@mail.com',
+    //         password: 'Secret123'
+    //     },
+    //     {
+    //         _id: '5',
+    //         name: 'Sophia Thompson',
+    //         email: 's.thompson@mail.com',
+    //         password: 'Secret123'
+    //     }
+    // ]);
 
-    //non database
-    getAll(): IUser[] {
-        Logger.log('getAll', this.TAG);
-        return this.Users$.value;
-    }
+    // //non database
+    // getAll(): IUser[] {
+    //     Logger.log('getAll', this.TAG);
+    //     return this.Users$.value;
+    // }
     
     //database
     async findAll(): Promise<IUser[]> {
@@ -108,9 +108,13 @@ export class UserService {
         const newUser: IUser = {
             ...user,
             _id: id.toString(),
+            hasGallery: false
         };
-        const createdGallery = await this.userModel.create(newUser);
-        return createdGallery;
+
+        Logger.log(newUser, "newUser")
+        
+        const createdUser = await this.userModel.create(newUser);
+        return createdUser;
     }
     
 
@@ -118,38 +122,31 @@ export class UserService {
     //todo: double check if this is correct
     delete(id: string): IUser {
         
-        Logger.log(`delete(${id})`, this.TAG);
-        const current = this.Users$.value;
-        const userIndex = current.findIndex((user) => user._id === id);
 
-        if (userIndex === -1) {
-            throw new NotFoundException(`User could not be found!`);
-        }
+        
+        // Logger.log(`delete(${id})`, this.TAG);
+        // const current = this.Users$.value;
+        // const userIndex = current.findIndex((user) => user._id === id);
 
-        const deletedUser = current.splice(userIndex, 1)[0];
-        this.Users$.next(current);
-        return deletedUser;
+        // if (userIndex === -1) {
+        //     throw new NotFoundException(`User could not be found!`);
+        // }
+
+
+        // const deletedUser = current.splice(userIndex, 1)[0];
+        // this.Users$.next(current);
+        return null as unknown as IUser;
     }
       
      //todo: double check if this is correct
-    update(id: string, user: Partial<IUser>): IUser {
+    async update(id: string, user: Partial<IUser>): Promise<IUser> {
         Logger.log(`update(${id})`, this.TAG);
-        const current = this.Users$.value;
-        
-        const userIndex = current.findIndex((user) => user._id === id);
-
-        if (userIndex === -1) {
+        const updatedUser = await this.userModel.findOneAndUpdate({ _id: id }, user, { new: true }).exec();
+        if (!updatedUser) {
             throw new NotFoundException(`User could not be found!`);
         }
-
-        const updatedUser = {
-            ...current[userIndex],
-            ...user,
-        };
-
-        console.log(updatedUser, "updatedUser");    
-        current[userIndex] = updatedUser;
-        this.Users$.next(current);
         return updatedUser;
     }
+
+    
 }

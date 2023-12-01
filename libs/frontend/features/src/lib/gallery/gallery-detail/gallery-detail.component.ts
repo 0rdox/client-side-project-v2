@@ -8,7 +8,7 @@ import { UserService } from '@client-side-project/frontend/features';
 import { IUser } from '@client-side-project/shared/api';
 import { Observable } from 'rxjs';
 //import { GalleryService as backendGalleryService } from 'libs/backend/features/src/lib/gallery/gallery.service';
-import  mongoose  from 'mongoose';
+import mongoose from 'mongoose';
 
 @Component({
   selector: 'client-side-project-gallery-detail',
@@ -22,47 +22,54 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
   user: IUser | undefined;
   owned = false;
 
-  hasGallery = false
+  hasGallery = false;
 
   constructor(
     private route: ActivatedRoute,
     private galleryService: GalleryService,
     private userService: UserService,
-    private router: Router,
-   // private backend: backendGalleryService
-
+    private router: Router
   ) {}
+
+
+
+  //TODO: SHOULD ONLY BE ABLE TO CLAIM 1 GALLERY
+
+
+
+
 
   ngOnInit(): void {
     //get user from local storage
-    console.log("ON INIT", "ON INIT");
+    console.log('ON INIT', 'ON INIT');
     const userString = localStorage.getItem('user');
+    
     this.user = userString ? JSON.parse(userString) : undefined;
-   
+    //use this instead of api call?
+
 
     //check whether user has gallery
 
+    this.subscription = this.route.params
+      .pipe(
+        switchMap((params) => {
+          return this.galleryService.read(params['id']);
+        })
+      )
+      .subscribe((results) => {
+        this.gallery = results;
+        if (this.gallery && this.gallery.userId) {
+          this.getUserById(this.gallery.userId).subscribe((user) => {
+            this.user = user;
+          });
 
-    this.subscription = this.route.params.pipe(
-      switchMap(params => {
-        return this.galleryService.read(params['id']);
-      })
-    ).subscribe((results) => {
-      this.gallery = results;
-      if (this.gallery && this.gallery.userId) {
-        this.getUserById(this.gallery.userId).subscribe(user => {
-          this.user = user;
-        });
-
-        if (this.user?._id === this.gallery?.userId) {
-          this.owned = true;
+          if (this.user?._id === this.gallery?.userId) {
+            this.owned = true;
+          }
+          console.log(this.user?._id, 'USER ID');
+          console.log(this.gallery?.userId, 'GALLERY USER ID');
         }
-        console.log(this.user?._id, "USER ID")
-        console.log(this.gallery?.userId, "GALLERY USER ID")
-
-
-      }
-    });
+      });
   }
 
   ngOnDestroy(): void {
@@ -77,31 +84,41 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
   // }
 
   onLeave() {
-    if (this.gallery) {      
+    if (this.gallery && this.user) {
       this.gallery.userId = null;
 
-      this.owned=false;
-      console.log(this.gallery, "GALLERY")
-      this.galleryService.updateGallery(this.gallery).subscribe(() => console.log("Gallery updated"));
+      this.owned = false;
+      this.user.hasGallery = false;
+      this.userService
+        .updateUser(this.user)
+        .subscribe(() => console.log('User updated'));
+
+      this.galleryService
+        .updateGallery(this.gallery)
+        .subscribe(() => console.log('Gallery updated'));
     }
     // this.router.navigate(['/gallery']);
   }
 
   onClaim() {
-    if (this.gallery) {      
+    if (this.gallery && this.user) {
       this.gallery.userId = this.user?._id;
 
-      this.owned=true;
-      console.log(this.gallery, "GALLERY")
-      this.galleryService.updateGallery(this.gallery).subscribe(() => console.log("Gallery updated"));
+      this.owned = true;
+
+      this.user.hasGallery = true;
+      this.userService
+        .updateUser(this.user)
+        .subscribe(() => console.log('User updated'));
+      this.galleryService
+        .updateGallery(this.gallery)
+        .subscribe(() => console.log('Gallery updated'));
     }
     // this.router.navigate(['/gallery']);
   }
 
   getUserById(id: string): Observable<IUser> {
-    console.log(this.userService.read(id), "USER FROM GALLERY");
+    console.log(this.userService.read(id), 'USER FROM GALLERY');
     return this.userService.read(id);
   }
 }
-
-

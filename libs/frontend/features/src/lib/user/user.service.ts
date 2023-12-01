@@ -21,8 +21,6 @@ export const httpOptions = {
 export class UserService {
     endpoint = environment.dataApiUrl + '/user';
 
-  private users$ = new BehaviorSubject<IUser[]>([]);
-
   constructor(private readonly http: HttpClient) {}
 
   public list(options?: any): Observable<IUser[] | null> {

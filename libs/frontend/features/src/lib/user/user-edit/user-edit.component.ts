@@ -73,6 +73,7 @@ export class UserEditComponent implements OnInit {
       name: this.name,
       email: this.email,
       password: this.user.password,
+      hasGallery: this.user.hasGallery
     };
     this.userService.updateUser(updatedUser).subscribe(() => {
       this.router.navigate(['/user']);
@@ -104,7 +105,7 @@ export class UserEditComponent implements OnInit {
       password: this.password,
       profilePicture: this.profilePicture,
       _id: new Types.ObjectId().toString(),
-      //eerst callde dit userService.create, daar wordt _id omgezet naar valid mongoose id
+      hasGallery: false
     };
     this.userService.register(newUser).subscribe(() => {
       this.router.navigate(['/user']);

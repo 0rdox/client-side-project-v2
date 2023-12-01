@@ -56,7 +56,7 @@ export class UserController {
     @ApiParam({ name: 'id', description: 'The ID of the User to update', type: 'string'})
     @ApiBody({ type: UpdateUserDto })
     @ApiResponse({ status: 200, description: 'Updates a User by ID.'})
-    update(@Param('id') id: string, @Body() data: UpdateUserDto): IUser {
+    async update(@Param('id') id: string, @Body() data: UpdateUserDto): Promise<IUser> {
         return this.UserService.update(id, data);
     }
 }
