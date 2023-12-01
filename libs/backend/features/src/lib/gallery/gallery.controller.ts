@@ -51,4 +51,17 @@ export class GalleryController {
     async delete(@Param('id') id: string): Promise<void> {
         await this.galleryService.delete(id);
     }
+
+
+    //
+    @Get('user/:userId/claimed')
+    @ApiOperation({ summary: 'Check if a user has a claimed gallery' })
+    @ApiParam({ name: 'userId', description: 'The ID of the user', type: 'string'})
+    @ApiResponse({ status: 200, description: 'Returns true if the user has a claimed gallery, false otherwise.'})
+    async hasClaimedGallery(@Param('userId') userId: string): Promise<boolean> {
+        return this.galleryService.hasClaimedGallery(userId);
+    }
 }
+
+    
+

@@ -101,7 +101,15 @@ export class GalleryService {
         }
         await this.galleryModel.deleteOne({ _id: id }).exec();
     }
+
+
+    async hasClaimedGallery(userId: string): Promise<boolean> {
+        Logger.log(`hasClaimedGallery(${userId})`, this.TAG);
+        const gallery = await this.galleryModel.findOne({ userId }).exec();
+        return !!gallery;
+    }
 }
 
     
 
+ 

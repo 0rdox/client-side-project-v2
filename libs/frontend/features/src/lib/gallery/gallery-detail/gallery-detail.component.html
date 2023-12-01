@@ -20,7 +20,7 @@
         Leave Gallery
     </button>
 
-    <button *ngIf="gallery?.userId == null || gallery?.userId === undefined" class="mt-4 bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-md" (click)="onClaim()">
+    <button *ngIf="gallery?.userId == null || gallery?.userId === undefined && !hasGallery" class="mt-4 bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-md" (click)="onClaim()">
         Claim
     </button>
 </div>

@@ -7,7 +7,7 @@ import { GalleryService } from '../gallery.service';
 import { UserService } from '@client-side-project/frontend/features';
 import { IUser } from '@client-side-project/shared/api';
 import { Observable } from 'rxjs';
-
+//import { GalleryService as backendGalleryService } from 'libs/backend/features/src/lib/gallery/gallery.service';
 import  mongoose  from 'mongoose';
 
 @Component({
@@ -28,13 +28,20 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private galleryService: GalleryService,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+   // private backend: backendGalleryService
+
   ) {}
 
   ngOnInit(): void {
+    //get user from local storage
+    console.log("ON INIT", "ON INIT");
     const userString = localStorage.getItem('user');
     this.user = userString ? JSON.parse(userString) : undefined;
-    
+   
+
+    //check whether user has gallery
+
 
     this.subscription = this.route.params.pipe(
       switchMap(params => {

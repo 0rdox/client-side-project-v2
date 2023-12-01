@@ -135,7 +135,10 @@ private galleries$ = new BehaviorSubject<IGallery[]>([]);
     }
 
 
+//   public hasClaimedGallery(userId: string): Observable<boolean> {
 
+//     }
+    
 
     /**
      * Handle errors.
