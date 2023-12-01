@@ -33,7 +33,6 @@ export class UserEditComponent implements OnInit {
     const userId = this.route.snapshot.paramMap.get('id');
 
     const login = window.location.href.includes('login');
-    console.log(login, 'login');
     //userid means logged in
     //i need a form for: name, email, password, profile image (create user)
     //i need a form for: email, password (login)
@@ -49,13 +48,14 @@ export class UserEditComponent implements OnInit {
         this.user = user;
         this.name = user.name;
         this.email = user.email;
+        this.password = user.password;
+        this.profilePicture = user.profilePicture ?? '';
       });
     }
   }
 
   saveUser() {
     console.log('Save user clicked', 'tag');
-    console.log(this.isEditing, 'tag');
     if (this.isEditing) {
       this.updateUser();
     } else if (this.isLogin) {
@@ -73,10 +73,11 @@ export class UserEditComponent implements OnInit {
       name: this.name,
       email: this.email,
       password: this.user.password,
+      profilePicture: this.profilePicture,
       hasGallery: this.user.hasGallery
     };
     this.userService.updateUser(updatedUser).subscribe(() => {
-      this.router.navigate(['/user']);
+      this.router.navigate(['/user/' + this.user._id]);
     });
   }
 
@@ -93,7 +94,8 @@ export class UserEditComponent implements OnInit {
 
     this.userService.login(loginCred).subscribe((user: IUser) => {
       localStorage.setItem('user', JSON.stringify(user));
-      this.router.navigate(['/user']);
+      // this.router.navigate(['/user']);
+      window.location.href = '/';
     });
   }
 

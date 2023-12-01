@@ -13,25 +13,26 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class UserDetailComponent implements OnInit, OnDestroy {
   users: IUser | null = null;
   subscription: Subscription | undefined = undefined;
+  canEdit: boolean = false; // Add isEdit property
 
   constructor(
     private route: ActivatedRoute, 
     private UserService: UserService,
     private router: Router,
-    ) { }
-
-
+  ) { }
+  userString = localStorage.getItem('user');
+  user = this.userString ? JSON.parse(this.userString) : undefined;
 
   ngOnInit(): void {
     console.log("INIT")
     this.subscription = this.route.params.pipe(
       switchMap(params => {
-        console.log(`switchMap params: ${JSON.stringify(params)}`);
         return this.UserService.read(params['id']);
       })
     ).subscribe((results) => {
       console.log(`results: ${JSON.stringify(results)}`);
       this.users = results;
+      this.canEdit = this.users?._id === this.user._id; // Check if user.id matches localStorage
     });
   }
 
@@ -44,7 +45,6 @@ export class UserDetailComponent implements OnInit, OnDestroy {
       this.UserService.removeUser(this.users._id).subscribe(() => console.log("user deleted"));   
     }
 
-   this.router.navigate(['/user']);
-    
+    this.router.navigate(['/user']);
   }
 }
