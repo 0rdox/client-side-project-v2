@@ -31,23 +31,23 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
     private router: Router
   ) {}
 
-
-
   //TODO: SHOULD ONLY BE ABLE TO CLAIM 1 GALLERY
-
-
-
-
 
   ngOnInit(): void {
     //get user from local storage
     console.log('ON INIT', 'ON INIT');
     const userString = localStorage.getItem('user');
-    
+
     this.user = userString ? JSON.parse(userString) : undefined;
     //use this instead of api call?
 
+    console.log(this.user, 'USER FROM LOCAL STORAGE');
+    this.userService.read(this.user?._id ?? null).subscribe((user) => {
+      this.user = user;
+      console.log(user, 'USER FROM API');
+    });
 
+    console.log(this.user, 'USER FROM LOCAL STORAGE');
     //check whether user has gallery
 
     this.subscription = this.route.params
@@ -66,6 +66,7 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
           if (this.user?._id === this.gallery?.userId) {
             this.owned = true;
           }
+
           console.log(this.user?._id, 'USER ID');
           console.log(this.gallery?.userId, 'GALLERY USER ID');
         }
