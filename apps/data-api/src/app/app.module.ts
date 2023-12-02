@@ -10,7 +10,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 
-@Module({
+@Module({ 
   imports: [MealModule, UserModule, GalleryModule, AuthModule, MongooseModule.forRootAsync({
     useFactory: () => ({
       uri: 'mongodb://127.0.0.1/client-side-project',
@@ -21,3 +21,4 @@ import { MongooseModule } from '@nestjs/mongoose';
   providers: [AppService],
 }) 
 export class AppModule {}
+ 
