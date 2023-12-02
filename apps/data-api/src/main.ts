@@ -24,7 +24,7 @@ const corsOptions: CorsOptions = {
 };
 app.enableCors(corsOptions);
 
-app.useGlobalInterceptors(new ApiResponseInterceptor)
+app.useGlobalInterceptors(new ApiResponseInterceptor())
 app.useGlobalPipes(new ValidationPipe());
 
 
