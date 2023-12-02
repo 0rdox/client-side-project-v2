@@ -15,25 +15,25 @@ export class CreateArtworkDto implements ICreateArtwork {
     type!: ArtworkType;
 
 
-    user!: IUser | null;
+    userId!: string ;
 
     image!: string;
  
 }
 
 export class UpsertArtworkDto implements IUpsertArtwork {
-    id!: string;
+    userId!: string;
+    _id!: string;
     title!: string;
     description!: string;
     type!: ArtworkType;
     creationDate!: Date;
     image!: string;
-    user!: IUser | null;
     galleryId?: string | undefined;
 }
 
 export class UpdateArtworkDto implements IUpdateArtwork {
-    id!: string;
+    _id!: string;
     title!: string;
     description!: string;
     type!: ArtworkType;

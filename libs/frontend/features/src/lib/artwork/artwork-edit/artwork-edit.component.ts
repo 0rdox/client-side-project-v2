@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArtworkService } from '../artwork.service';
-import { ArtworkType, IArtwork } from '@client-side-project/shared/api';
+import { ArtworkType, IArtwork, IGallery } from '@client-side-project/shared/api';
 import { IUser } from '@client-side-project/shared/api';
 import { GalleryService } from '../../gallery/gallery.service';
+import { Types } from 'mongoose';
 
 @Component({
   selector: 'client-side-project-artwork-edit',
@@ -11,15 +12,29 @@ import { GalleryService } from '../../gallery/gallery.service';
   styleUrls: ['./artwork-edit.component.css'],
 })
 export class ArtworkEditComponent implements OnInit {
-  id = '';
-  title = '';
+  
+  userString = localStorage.getItem('user');
+  user = this.userString ? JSON.parse(this.userString) : undefined;
+  id = this.user._id;
+
+  
+ 
+ title = '';
   description = '';
   type = 'undefined';
   creationDate = '';
   image = '';
 
+
+
+
+// userString = localStorage.getItem('user');
+// user = this.userString ? JSON.parse(this.userString) : undefined;
+
+
   isEditing = false; // Add a flag to track if editing or creating
 
+  galleryId = this.route.snapshot.paramMap.get('id');
   constructor(
     private route: ActivatedRoute,
     private artworkService: ArtworkService,
@@ -27,9 +42,15 @@ export class ArtworkEditComponent implements OnInit {
     private router: Router,
   ) { }
 
+  gallery = this.galleryService.read(this.galleryId).subscribe((gallery: any) => {});
+
   private artwork!: IArtwork;
 
   ngOnInit() {
+    console.log("TESTING CONSOLE LOGS SSSSSSSSSSSSSSSSSSSSSS" , "TAGSSSSSSSSSSSSSSSSSSSSSSSSSSs");
+    console.log(this.id, "id");
+    console.log(this.user, "user");
+    console.log(this.userString, "userString");
     const galleryId = this.route.snapshot.paramMap.get('id');
     console.log(galleryId, "galleryId");
     
@@ -60,41 +81,48 @@ export class ArtworkEditComponent implements OnInit {
 
   createArtwork() {
     console.log("creating artwork clicked in artwork-edit.component.ts", "TAG");
-    
+
+    // Get the gallery ID from the route parameter
+    const galleryId = this.route.snapshot.paramMap.get('id');
+
+    // Create a new artwork object
     const newArtwork: IArtwork = {
-      id: 'undefined',
+      _id: new Types.ObjectId().toString(),
       title: this.title,
       description: this.description,
       type: this.type as ArtworkType,
       creationDate: new Date(),
       image: this.image,
-      user: null,
+      userId: this.id,
     };
-    
+
+    // Add the artwork to the database
     this.artworkService.createArtwork(newArtwork).subscribe(() => {
-      const galleryId = this.route.snapshot.paramMap.get('id');
-      if (galleryId) {
-        //get gallery by id? 
-        
-        // this.galleryService.updateGallery(newArtwork.id, galleryId).subscribe(() => {
+      // Update the artwork array of the gallery
+      this.galleryService.read(galleryId).subscribe((gallery: IGallery) => {
+        gallery.artworks!.push(newArtwork); // Add the new artwork to the array
+        this.galleryService.updateGallery(gallery).subscribe(() => {
           this.router.navigate(['/gallery', galleryId]);
-        // });
-      }
+        });
+      });
     });
   }
+
+    
+
 
   updateArtwork() {
     console.log("updating artwork clicked in artwork-edit.component.ts", "TAG");
 
     console.log(this.title, "title");
     const updatedArtwork: IArtwork = {
-      id: this.artwork.id,
-      title: '',
-      description: '',
+      _id: this.artwork._id,
+      title: this.artwork.title,
+      description: this.artwork.description,
       type: ArtworkType.painting,
       creationDate: new Date(),
-      image: '',
-      user: null
+      image: this.artwork.image,
+      userId: this.artwork.userId
     };
 
     console.log(updatedArtwork)

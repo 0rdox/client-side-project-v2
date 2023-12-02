@@ -72,7 +72,7 @@ export class ArtworkService {
     public updateArtwork(artwork: IArtwork, options?: any): Observable<IArtwork> {
         console.log(artwork, "artwork in artworkService");
         return this.http
-            .put<ApiResponse<IArtwork>>(`${this.endpoint}/${artwork.id}`, artwork, {
+            .put<ApiResponse<IArtwork>>(`${this.endpoint}/${artwork._id}`, artwork, {
                 ...options,
                 ...httpOptions,
             })

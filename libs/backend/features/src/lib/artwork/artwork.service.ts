@@ -2,118 +2,59 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { IArtwork, ArtworkType } from '@client-side-project/shared/api';
 import { BehaviorSubject } from 'rxjs';
 import { Logger } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import mongoose, { Model } from 'mongoose';
 
 @Injectable()
 export class ArtworkService {
     TAG = 'ArtworkService';
 
-    private artworks$ = new BehaviorSubject<IArtwork[]>([
-        {
-            id: '1',
-            title: 'Artwork 1',
-            description: 'Description of Artwork 1',
-            type: ArtworkType.painting,
-            creationDate: new Date(),
-            image: 'image1.jpg',
-            user: null,
-        },
-        {
-            id: '2',
-            title: 'Artwork 2',
-            description: 'Description of Artwork 2',
-            type: ArtworkType.painting,
-            creationDate: new Date(),
-            image: 'image2.jpg',
-            user: null,
-        },
-        {
-            id: '3',
-            title: 'Artwork 3',
-            description: 'Description of Artwork 3',
-            type: ArtworkType.painting,
-            creationDate: new Date(),
-            image: 'image3.jpg',
-            user: null,
-        },
-        {
-            id: '4',
-            title: 'Artwork 4',
-            description: 'Description of Artwork 4',
-            type: ArtworkType.painting,
-            creationDate: new Date(),
-            image: 'image4.jpg',
-            user: null,
-        },
-        {
-            id: '5',
-            title: 'Artwork 5',
-            description: 'Description of Artwork 5',
-            type: ArtworkType.painting,
-            creationDate: new Date(),
-            image: 'image5.jpg',
-            user: null,
-        },
-    ]);
+    constructor(@InjectModel('artwork') private readonly artworkModel: Model<IArtwork>) { }
 
+    private artworks$ = new BehaviorSubject<IArtwork[]>([]);
 
-    getAll(): IArtwork[] {
+    async getAll(): Promise<IArtwork[]> {
         Logger.log('getAll', this.TAG);
-        return this.artworks$.value;
+        return await this.artworkModel.find().exec();
     }
 
-    getOne(id: string): IArtwork {
+    async getOne(id: string): Promise<IArtwork> {
         Logger.log(`getOne(${id})`, this.TAG);
-        const Artwork = this.artworks$.value.find((td) => td.id === id);
-        if (!Artwork) {
+        const artwork = await this.artworkModel.findById(id).exec();
+        if (!artwork) {
             throw new NotFoundException(`Artwork could not be found!`);
         }
-        return Artwork;
+        return artwork;
     }
 
-    create(Artwork: Pick<IArtwork, 'title' | 'description' | 'type' | 'image'>): IArtwork {
+
+    //todo: this
+    //create -> userId out of localstorage
+    async create(artwork: Pick<IArtwork, 'title' | 'description' | 'type' | 'image'| 'userId' >): Promise<IArtwork> {
         Logger.log('create', this.TAG);
-        const current = this.artworks$.value;
-        console.log(Artwork, "Artwork");
-
-
-        
-        const newArtwork: IArtwork = {
-            ...Artwork,
-            id: `Artwork-${Math.floor(Math.random() * 10000)}`,
-            user: null,
+        const newArtwork = new this.artworkModel({
+            ...artwork,
+            _id: new mongoose.Types.ObjectId(),
             creationDate: new Date(),
-        };
-        this.artworks$.next([...current, newArtwork]);
+        });
+        await newArtwork.save();
         return newArtwork;
     }
 
-    update(id: string, Artwork: Partial<IArtwork>): IArtwork {
+    async update(id: string, artwork: Partial<IArtwork>): Promise<IArtwork> {
         Logger.log(`update(${id})`, this.TAG);
-        const current = this.artworks$.value;
-        const index = current.findIndex((g) => g.id === id);
-        if (index === -1) {
+        const updatedArtwork = await this.artworkModel.findByIdAndUpdate(id, artwork, { new: true }).exec();
+        if (!updatedArtwork) {
             throw new NotFoundException(`Artwork could not be found!`);
         }
-        const updatedArtwork = {
-            ...current[index],
-            ...Artwork,
-        };
-        current[index] = updatedArtwork;
-        this.artworks$.next(current);
         return updatedArtwork;
     }
 
-    delete(id: string): void {
+    async delete(id: string): Promise<void> {
         Logger.log(`delete(${id})`, this.TAG);
-        const current = this.artworks$.value;
-        const index = current.findIndex((g) => g.id === id);
-        if (index === -1) {
+        const deletedArtwork = await this.artworkModel.findByIdAndDelete(id).exec();
+        if (!deletedArtwork) {
             throw new NotFoundException(`Artwork could not be found!`);
         }
-        current.splice(index, 1);
-        this.artworks$.next(current);
     }
 }
-
-    
-

@@ -16,24 +16,24 @@ export class ArtworkController {
     @ApiOperation({ summary: 'Get all artwork' })
     @ApiResponse({ status: 200, description: 'Returns all Galleries.'})
     @ApiResponse({ status: 400, description: 'Bad Request.'})
-    getAll(): IArtwork[] {
-        return this.artworkService.getAll();
+    async getAll(): Promise<IArtwork[]> {
+        return await this.artworkService.getAll();
     }
 
     @Get(':id')
     @ApiOperation({ summary: 'Get a Artwork by ID' })
     @ApiParam({ name: 'id', description: 'The ID of the Artwork to retrieve', type: 'string'})
     @ApiResponse({ status: 200, description: 'Returns a Artwork by ID.'})
-    getOne(@Param('id') id: string): IArtwork {
-        return this.artworkService.getOne(id);
+    async getOne(@Param('id') id: string): Promise<IArtwork> {
+        return await this.artworkService.getOne(id);
     }
 
     @Post('')
     @ApiOperation({ summary: 'Create a new Artwork' })
     @ApiBody({ type: CreateArtworkDto })
     @ApiResponse({ status: 201, description: 'Creates a new Artwork.'})
-    create(@Body() data: CreateArtworkDto): IArtwork {
-        return this.artworkService.create(data);
+    async create(@Body() data: CreateArtworkDto): Promise<IArtwork> {
+        return await this.artworkService.create(data);
     }
 
     @Put(':id')
@@ -41,15 +41,15 @@ export class ArtworkController {
     @ApiParam({ name: 'id', description: 'The ID of the Artwork to update', type: 'string'})
     @ApiBody({ type: UpdateArtworkDto })
     @ApiResponse({ status: 200, description: 'Updates a Artwork by ID.'})
-    update(@Param('id') id: string, @Body() data: UpdateArtworkDto): IArtwork {
-        return this.artworkService.update(id, data);
+    async update(@Param('id') id: string, @Body() data: UpdateArtworkDto): Promise<IArtwork> {
+        return await this.artworkService.update(id, data);
     }
 
     @Delete(':id')
     @ApiOperation({ summary: 'Delete a Artwork by ID' })
     @ApiParam({ name: 'id', description: 'The ID of the Artwork to delete', type: 'string'})
     @ApiResponse({ status: 200, description: 'Deletes a Artwork by ID.'})
-    delete(@Param('id') id: string): void {
-        this.artworkService.delete(id);
+    async delete(@Param('id') id: string): Promise<void> {
+        return await this.artworkService.delete(id);
     }
 }

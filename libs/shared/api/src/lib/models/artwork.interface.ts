@@ -6,19 +6,19 @@ export enum ArtworkType {
 }
 
 export interface IArtwork {
-    id: Id;
+    _id: Id;
     title: string;
     description: string;
     type: ArtworkType;
     creationDate: Date;
     image: string;
-    user: IUser | null;
-   // galleryId?: Id;
+    userId: Id
+
 }
 
 export type ICreateArtwork = Pick<
     IArtwork,
-    'title' | 'description' | 'type' | 'user'
+    'title' | 'description' | 'type' | 'userId' | 'image'
 >;
 export type IUpdateArtwork = Partial<Omit<IArtwork, 'id'>>;
 export type IUpsertArtwork = IArtwork;

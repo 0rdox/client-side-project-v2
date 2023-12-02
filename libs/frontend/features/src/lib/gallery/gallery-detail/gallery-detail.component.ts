@@ -37,7 +37,6 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
     //get user from local storage
     console.log('ON INIT', 'ON INIT');
     const userString = localStorage.getItem('user');
-
     this.user = userString ? JSON.parse(userString) : undefined;
     //use this instead of api call?
 
