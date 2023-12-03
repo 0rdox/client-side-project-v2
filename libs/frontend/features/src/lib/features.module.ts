@@ -4,10 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 
-import { MealListComponent } from './meal/meal-list/meal-list.component';
-import { MealDetailComponent } from './meal/meal-detail/meal-detail.component';
-import { MealEditComponent } from './meal/meal-edit/meal-edit.component';
-import { MealService } from './meal/meal.service';
 
 import { UserListComponent } from './user/user-list/user-list.component';
 import { UserDetailComponent } from './user/user-detail/user-detail.component';
@@ -25,107 +21,82 @@ import { ArtworkEditComponent } from './artwork/artwork-edit/artwork-edit.compon
 import { ArtworkService } from './artwork/artwork.service';
 import { ArtworkDetailComponent } from './artwork/artwork-detail/artwork-detail.component';
 
-  const routes: Routes = [
-    {
-      path: '',
-      pathMatch: 'full',
-      redirectTo: '/home',
-    },
-    {
-      path: 'meal',
-      children: [
-        {
-          path: '',
-          pathMatch: 'full',
-          component: MealListComponent,
-        },
-        {
-          path: 'new',
-          pathMatch: 'full',
-          component: MealEditComponent,
-        },
-        {
-          path: ':id',
-          pathMatch: 'full',
-          component: MealDetailComponent,
-        },
-        {
-          path: ':id/edit',
-          pathMatch: 'full',
-          component: MealEditComponent,
-        },
-      ],
-    },
-    {
-      path: 'user',
-      children: [
-        {
-          path: '',
-          pathMatch: 'full',
-          component: UserListComponent,
-        },
-        {
-          path: 'new',
-          pathMatch: 'full',
-          component: UserEditComponent,
-        },
-        {
-          path: ':id',
-          pathMatch: 'full',
-          component: UserDetailComponent,
-        },
-        {
-          path: ':id/edit',
-          pathMatch: 'full',
-          component: UserEditComponent,
-        }
-      ],
-    },
-    {
-      path: 'gallery',
-      children: [
-        {
-          path: '',
-          pathMatch: 'full',
-          component: GalleryListComponent,
-        },
-        {
-          path: 'new',
-          pathMatch: 'full',
-          component: GalleryEditComponent,
-        },
-        {
-          path: ':id',
-          pathMatch: 'full',
-          component: GalleryDetailComponent,
-        },
-        {
-          path: ':id/edit',
-          pathMatch: 'full',
-          component: GalleryEditComponent,
-        },
-        {
-          path: ':id/add',
-          pathMatch: 'full',
-          component: ArtworkEditComponent,
-        },
-      ],
-    }, {
-      path: 'artwork',
-      children: [
-        {
-          path:':id',
-          pathMatch: 'full',
-          component: ArtworkDetailComponent,
-        },
-        {
-          path: ':id/edit',
-          pathMatch: 'full',
-          component: ArtworkEditComponent,
-        },
-      ]
-    }
-  ];
+const routes: Routes = [
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: '/home',
+  },
+  {
+    path: 'user',
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        component: UserListComponent,
+      },
+      {
+        path: 'new',
+        pathMatch: 'full',
+        component: UserEditComponent,
+      },
+      {
+        path: ':id',
+        pathMatch: 'full',
+        component: UserDetailComponent,
+      },
+      {
+        path: ':id/edit',
+        pathMatch: 'full',
+        component: UserEditComponent,
+      }
+    ],
+  },
+  {
+    path: 'gallery',
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        component: GalleryListComponent,
+      },
+      {
+        path: 'new',
+        pathMatch: 'full',
+        component: GalleryEditComponent,
+      },
+      {
+        path: ':id',
+        pathMatch: 'full',
+        component: GalleryDetailComponent,
+      },
+      {
+        path: ':id/edit',
+        pathMatch: 'full',
+        component: GalleryEditComponent,
+      },
+      {
+        path: ':id/add',
+        pathMatch: 'full',
+        component: ArtworkEditComponent,
+      },
+    ],
+  }, {
+    path: 'artwork',
+    children: [
+      {
+        path:':id',
+        pathMatch: 'full',
+        component: ArtworkDetailComponent,
+      },
+      {
+        path: ':id/edit',
+        pathMatch: 'full',
+        component: ArtworkEditComponent,
+      },
+    ]
+  }
+];
 
 @NgModule({
   imports: [
@@ -136,9 +107,6 @@ import { ArtworkDetailComponent } from './artwork/artwork-detail/artwork-detail.
     UiModule,
   ],
   declarations: [
-    MealListComponent,
-    MealDetailComponent,
-    MealEditComponent,
     UserListComponent,
     UserDetailComponent,
     UserEditComponent,
@@ -149,14 +117,11 @@ import { ArtworkDetailComponent } from './artwork/artwork-detail/artwork-detail.
     ArtworkDetailComponent
   ],
   providers: [
-    MealService,
     UserService,
     GalleryService,
     ArtworkService
   ],
   exports: [
-    MealListComponent,
-    MealDetailComponent,
     UserListComponent,
     UserDetailComponent,
     UserEditComponent,
