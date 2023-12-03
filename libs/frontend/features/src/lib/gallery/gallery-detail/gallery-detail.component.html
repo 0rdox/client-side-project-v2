@@ -24,3 +24,14 @@
         Claim
     </button>
 </div>
+
+<h2 class="text-2xl font-bold mt-8">Artworks</h2>
+
+<div class="grid grid-cols-3 gap-4 mt-4">
+    <a *ngFor="let artwork of gallery?.artworks" [routerLink]="['/artwork', artwork._id]" class="bg-white p-4 rounded-lg shadow-md">
+        <img [src]="artwork.image" alt="Artwork" class="w-full h-48 object-cover mb-4">
+        <p class="text-lg font-bold">{{ artwork.title }}</p>
+        <p class="text-gray-700">{{ artwork.type }}</p>
+        <p class="text-gray-700">{{ artwork.description }}</p>
+    </a>
+</div>

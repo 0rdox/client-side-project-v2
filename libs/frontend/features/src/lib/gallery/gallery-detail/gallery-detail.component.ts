@@ -35,20 +35,20 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     //get user from local storage
-    console.log('ON INIT', 'ON INIT');
     const userString = localStorage.getItem('user');
     this.user = userString ? JSON.parse(userString) : undefined;
+    
     //use this instead of api call?
-
     console.log(this.user, 'USER FROM LOCAL STORAGE');
+
     this.userService.read(this.user?._id ?? null).subscribe((user) => {
       this.user = user;
       console.log(user, 'USER FROM API');
     });
 
     console.log(this.user, 'USER FROM LOCAL STORAGE');
+    
     //check whether user has gallery
-
     this.subscription = this.route.params
       .pipe(
         switchMap((params) => {
@@ -68,8 +68,13 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
 
           console.log(this.user?._id, 'USER ID');
           console.log(this.gallery?.userId, 'GALLERY USER ID');
+     
+
+          console.log(this.gallery.artworks![0]._id, 'ARTWORK ID!!!!!!!!!!!!!!!!!');
+          console.log(this.gallery.artworks, 'ARTWORKS');
         }
       });
+
   }
 
   ngOnDestroy(): void {
@@ -86,9 +91,13 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
   onLeave() {
     if (this.gallery && this.user) {
       this.gallery.userId = null;
+      //remove artworks?
+      this.gallery.artworks = null;
+
 
       this.owned = false;
       this.user.hasGallery = false;
+
       this.userService
         .updateUser(this.user)
         .subscribe(() => console.log('User updated'));
@@ -103,6 +112,7 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
   onClaim() {
     if (this.gallery && this.user) {
       this.gallery.userId = this.user?._id;
+      this.gallery.artworks = [];
 
       this.owned = true;
 

@@ -85,6 +85,8 @@ export class ArtworkEditComponent implements OnInit {
     // Get the gallery ID from the route parameter
     const galleryId = this.route.snapshot.paramMap.get('id');
 
+
+
     // Create a new artwork object
     const newArtwork: IArtwork = {
       _id: new Types.ObjectId().toString(),
@@ -97,10 +99,11 @@ export class ArtworkEditComponent implements OnInit {
     };
 
     // Add the artwork to the database
-    this.artworkService.createArtwork(newArtwork).subscribe(() => {
+    this.artworkService.createArtwork(newArtwork).subscribe((result: any) => {
       // Update the artwork array of the gallery
+      console.log(result, "result");
       this.galleryService.read(galleryId).subscribe((gallery: IGallery) => {
-        gallery.artworks!.push(newArtwork); // Add the new artwork to the array
+        gallery.artworks!.push(result); // Add the new artwork to the array
         this.galleryService.updateGallery(gallery).subscribe(() => {
           this.router.navigate(['/gallery', galleryId]);
         });

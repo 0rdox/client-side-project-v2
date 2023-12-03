@@ -23,6 +23,7 @@ import { UiModule } from '@client-side-project/frontend/ui';
 
 import { ArtworkEditComponent } from './artwork/artwork-edit/artwork-edit.component';
 import { ArtworkService } from './artwork/artwork.service';
+import { ArtworkDetailComponent } from './artwork/artwork-detail/artwork-detail.component';
 
   const routes: Routes = [
     {
@@ -109,7 +110,21 @@ import { ArtworkService } from './artwork/artwork.service';
           component: ArtworkEditComponent,
         },
       ],
-    },
+    }, {
+      path: 'artwork',
+      children: [
+        {
+          path:':id',
+          pathMatch: 'full',
+          component: ArtworkDetailComponent,
+        },
+        {
+          path: ':id/edit',
+          pathMatch: 'full',
+          component: ArtworkEditComponent,
+        },
+      ]
+    }
   ];
 
 @NgModule({
@@ -130,7 +145,8 @@ import { ArtworkService } from './artwork/artwork.service';
     GalleryListComponent,
     GalleryDetailComponent,
     GalleryEditComponent,
-    ArtworkEditComponent
+    ArtworkEditComponent,
+    ArtworkDetailComponent
   ],
   providers: [
     MealService,
