@@ -20,6 +20,8 @@ export class HeaderComponent implements OnInit {
     const userString = localStorage.getItem('user');
     this.user = userString ? JSON.parse(userString) : null;
     
+
+    //subscribe to user in auth service, zal user updaten in header
   }
 
   logout() {

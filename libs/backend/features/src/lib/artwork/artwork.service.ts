@@ -9,8 +9,9 @@ import mongoose, { Model } from 'mongoose';
 export class ArtworkService {
     TAG = 'ArtworkService';
 
-    constructor(@InjectModel('artwork') private readonly artworkModel: Model<IArtwork>) { }
-
+    constructor(
+        @InjectModel('artwork') private readonly artworkModel: Model<IArtwork>,
+    ) { }
     private artworks$ = new BehaviorSubject<IArtwork[]>([]);
 
     async getAll(): Promise<IArtwork[]> {

@@ -19,7 +19,7 @@ export class ArtworkEditComponent implements OnInit {
 
   
  
- title = '';
+  title = '';
   description = '';
   type = 'undefined';
   creationDate = '';
@@ -34,7 +34,11 @@ export class ArtworkEditComponent implements OnInit {
 
   isEditing = false; // Add a flag to track if editing or creating
 
-  galleryId = this.route.snapshot.paramMap.get('id');
+
+  //add galleryId to artwork?
+  galleryid = '';
+
+ // galleryId = this.route.snapshot.paramMap.get('id');
   constructor(
     private route: ActivatedRoute,
     private artworkService: ArtworkService,
@@ -42,30 +46,26 @@ export class ArtworkEditComponent implements OnInit {
     private router: Router,
   ) { }
 
-  gallery = this.galleryService.read(this.galleryId).subscribe((gallery: any) => {});
+  // gallery = this.galleryService.read(this.galleryId).subscribe((gallery: any) => {});
 
   private artwork!: IArtwork;
-
+galleryId = '';
   ngOnInit() {
-    console.log("TESTING CONSOLE LOGS SSSSSSSSSSSSSSSSSSSSSS" , "TAGSSSSSSSSSSSSSSSSSSSSSSSSSSs");
-    console.log(this.id, "id");
-    console.log(this.user, "user");
-    console.log(this.userString, "userString");
-    const galleryId = this.route.snapshot.paramMap.get('id');
-    console.log(galleryId, "galleryId");
-    
+    const artworkId = this.route.snapshot.paramMap.get('id');
     const url = window.location.protocol + '//' + window.location.host + window.location.pathname;
-    
-    if (url.includes("artwork")) {
+
+    if (url.includes("artwork") && artworkId) {
+
+
       this.isEditing = true;
-      // this.artworkService.read(artworkId).subscribe((artwork: IArtwork) => {
-      //   this.artwork = artwork;
-      //   this.title = artwork.title;
-      //   this.description = artwork.description;
-      //   this.type = artwork.type;
-      //   this.creationDate = artwork.creationDate.toString();
-      //   this.image = artwork.image;
-      // });
+      this.artworkService.read(artworkId).subscribe((artwork: IArtwork) => {
+        this.artwork = artwork;
+        this.title = artwork.title;
+        this.description = artwork.description;
+        this.type = artwork.type;
+        this.creationDate = artwork.creationDate.toString();
+        this.image = artwork.image;
+      });
     }
   }
   
@@ -85,8 +85,6 @@ export class ArtworkEditComponent implements OnInit {
     // Get the gallery ID from the route parameter
     const galleryId = this.route.snapshot.paramMap.get('id');
 
-
-
     // Create a new artwork object
     const newArtwork: IArtwork = {
       _id: new Types.ObjectId().toString(),
@@ -100,10 +98,13 @@ export class ArtworkEditComponent implements OnInit {
 
     // Add the artwork to the database
     this.artworkService.createArtwork(newArtwork).subscribe((result: any) => {
-      // Update the artwork array of the gallery
+
       console.log(result, "result");
+      //pak de gallery
       this.galleryService.read(galleryId).subscribe((gallery: IGallery) => {
+        //add artwork to gallery
         gallery.artworks!.push(result); // Add the new artwork to the array
+        //update gallery
         this.galleryService.updateGallery(gallery).subscribe(() => {
           this.router.navigate(['/gallery', galleryId]);
         });
@@ -118,20 +119,25 @@ export class ArtworkEditComponent implements OnInit {
     console.log("updating artwork clicked in artwork-edit.component.ts", "TAG");
 
     console.log(this.title, "title");
+
+    //HERE
     const updatedArtwork: IArtwork = {
       _id: this.artwork._id,
-      title: this.artwork.title,
-      description: this.artwork.description,
-      type: ArtworkType.painting,
-      creationDate: new Date(),
-      image: this.artwork.image,
+      title: this.title,
+      description: this.description,
+      type: this.type as ArtworkType,
+      creationDate: this.artwork.creationDate,
+      image: this.image,
       userId: this.artwork.userId
     };
 
-    console.log(updatedArtwork)
+    console.log(updatedArtwork, "UPDATED ARTWORK")
     this.artworkService.updateArtwork(updatedArtwork).subscribe(() => {
       this.router.navigate(['/gallery']);
     });
+
+    
+
   }
 
 }

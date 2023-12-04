@@ -5,6 +5,7 @@ export const ArtworkSchema = new Schema({
     description: String,
     creationDate: Date,
     image: String,
+    type: String,
     userId: { type: Schema.Types.ObjectId, ref: 'User' },
     galleryId: { type: Schema.Types.ObjectId, ref: 'Gallery' },
 })

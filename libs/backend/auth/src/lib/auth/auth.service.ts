@@ -70,12 +70,17 @@ export class AuthService {
                 } else {
                     const errMsg = 'Email not found or password invalid';
                     this.logger.debug(errMsg);
-                    throw new UnauthorizedException(errMsg);
+                    throw null;
                 }
             })
             .catch((error) => {
+                console.log("This error reached");
                 return error;
             });
+    }
+
+    subscribeToCurrentUser(callback: (user: IUser | null) => void): void {
+        this.currentUser$.subscribe(callback);
     }
 
     async register(user: CreateUserDto): Promise<IUser> {

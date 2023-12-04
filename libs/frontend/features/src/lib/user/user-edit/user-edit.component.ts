@@ -20,6 +20,8 @@ export class UserEditComponent implements OnInit {
   isEditing = false; // Add a flag to track if editing or creating
   isLogin = false;
 
+  loginFailed = false;
+
   constructor(
     private route: ActivatedRoute,
 
@@ -31,13 +33,8 @@ export class UserEditComponent implements OnInit {
 
   ngOnInit() {
     const userId = this.route.snapshot.paramMap.get('id');
-
     const login = window.location.href.includes('login');
-    //userid means logged in
-    //i need a form for: name, email, password, profile image (create user)
-    //i need a form for: email, password (login)
 
-    //create a new component for login + create -> user-login
     if (login) {
       this.isLogin = true;
     }
@@ -87,16 +84,25 @@ export class UserEditComponent implements OnInit {
       emailAddress: this.email,
       password: this.password,
     };
-    //TODO: this
-    //window.location.href = '/';
 
     localStorage.removeItem('user');
 
-    this.userService.login(loginCred).subscribe((user: IUser) => {
-      localStorage.setItem('user', JSON.stringify(user));
-      // this.router.navigate(['/user']);
-      window.location.href = '/';
-    });
+    this.userService.login(loginCred).subscribe(
+      (user: IUser | null) => {
+        if (user) {
+          console.log(user, 'USER');
+          localStorage.setItem('user', JSON.stringify(user));
+          // this.router.navigate(['/user']);
+          window.location.href = '/';
+        } else {
+          this.loginFailed = true;
+          console.log('Login failed');
+        }
+      },
+      (error) => {
+        console.log('Unauthorized');
+      }
+    );
   }
 
   createUser() {

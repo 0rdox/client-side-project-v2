@@ -128,7 +128,8 @@ const routes: Routes = [
     GalleryListComponent,
     GalleryDetailComponent,
     GalleryEditComponent,
-    ArtworkEditComponent
+    ArtworkEditComponent,
+    ArtworkDetailComponent
   ],
 })
 export class FeaturesModule {}
