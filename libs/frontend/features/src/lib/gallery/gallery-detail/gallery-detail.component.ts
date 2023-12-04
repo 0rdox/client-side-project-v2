@@ -62,7 +62,7 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
             this.user = user;
           });
 
-          if (this.user?._id === this.gallery?.userId) {
+          if ((this.user?._id === this.gallery?.userId) || this.user?.role ==='Admin' ) {
             this.owned = true;
           }
 

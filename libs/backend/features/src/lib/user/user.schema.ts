@@ -3,7 +3,7 @@ import { Document, Schema as MongooseSchema } from 'mongoose';
 // import { v4 as uuid } from 'uuid';
 import isEmail from 'validator/lib/isEmail';
 import {
-    IUser,
+    IUser, UserRole,
 } from '@client-side-project/shared/api';
 import { IsMongoId } from 'class-validator';
 
@@ -11,6 +11,8 @@ export type UserDocument = User & Document;
 
 @Schema()
 export class User implements IUser {
+   
+    role!: UserRole;
    
     
     @Prop({

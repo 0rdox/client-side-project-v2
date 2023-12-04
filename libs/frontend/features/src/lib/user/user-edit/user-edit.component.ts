@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IUser } from '@client-side-project/shared/api';
+import { IUser, UserRole } from '@client-side-project/shared/api';
 import { UserService } from '../user.service';
 import { AuthService } from '@client-side-project/backend/auth';
 import { Types } from 'mongoose';
@@ -71,7 +71,8 @@ export class UserEditComponent implements OnInit {
       email: this.email,
       password: this.user.password,
       profilePicture: this.profilePicture,
-      hasGallery: this.user.hasGallery
+      hasGallery: this.user.hasGallery,
+      role: this.user.role,
     };
     this.userService.updateUser(updatedUser).subscribe(() => {
       this.router.navigate(['/user/' + this.user._id]);
@@ -113,7 +114,8 @@ export class UserEditComponent implements OnInit {
       password: this.password,
       profilePicture: this.profilePicture,
       _id: new Types.ObjectId().toString(),
-      hasGallery: false
+      hasGallery: false,
+      role: UserRole.User,
     };
     this.userService.register(newUser).subscribe(() => {
       this.router.navigate(['/user']);

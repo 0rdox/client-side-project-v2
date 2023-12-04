@@ -7,6 +7,11 @@ import { Id } from './id.type';
 //add location?
 //add bio?
 //add phone number?
+export enum UserRole {
+    Admin = 'Admin',
+    User = 'User',
+    Guest = 'Guest'
+}
 
 
 export interface IUser {
@@ -17,12 +22,13 @@ export interface IUser {
     token?: string
     profilePicture?: string;
     hasGallery: boolean;
+    role: UserRole;
 }
 
 
 export type ICreateUser = Pick<
     IUser,
-    'name' | 'email' | 'password'
+    'name' | 'email' | 'password' 
 >;
 export type IUpdateUser = Partial<Omit<IUser, 'id'>>;
 export type IUpsertUser = IUser;

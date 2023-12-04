@@ -12,6 +12,11 @@ import { IGallery } from '@client-side-project/shared/api';
 })
 export class GalleryListComponent implements OnInit, OnDestroy {
   galleries: IGallery[] | null = null;
+
+
+  //get user from localstorage -> check if userRole is in localStorage if so set isAdmin to true. if IsAdmin there will be a button to create gallery. Admin can CRUD everything
+
+
   subscription: Subscription | undefined = undefined;
   isLoading: boolean = false; // Add isLoading property
 

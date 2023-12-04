@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { IUser } from '@client-side-project/shared/api';
+import { IUser, UserRole } from '@client-side-project/shared/api';
 
 import { BehaviorSubject } from 'rxjs';
 import { Logger } from '@nestjs/common';
@@ -107,7 +107,8 @@ export class UserService {
         const newUser: IUser = {
             ...user,
             _id: id.toString(),
-            hasGallery: false
+            hasGallery: false,
+            role: UserRole.User,
         };
 
         Logger.log(newUser, "newUser")

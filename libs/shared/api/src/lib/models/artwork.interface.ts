@@ -18,7 +18,7 @@ export interface IArtwork {
 
 export type ICreateArtwork = Pick<
     IArtwork,
-    "title" | "description" | "type" | "userId" | "image" | "galleryId"
+    "title" | "description" | "type" | "userId" | "image" | "galleryId" 
 >;
 export type IUpdateArtwork = Partial<Omit<IArtwork, 'id'>>;
 export type IUpsertArtwork = IArtwork;
