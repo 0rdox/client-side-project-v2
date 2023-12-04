@@ -10,7 +10,7 @@ import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({ 
-  imports: [UserModule, GalleryModule, ArtworkModule, /*ListModule*/, AuthModule, MongooseModule.forRootAsync({
+  imports: [UserModule, GalleryModule, ArtworkModule, /*ListModule,*/ AuthModule, MongooseModule.forRootAsync({
     useFactory: () => ({
       // uri: 'mongodb://127.0.0.1/client-side-project',
       uri: 'mongodb+srv://janko:janko123@cluster0.1ph1wwi.mongodb.net/client-side-project',

@@ -1,4 +1,6 @@
-<client-side-project-spinner *ngIf="isLoading"></client-side-project-spinner>
+<div *ngIf="isLoading" class="flex items-center justify-center" style="height: 100vh;">
+    <client-side-project-spinner></client-side-project-spinner>
+</div>
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-3">
     <a *ngFor="let gallery of galleries" [routerLink]="['/gallery', gallery._id]" class="gallery-box m-3">

@@ -22,6 +22,7 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
   user: IUser | undefined;
   owned = false;
 
+  admin = false;
   hasGallery = false;
 
   constructor(
@@ -62,7 +63,10 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
             this.user = user;
           });
 
-          if ((this.user?._id === this.gallery?.userId) || this.user?.role ==='Admin' ) {
+          if (this.user?.role === 'Admin') {
+            this.admin = true;
+          }
+          if ((this.user?._id === this.gallery?.userId) ) {
             this.owned = true;
           }
 
@@ -106,7 +110,7 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
         .updateGallery(this.gallery)
         .subscribe(() => console.log('Gallery updated'));
     }
-    // this.router.navigate(['/gallery']);
+    this.router.navigate(['/gallery']);
   }
 
   onClaim() {

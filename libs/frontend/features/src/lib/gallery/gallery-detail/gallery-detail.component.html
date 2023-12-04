@@ -8,15 +8,19 @@
 
 <!-- TODO: CHANGE '1' TO LOGGED IN USER -->
 <div class="flex justify-center space-x-4">
-    <button *ngIf="owned" routerLink="/gallery/{{gallery?._id}}/edit" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">
+    <button *ngIf="owned || admin" routerLink="/gallery/{{gallery?._id}}/edit" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">
         Edit Gallery
     </button>
 
-    <button *ngIf="owned" routerLink="/gallery/{{gallery?._id}}/add" class="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md">
+    <button *ngIf="owned || admin" routerLink="/gallery/{{gallery?._id}}/add" class="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md">
         Add Artwork
     </button>
 
-    <button *ngIf="owned" class="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md" (click)="onLeave()">
+    <button *ngIf="admin" class="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md" (click)="onLeave()">
+    Remove User
+    </button>
+
+    <button *ngIf="owned && !admin" class="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md" (click)="onLeave()">
         Leave Gallery
     </button>
 

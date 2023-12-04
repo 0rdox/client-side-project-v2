@@ -23,7 +23,7 @@ export class ArtworkDetailComponent implements OnInit, OnDestroy {
   user: IUser | undefined;
   owned = false;
   hasArtwork = false;
-
+admin = false;
   canEdit = false;
 
   constructor(
@@ -41,6 +41,7 @@ export class ArtworkDetailComponent implements OnInit, OnDestroy {
     const userString = localStorage.getItem('user');
     this.user = userString ? JSON.parse(userString) : undefined;
     
+
     //use this instead of api call?
     console.log(this.user, 'USER FROM LOCAL STORAGE');
 
@@ -69,6 +70,11 @@ export class ArtworkDetailComponent implements OnInit, OnDestroy {
           if (this.user?._id === this.artwork?.userId) {
             this.owned = true;
             this.canEdit = true
+          }
+
+          console.log(this.user?.role, 'USER ROLE');
+          if (this.user?.role === 'Admin') {
+            this.admin = true;
           }
 
           console.log(this.user?._id, 'USER ID');
