@@ -3,7 +3,7 @@
 
 name: Build and deploy a Node.js app and an Angular app to an Azure
 env:
-  AZURE_data-api_NAME: 'Client-Side-Api'
+  AZURE_data-api_NAME: 'client-side-api-2'
   
 on:
   push:
@@ -102,5 +102,5 @@ jobs:
         with:
           app-name: '${{ env.AZURE_data-api_NAME}}'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.NEXTJS_PUBLISHPROFILE }}
+          publish-profile: ${{ secrets.NEXTJS_PUBLISHPROFILE_2 }}
           package: .
