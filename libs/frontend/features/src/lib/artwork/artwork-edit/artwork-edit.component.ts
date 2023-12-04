@@ -84,7 +84,7 @@ galleryId = '';
 
     // Get the gallery ID from the route parameter
     const galleryId = this.route.snapshot.paramMap.get('id');
-
+this.galleryId = galleryId!;
     // Create a new artwork object
     const newArtwork: IArtwork = {
       _id: new Types.ObjectId().toString(),
@@ -94,6 +94,7 @@ galleryId = '';
       creationDate: new Date(),
       image: this.image,
       userId: this.id,
+      galleryId: this.galleryId
     };
 
     // Add the artwork to the database
@@ -120,7 +121,6 @@ galleryId = '';
 
     console.log(this.title, "title");
 
-    //HERE
     const updatedArtwork: IArtwork = {
       _id: this.artwork._id,
       title: this.title,
@@ -128,7 +128,8 @@ galleryId = '';
       type: this.type as ArtworkType,
       creationDate: this.artwork.creationDate,
       image: this.image,
-      userId: this.artwork.userId
+      userId: this.artwork.userId,
+      galleryId: this.artwork.galleryId
     };
 
     console.log(updatedArtwork, "UPDATED ARTWORK")
@@ -136,8 +137,20 @@ galleryId = '';
       this.router.navigate(['/gallery']);
     });
 
-    
+    this.galleryService.read(this.artwork.galleryId).subscribe((gallery: IGallery) => {
+      // Update the artwork in the gallery
+      const artworkIndex = gallery.artworks!.findIndex((artwork: IArtwork) => artwork._id === updatedArtwork._id);
+      if (artworkIndex !== -1) {
+        gallery.artworks![artworkIndex] = updatedArtwork;
+      }
+      console.log(artworkIndex, "artworkIndex");
+      console.log(gallery.artworks, "gallery.artworks");
 
+      // Update the gallery
+      this.galleryService.updateGallery(gallery).subscribe(() => {
+        this.router.navigate(['/gallery', this.artwork.galleryId]);
+      });
+    });
   }
 
 }

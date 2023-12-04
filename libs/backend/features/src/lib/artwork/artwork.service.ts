@@ -31,7 +31,7 @@ export class ArtworkService {
 
     //todo: this
     //create -> userId out of localstorage
-    async create(artwork: Pick<IArtwork, 'title' | 'description' | 'type' | 'image'| 'userId' >): Promise<IArtwork> {
+    async create(artwork: Pick<IArtwork, 'title' | 'description' | 'type' | 'image'| 'userId' | 'galleryId' >): Promise<IArtwork> {
         Logger.log('create', this.TAG);
         const newArtwork = new this.artworkModel({
             ...artwork,

@@ -2,6 +2,8 @@ import { IsNotEmpty, IsString, IsOptional, IsDate } from 'class-validator';
 import { ArtworkType, ICreateArtwork, IUpdateArtwork, IUpsertArtwork, IUser } from '@client-side-project/shared/api';
 
 export class CreateArtworkDto implements ICreateArtwork {
+    galleryId!: string;
+    
     @IsString()
     @IsNotEmpty()
     title!: string;
@@ -18,7 +20,7 @@ export class CreateArtworkDto implements ICreateArtwork {
     userId!: string ;
 
     image!: string;
- 
+  
 }
 
 export class UpsertArtworkDto implements IUpsertArtwork {
@@ -29,7 +31,7 @@ export class UpsertArtworkDto implements IUpsertArtwork {
     type!: ArtworkType;
     creationDate!: Date;
     image!: string;
-    galleryId?: string | undefined;
+    galleryId!: string;
 }
 
 export class UpdateArtworkDto implements IUpdateArtwork {
@@ -40,5 +42,5 @@ export class UpdateArtworkDto implements IUpdateArtwork {
     creationDate!: Date;
     image!: string;
     user!: IUser | null;
-    galleryId?: string | undefined;
+    galleryId!: string;
 }
