@@ -2,6 +2,7 @@ import { IArtwork } from './artwork.interface';
 import { Id } from './id.type';
 
 
+//sterke entiteit
 export interface IGallery {
     _id: Id;
     name: string;

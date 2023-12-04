@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
-import { User as UserModel, UserDocument } from './user.schema';
+import { User as UserModel, UserDocument } from './schema/user.schema';
 
 @Injectable()
 export class UserService {

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ArtworkController } from './artwork.controller';
 import { ArtworkService } from './artwork.service';
-import { ArtworkSchema } from './schemas/artwork.schema';
+import { ArtworkSchema } from './schema/artwork.schema';
 import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({

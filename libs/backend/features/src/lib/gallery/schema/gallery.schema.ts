@@ -1,5 +1,5 @@
 import { Schema} from 'mongoose';
-import { ArtworkSchema } from '../../artwork/schemas/artwork.schema';
+import { ArtworkSchema } from '../../artwork/schema/artwork.schema';
 export const GallerySchema = new Schema({
     _id: Schema.Types.ObjectId,
     name: String,
