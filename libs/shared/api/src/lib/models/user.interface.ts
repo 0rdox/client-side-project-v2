@@ -3,6 +3,12 @@ import { Id } from './id.type';
 
 
 
+//add age?
+//add location?
+//add bio?
+//add phone number?
+
+
 export interface IUser {
     _id: Id;
     name: string;

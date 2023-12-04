@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GalleryService } from '../gallery.service';
 import { IGallery } from '@client-side-project/shared/api';
+import { Types } from 'mongoose';
 
 @Component({
   selector: 'client-side-project-gallery-edit',
@@ -56,7 +57,7 @@ export class GalleryEditComponent implements OnInit {
   createGallery() {
     console.log("creating gallery clicked in gallery-edit.component.ts", "TAG");
     const newGallery: IGallery = {
-      _id: 'undefined',
+      _id: new Types.ObjectId().toString(),
       name: this.name,
       location: this.location,
       userId: this.userId,

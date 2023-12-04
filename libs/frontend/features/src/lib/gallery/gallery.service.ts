@@ -78,26 +78,18 @@ private galleries$ = new BehaviorSubject<IGallery[]>([]);
 
 
 
-    public createGallery(Gallery: ICreateGallery | null): Observable<boolean> {
-       console.log("CREATE Gallery CLICKED", "TAG");
-       
-        // if (Gallery == null) {
-        //     return of(false);
-        // }
-
-        // //LASTGallery
-        // const lastGallery = this.galleries$.value[this.galleries$.value.length - 1];
-
-        // // Create a new Gallery object with the provided properties
-        // const newGallery: IGallery = {
-        //     id: String(Number(lastGallery.id) + 1),
-        //     name: '',
-        //     location: '',
-        //     image: ''
-        // };
-
-        // this.galleries$.next([...this.galleries$.value, newGallery]);
-         return of(true);
+    public createGallery(gallery: ICreateGallery, options?: any ): Observable<boolean> {
+        console.log("CREATE gallery CLICKED", "TAG");
+        return this.http
+            .post<ApiResponse<IGallery>>(`${this.endpoint}`, gallery, {
+                ...options,
+                ...httpOptions,
+            })
+            .pipe(
+                tap(console.log),
+                map((response: any) => response.results),
+                catchError(this.handleError)
+            );
     }
    
 

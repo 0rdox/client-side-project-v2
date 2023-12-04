@@ -62,8 +62,7 @@ export class UserService {
     
     //database
     async findAll(): Promise<IUser[]> {
-        // this.logger.log(`Finding all items`);
-        const items = await this.userModel.find();
+        const items = await this.userModel.find().sort({ name: 1 });
         return items;
     }
 

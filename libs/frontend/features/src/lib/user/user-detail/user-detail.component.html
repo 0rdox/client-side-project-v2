@@ -7,7 +7,9 @@
         <div class="text-center mt-4">
             <p class="text-lg font-bold mb-2">{{ users?.name }} [{{users?._id}}]</p>
             <p class="text-gray-700">{{ users?.email }}</p>
-            <p class="text-gray-700">hasGallery: {{ users?.hasGallery }}</p>
+            <p class="text-gray-700">
+                {{ users?.hasGallery ? "does have a gallery" : "doesn't have a gallery" }}
+            </p>
         </div>
     </div>
 </div>
