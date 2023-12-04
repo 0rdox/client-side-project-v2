@@ -139,6 +139,7 @@ this.galleryId = galleryId!;
 
     this.galleryService.read(this.artwork.galleryId).subscribe((gallery: IGallery) => {
       // Update the artwork in the gallery
+    
       const artworkIndex = gallery.artworks!.findIndex((artwork: IArtwork) => artwork._id === updatedArtwork._id);
       if (artworkIndex !== -1) {
         gallery.artworks![artworkIndex] = updatedArtwork;

@@ -2,13 +2,14 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, switchMap } from 'rxjs';
 
-import { IArtwork } from '@client-side-project/shared/api';
+import { IArtwork, IGallery } from '@client-side-project/shared/api';
 import { ArtworkService } from '../artwork.service';
 import { UserService } from '@client-side-project/frontend/features';
 import { IUser } from '@client-side-project/shared/api';
 import { Observable } from 'rxjs';
 //import { ArtworkService as backendArtworkService } from 'libs/backend/features/src/lib/artwork/artwork.service';
 import mongoose from 'mongoose';
+import { GalleryService } from '../../gallery/gallery.service';
 
 @Component({
   selector: 'client-side-project-artwork-detail',
@@ -29,6 +30,7 @@ export class ArtworkDetailComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private artworkService: ArtworkService,
     private userService: UserService,
+    private galleryService: GalleryService,
     private router: Router
   ) {}
 
@@ -80,16 +82,36 @@ export class ArtworkDetailComponent implements OnInit, OnDestroy {
     if (this.subscription) this.subscription.unsubscribe();
   }
 
-  // onDelete() {
-  //   if (this.artwork) {
-  //     this.artworkService.removeArtwork(this.artwork._id).subscribe(() => console.log("Artwork Deleted"));
-  //   }
-  //   this.router.navigate(['/artwork']);
-  // }
+  onDelete() {
+    const galleryId = this.artwork?.galleryId;
 
- 
+    if (this.artwork) {
+      this.artworkService.removeArtwork(this.artwork._id).subscribe(() => {
+        console.log("Artwork Deleted");
+
+        if (galleryId) {
+          this.galleryService.read(galleryId).subscribe((gallery: IGallery) => {
+            // Remove the artwork from the gallery
+            const artworkIndex = gallery.artworks!.findIndex((artwork: IArtwork) => artwork._id === this.artwork!._id);
+           
+            console.log(artworkIndex, "ARTWORK INDEX")
+            console.log(gallery.artworks, "GALLERY ARTWORKS")
+            if (artworkIndex !== -1) {
+              gallery.artworks!.splice(artworkIndex, 1);
+            }
 
 
+            console.log(gallery.artworks, "GALLERY ARTWORKS AFTER SPLICE")
+            // Update the gallery
+            this.galleryService.updateGallery(gallery).subscribe(() => {
+              this.router.navigate(['/gallery', galleryId]);
+            });
+          });
+        }
+      });
+    }
+
+   }
 
   getUserById(id: string): Observable<IUser> {
     console.log(this.userService.read(id), 'USER FROM ARTWORK');
