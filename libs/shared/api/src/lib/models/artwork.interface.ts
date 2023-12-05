@@ -3,6 +3,8 @@ import { IUser } from './user.interface';
 
 export enum ArtworkType {
     painting = "Painting",
+    sculpture = "Sculpture",
+    photograph = "Photograph",
 }
 
 export interface IArtwork {

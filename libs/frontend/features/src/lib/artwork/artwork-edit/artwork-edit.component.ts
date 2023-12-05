@@ -104,7 +104,7 @@ this.galleryId = galleryId!;
       //pak de gallery
       this.galleryService.read(galleryId).subscribe((gallery: IGallery) => {
         //add artwork to gallery
-        gallery.artworks!.push(result); // Add the new artwork to the array
+        gallery.artworks!.push(result); 
         //update gallery
         this.galleryService.updateGallery(gallery).subscribe(() => {
           this.router.navigate(['/gallery', galleryId]);
