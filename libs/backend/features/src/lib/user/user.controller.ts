@@ -15,8 +15,8 @@ export class UserController {
     @ApiOperation({ summary: 'Get all Users' })
     @ApiResponse({ status: 200, description: 'Returns all Users.'})
     @ApiResponse({ status: 400, description: 'Bad Request.'})
-    getAll(): Promise<IUser[]> {
-        return this.UserService.findAll();
+   async getAll(): Promise<IUser[]> {
+        return await this.UserService.findAll();
     }
 
 
@@ -46,10 +46,11 @@ export class UserController {
     @ApiOperation({ summary: 'Delete a User by ID' })
     @ApiParam({ name: 'id', description: 'The ID of the User to delete', type: 'string'})
     @ApiResponse({ status: 200, description: 'Deletes a User by ID.'})
-    delete(@Param('id') id: string): void {
-        console.log("USER DELETION USER.CONTROLLER");
-        this.UserService.delete(id);
+    async delete(@Param('id') id: string): Promise<void> {
+       await this.UserService.delete(id);
     }
+
+    
 
     @Put(':id')
     @ApiOperation({ summary: 'Update a User by ID' })

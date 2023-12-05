@@ -120,23 +120,19 @@ export class UserService {
 
 
     //todo: double check if this is correct
-    delete(id: string): IUser {
-        
-
-        
-        // Logger.log(`delete(${id})`, this.TAG);
-        // const current = this.Users$.value;
-        // const userIndex = current.findIndex((user) => user._id === id);
-
-        // if (userIndex === -1) {
-        //     throw new NotFoundException(`User could not be found!`);
-        // }
-
-
-        // const deletedUser = current.splice(userIndex, 1)[0];
-        // this.Users$.next(current);
-        return null as unknown as IUser;
+    async delete(id: string): Promise<void> {
+        Logger.log(`delete(${id})`, this.TAG);
+        const gallery = await this.userModel.findOne({ _id: id }).exec();
+        if (!gallery) {
+            throw new NotFoundException(`Gallery could not be found!`);
+        }
+        await this.userModel.deleteOne({ _id: id }).exec();
     }
+
+    
+
+    
+
       
      //todo: double check if this is correct
     async update(id: string, user: Partial<IUser>): Promise<IUser> {

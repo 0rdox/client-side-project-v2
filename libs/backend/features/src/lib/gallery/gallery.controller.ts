@@ -13,8 +13,8 @@ export class GalleryController {
     @ApiOperation({ summary: 'Get all Galleries' })
     @ApiResponse({ status: 200, description: 'Returns all Galleries.'})
     @ApiResponse({ status: 400, description: 'Bad Request.'})
-    getAll(): Promise<IGallery[]> {
-        return this.galleryService.getAll();
+   async getAll(): Promise<IGallery[]> {
+        return await this.galleryService.getAll();
     }
 
     //remove promise for not db connection
@@ -53,8 +53,8 @@ export class GalleryController {
     }
 
 
-    //
-    @Get('user/:userId/claimed')
+    //maybe change this to get gallery from user?
+    @Get('user/:userId/')
     @ApiOperation({ summary: 'Check if a user has a claimed gallery' })
     @ApiParam({ name: 'userId', description: 'The ID of the user', type: 'string'})
     @ApiResponse({ status: 200, description: 'Returns true if the user has a claimed gallery, false otherwise.'})

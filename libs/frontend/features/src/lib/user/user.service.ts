@@ -19,7 +19,7 @@ export const httpOptions = {
 
 @Injectable()
 export class UserService {
-    endpoint = environment.dataApiUrl + '/user';
+  endpoint = environment.dataApiUrl + '/user';
 
   constructor(private readonly http: HttpClient) {}
 
@@ -62,8 +62,6 @@ export class UserService {
       );
   }
 
-
-
   public login(user: IUserCredentials, options?: any): Observable<IUser> {
     return this.http
       .post<ApiResponse<IUser>>(`${environment.dataApiUrl}/auth/login`, user, {
@@ -78,10 +76,14 @@ export class UserService {
   }
   public register(user: IUser, options?: any): Observable<boolean> {
     return this.http
-      .post<ApiResponse<IUser>>(`${environment.dataApiUrl}/auth/register`, user, {
-        ...options,
-        ...httpOptions,
-      })
+      .post<ApiResponse<IUser>>(
+        `${environment.dataApiUrl}/auth/register`,
+        user,
+        {
+          ...options,
+          ...httpOptions,
+        }
+      )
       .pipe(
         tap(console.log),
         map((response: any) => response.results),
@@ -102,7 +104,9 @@ export class UserService {
   }
 
   public removeUser(id: string, options?: any): Observable<void> {
-    console.log('DELETE USER');
+    console.log(`delete ${this.endpoint}/${id}`);
+    
+
 
     return this.http
       .delete(`${this.endpoint}/${id}`, {
@@ -115,8 +119,6 @@ export class UserService {
         catchError(this.handleError)
       );
   }
-
- 
 
   public handleError(error: HttpErrorResponse): Observable<any> {
     return throwError(() => new Error(error.message));

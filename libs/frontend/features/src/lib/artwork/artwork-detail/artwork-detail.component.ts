@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, switchMap } from 'rxjs';
 
-import { IArtwork, IGallery } from '@client-side-project/shared/api';
+import { IArtwork, IGallery, IList } from '@client-side-project/shared/api';
 import { ArtworkService } from '../artwork.service';
 import { UserService } from '@client-side-project/frontend/features';
 import { IUser } from '@client-side-project/shared/api';
@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 //import { ArtworkService as backendArtworkService } from 'libs/backend/features/src/lib/artwork/artwork.service';
 import mongoose from 'mongoose';
 import { GalleryService } from '../../gallery/gallery.service';
+import { ListService } from '../../list/list.service';
 
 @Component({
   selector: 'client-side-project-artwork-detail',
@@ -26,11 +27,15 @@ export class ArtworkDetailComponent implements OnInit, OnDestroy {
 admin = false;
   canEdit = false;
 
+lists!: IList[];
+
+
   constructor(
     private route: ActivatedRoute,
     private artworkService: ArtworkService,
     private userService: UserService,
     private galleryService: GalleryService,
+    private listService: ListService,
     private router: Router
   ) {}
 
@@ -42,6 +47,16 @@ admin = false;
     this.user = userString ? JSON.parse(userString) : undefined;
     
 
+
+
+    this.listService.listForUser(this.user?._id!).subscribe((lists) => {
+      if (lists) {
+        this.lists = lists;
+        console.log(this.lists, 'LISTS');
+      }
+    });
+
+
     //use this instead of api call?
     console.log(this.user, 'USER FROM LOCAL STORAGE');
 
@@ -49,6 +64,8 @@ admin = false;
       this.user = user;
       console.log(user, 'USER FROM API');
     });
+
+
 
     console.log(this.user, 'USER FROM LOCAL STORAGE');
     
@@ -82,6 +99,54 @@ admin = false;
         }
       });
 
+  }
+
+  onLike() {
+    console.log(this.artwork, "ARTWORK");
+  }
+  showModal = false;
+  openModal(): void {
+    this.showModal = true;
+  }
+
+
+  selectedList!: string;
+
+  //save artwork to list
+  closeModal(): void {
+    this.showModal = false
+  }
+
+  addToList(): void {
+    console.log(this.selectedList, 'SELECTED LIST');
+    this.showModal = false;
+
+
+
+    const userString = localStorage.getItem('user');
+    const user = userString ? JSON.parse(userString) : undefined;
+    
+
+    const userId = this.user?._id ?? null;
+    console.log(userId, "USER ID CONST");
+
+
+    this.listService.listForUser(user._id).subscribe((lists) => {
+      const matchingList = lists!.find((list) => list.title = this.selectedList);
+
+      console.log(lists, "LISTS");
+
+
+      console.log(matchingList, "MATCHING LIST")
+      if (matchingList) {
+        console.log("list match")
+        console.log(this.artwork, "ARTWORK");
+        matchingList.artworks?.push(this.artwork!);
+        this.listService.updateList(matchingList).subscribe(() => {
+
+        });
+      }
+    });
   }
 
   ngOnDestroy(): void {

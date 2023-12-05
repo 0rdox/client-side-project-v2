@@ -14,13 +14,12 @@ import { Observable } from 'rxjs';
 export class HeaderComponent implements OnInit {
   user: IUser | null | undefined;
 
-  constructor(private router: Router, private cdr: ChangeDetectorRef) {
+  constructor(private router: Router) {
  }
   ngOnInit(): void {
     const userString = localStorage.getItem('user');
     this.user = userString ? JSON.parse(userString) : null;
     
-
     //subscribe to user in auth service, zal user updaten in header
   }
 

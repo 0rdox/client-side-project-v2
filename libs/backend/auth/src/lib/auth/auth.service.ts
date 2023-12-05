@@ -60,13 +60,13 @@ export class AuthService {
                         user_id: user._id
                     };
                     this.currentUser$.next(user);
-                    return {
-                        _id: user._id,
-                        name: user.name,
-                        email: user.email,
-                        role: user.role,
-                        token: this.jwtService.sign(payload)
-                    };
+                        return {
+                            _id: user._id,
+                            name: user.name,
+                            email: user.email,
+                            role: user.role,
+                            token: this.jwtService.sign(payload)
+                        };
                 } else {
                     const errMsg = 'Email not found or password invalid';
                     this.logger.debug(errMsg);

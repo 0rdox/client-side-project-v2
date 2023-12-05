@@ -32,7 +32,9 @@ export class UserDetailComponent implements OnInit, OnDestroy {
     ).subscribe((results) => {
       console.log(`results: ${JSON.stringify(results)}`);
       this.users = results;
-      this.canEdit = this.users?._id === this.user._id; // Check if user.id matches localStorage
+      console.log(this.user?.role, 'USER ROLE')
+      console.log(this.user, 'USER');
+      this.canEdit = this.users?._id === this.user?._id || this.user?.role === 'admin';
     });
   }
 
@@ -42,9 +44,21 @@ export class UserDetailComponent implements OnInit, OnDestroy {
 
   onDelete() {
     if (this.users) {
-      this.UserService.removeUser(this.users._id).subscribe(() => console.log("user deleted"));   
+      if (this.users._id === this.user._id) {
+        localStorage.removeItem('user');
+        
+        this.UserService.removeUser(this.users._id).subscribe(() => {
+          console.log("user deleted");
+          //TODO: this
+          window.location.href = '/';
+          // this.router.navigate(['/user']);
+        });
+      } else {
+        this.UserService.removeUser(this.users._id).subscribe(() => {
+          console.log("user deleted");
+        this.router.navigate(['/user']);
+        });
+      }
     }
-
-    this.router.navigate(['/user']);
   }
 }

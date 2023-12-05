@@ -1,10 +1,11 @@
 <div class="component edit">
     <div class="flex flex-col items-center justify-center h-screen">
         <div class="w-full max-w-md">
-            <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <form #form="ngForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                 <h2 class="text-center text-xl font-bold mb-4" *ngIf="!isEditing && !isLogin">Create Account</h2>
                 <h2 class="text-center text-xl font-bold mb-4" *ngIf="isLogin">Login</h2>
                 <h2 class="text-center text-xl font-bold mb-4" *ngIf="isEditing">Edit Account</h2>
+                <!-- LOGIN -->
                 <div class="mb-4" *ngIf="isLogin">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
                         Email Address
@@ -17,24 +18,43 @@
                     </label>
                     <input [(ngModel)]="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" name="password" type="password" placeholder="Your password" />
                     <p class="text-red-500" *ngIf="loginFailed">User credentials incorrect</p>
-
                 </div>
+
+
+
+                <!-- CREATE ACCOUNT -->
                 <div class="mb-4" *ngIf="!isLogin">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="profile-picture"> Name
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="name"> Name
                     </label>
-                    <input [(ngModel)]="name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" name="name" type="text" placeholder="Your name" />
+                    <input [(ngModel)]="name" #nameField="ngModel" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" name="name" type="text" placeholder="Your name" required />
+                    <div *ngIf="nameField.invalid && (nameField.dirty || nameField.touched)" class="text-red-500 text-xs mt-1">
+                        <span *ngIf="nameField.errors && nameField.errors['required']">Name is required.</span>
+
+                    </div>
                 </div>
                 <div class="mb-4" *ngIf="!isLogin">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
                         Email Address
                     </label>
-                    <input [(ngModel)]="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" name="email" type="email" placeholder="Your email address" />
+                    <input [(ngModel)]="email" #emailField="ngModel" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" name="email" type="email" placeholder="Your email address" required
+                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" />
+                    <div *ngIf="emailField.invalid && (emailField.dirty || emailField.touched)" class="text-red-500 text-xs mt-1">
+                        <span *ngIf="emailField.errors && emailField.errors['required']">Email is required.</span>
+                        <span *ngIf="emailField.errors && emailField.errors['pattern']">Invalid email format.</span>
+                    </div>
                 </div>
                 <div class="mb-4" *ngIf="!isLogin">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
                         Password
                     </label>
-                    <input [(ngModel)]="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" name="password" type="password" placeholder="Your password" />
+                    <input [(ngModel)]="password" #passwordField="ngModel" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" name="password" type="password" placeholder="Your password"
+                        required minlength="6" />
+                    <div *ngIf="passwordField.invalid && (passwordField.dirty || passwordField.touched)" class="text-red-500 text-xs mt-1">
+                        <span *ngIf="passwordField.errors && passwordField.errors['required']">Password is
+                            required.</span>
+                        <span *ngIf="passwordField.errors && passwordField.errors['minlength']">Password must be at
+                            least 6 characters long.</span>
+                    </div>
                 </div>
                 <div class="mb-4" *ngIf="!isLogin">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="profile-picture">
@@ -44,7 +64,7 @@
                     />
                 </div>
                 <div class="flex items-center justify-between">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" (click)="saveUser()">
+                    <button [disabled]="form.invalid" [class.bg-blue-500]="!form.invalid" [class.bg-gray-500]="form.invalid" class="hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" (click)="saveUser()">
                         Save
                     </button>
                     <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#" routerLink="/home">

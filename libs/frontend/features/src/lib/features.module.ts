@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 
-
 import { UserListComponent } from './user/user-list/user-list.component';
 import { UserDetailComponent } from './user/user-detail/user-detail.component';
 import { UserService } from './user/user.service';
@@ -20,6 +19,10 @@ import { UiModule } from '@client-side-project/frontend/ui';
 import { ArtworkEditComponent } from './artwork/artwork-edit/artwork-edit.component';
 import { ArtworkService } from './artwork/artwork.service';
 import { ArtworkDetailComponent } from './artwork/artwork-detail/artwork-detail.component';
+import { ListListComponent } from './list/list-list/list-list.component';
+import { ListDetailComponent } from './list/list-detail/list-detail.component';
+import { ListEditComponent } from './list/list-edit/list-edit.component';
+import { ListService } from './list/list.service';
 
 const routes: Routes = [
   {
@@ -49,7 +52,7 @@ const routes: Routes = [
         path: ':id/edit',
         pathMatch: 'full',
         component: UserEditComponent,
-      }
+      },
     ],
   },
   {
@@ -81,11 +84,12 @@ const routes: Routes = [
         component: ArtworkEditComponent,
       },
     ],
-  }, {
+  },
+  {
     path: 'artwork',
     children: [
       {
-        path:':id',
+        path: ':id',
         pathMatch: 'full',
         component: ArtworkDetailComponent,
       },
@@ -94,8 +98,33 @@ const routes: Routes = [
         pathMatch: 'full',
         component: ArtworkEditComponent,
       },
-    ]
-  }
+    ],
+  },
+  {
+    path: 'list',
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        component: ListListComponent,
+      },
+      {
+        path: 'new',
+        pathMatch: 'full',
+        component: ListEditComponent,
+      },
+      {
+        path: ':id',
+        pathMatch: 'full',
+        component: ListDetailComponent,
+      },
+      {
+        path: ':id/edit',
+        pathMatch: 'full',
+        component: ListEditComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
@@ -110,26 +139,34 @@ const routes: Routes = [
     UserListComponent,
     UserDetailComponent,
     UserEditComponent,
+
     GalleryListComponent,
     GalleryDetailComponent,
     GalleryEditComponent,
+
     ArtworkEditComponent,
-    ArtworkDetailComponent
+    ArtworkDetailComponent,
+
+    ListListComponent,
+    ListDetailComponent,
+    ListEditComponent,
   ],
-  providers: [
-    UserService,
-    GalleryService,
-    ArtworkService
-  ],
+  providers: [UserService, GalleryService, ArtworkService, ListService],
   exports: [
     UserListComponent,
     UserDetailComponent,
     UserEditComponent,
+
     GalleryListComponent,
     GalleryDetailComponent,
     GalleryEditComponent,
+
     ArtworkEditComponent,
-    ArtworkDetailComponent
+    ArtworkDetailComponent,
+
+    ListListComponent,
+    ListDetailComponent,
+    ListEditComponent,
   ],
 })
 export class FeaturesModule {}

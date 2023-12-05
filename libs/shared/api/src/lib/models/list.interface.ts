@@ -7,15 +7,17 @@ export enum ListType {
 }
 
 export interface IList {
+    _id: Id;
     title: string;
     description: string;
     userId: Id;
-    artworks: IArtwork[];
+    image: string;
+    artworks?: IArtwork[];
 }
 
 export type ICreateList = Pick<
     IList,
-    'title' | 'description' | 'userId' 
+    'title' | 'description' | 'userId' | 'image' 
 >;
 export type IUpdateList = Partial<Omit<IList, 'id'>>;
 export type IUpsertList = IList;

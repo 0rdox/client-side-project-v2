@@ -11,6 +11,7 @@ export interface IUserCredentials {
  */
 export interface IUserRegistration extends IUserCredentials {
     name: string;
+    
 }
 
 export interface IToken {

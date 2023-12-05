@@ -3,14 +3,11 @@
     <h1 class="text-3xl font-bold">Angular ProjectCasus</h1>
     <p>Deze webapplicatie is gemaakt in het kader van Client-Side Web Development, individueel project</p>
     <br>
-    <p >In deze applicatie hebben kunstenaars de mogelijkheid om een galerij te huren, waardoor ze hun
-        kunstwerken zowel op locatie als online kunnen presenteren. Wanneer een kunstenaar een galerij
-        huurt, krijgen ze de optie om hun kunstwerken binnen de app toe te voegen aan de gehuurde galerij.
-        Ook zijn gebruikers in staat om andermans kunstwerken op te slaan in zelf gemaakte lijsten om ze
-        gemakkelijk terug te kunnen vinden. Het doel van deze applicatie is om kunstenaars de mogelijkheid
-        te geven hun kunstwerken op nieuwe manieren te delen met anderen
+    <p>In deze applicatie hebben kunstenaars de mogelijkheid om een galerij te huren, waardoor ze hun kunstwerken zowel op locatie als online kunnen presenteren. Wanneer een kunstenaar een galerij huurt, krijgen ze de optie om hun kunstwerken binnen de app
+        toe te voegen aan de gehuurde galerij. Ook zijn gebruikers in staat om andermans kunstwerken op te slaan in zelf gemaakte lijsten om ze gemakkelijk terug te kunnen vinden. Het doel van deze applicatie is om kunstenaars de mogelijkheid te geven
+        hun kunstwerken op nieuwe manieren te delen met anderen
     </p>
-  
+
     <h2 class="text-xl font-bold">Functional Requirements</h2>
     <p>De applicatie biedt de onderstaande functionaliteiten:</p>
 
@@ -142,8 +139,8 @@
     </div>
 
     <h2 class="text-xl font-bold">Entiteiten</h2>
-   
-<div>
+
+    <div>
         <table class="table-auto border-collapse border border-gray-400 mt-4 mb-4 mx-2" style="float: left;">
             <thead>
                 <tr class="bg-gray-200">
@@ -248,20 +245,25 @@
         </table>
         <div style="clear: both;"></div>
     </div>
-   
+
 
     <h2 class="text-xl font-bold">Datamodel / ERD</h2>
-    <p>Hier onder is mijn ERD te zien. Deze applicatie heeft de entiteiten User, Galerij, Kunstwerk en Lijst.
-        In dit geval zijn Galerij en Kunstwerk beide sterke entiteiten. Ik had overwogen om Kunstwerk een zwakke entiteit te maken, maar ik heb uiteindelijk besloten om het zijn eigen ID te geven voor gemak tijdens het ontwikkelen. Lijst daarentegen is wel een zwakke entiteit, aangezien dit afhankelijk is van de UserId. De lijst kan niet bestaan zonder een User, een user moet in dit geval ook unieke namen hebben voor hun lijsten.
-        
-        De veel op veel relatie ligt tussen Lijst en Kunstwerk. Binnen een lijst kunnen zich meerdere kunstwerken bevinden en een kunstwerk kan in meerdere lijsten voorkomen.
-        </p>
+    <p>Hier onder is mijn ERD te zien. Deze applicatie heeft de entiteiten User, Galerij, Kunstwerk en Lijst. In dit geval zijn Galerij en Kunstwerk beide sterke entiteiten. Ik had overwogen om Kunstwerk een zwakke entiteit te maken, maar ik heb uiteindelijk
+        besloten om het zijn eigen ID te geven voor gemak tijdens het ontwikkelen. Lijst daarentegen is wel een zwakke entiteit, aangezien dit afhankelijk is van de UserId. De lijst kan niet bestaan zonder een User, een user moet in dit geval ook unieke
+        namen hebben voor hun lijsten. De veel op veel relatie ligt tussen Lijst en Kunstwerk. Binnen een lijst kunnen zich meerdere kunstwerken bevinden en een kunstwerk kan in meerdere lijsten voorkomen.
+    </p>
 
 
     <section class="hero container max-w-screen-lg mx-auto pb-10 flex justify-center">
         <img src="./assets/images/erd.png" alt="">
     </section>
+
+    <p>Tijdens het werken aan mijn project heb ik alsnog de keuze gemaakt om artwork een zwakke entiteit te maken, aangezien het alleen aan te maken is binnen een galerij. Lijst blijft hierbij alsnog een zwakke entiteit, aangezien ook dit afhankelijk is
+        van andere objecten, in dit geval de user.
+    </p>
 </div>
+
+
 
 
 

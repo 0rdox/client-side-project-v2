@@ -1,7 +1,6 @@
 <div class="bg-gray-100 p-4 rounded-lg mx-80 mt-10">
     <div class="bg-white p-4 rounded-lg shadow-md">
         <div class="flex justify-center">
-
             <img src="{{ artwork?.image }}" alt="Artwork Profile Picture" class="rounded-full h-24 w-auto">
         </div>
         <div class="text-center mt-4">
@@ -11,12 +10,45 @@
         </div>
     </div>
 </div>
-
-<div *ngIf="canEdit || admin" class="flex justify-center space-x-4">
-    <button class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">
-        <a routerLink="/artwork/{{artwork?._id}}/edit">Edit Artwork</a>
-    </button>
-    <button class="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md" (click)="onDelete()">
-        Delete Artwork
+<div class="flex justify-center space-x-4">
+    <div *ngIf="canEdit || admin" class="flex justify-center space-x-4">
+        <button class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">
+            <a routerLink="/artwork/{{artwork?._id}}/edit">Edit Artwork</a>
+        </button>
+        <button class="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md" (click)="onDelete()">
+            Delete Artwork
+        </button>
+    </div>
+    <button class="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md" (click)="openModal()">
+        Add to list
     </button>
 </div>
+
+<div *ngIf="showModal" class="bg-gray-100 p-4 rounded-lg mx-auto mt-10">
+    <div id="myModal" class="modal">
+        <div class="flex justify-center">
+            <div class="modal-content">
+
+                <select class="mt-4 bg-white hover:bg-white-700 text-black border-2 font-bold py-2 px-4 rounded-md" id="type" name="type" [(ngModel)]="selectedList">
+                    <option value="undefined" disabled selected>Add to list:</option>
+                    <ng-container *ngFor="let list of lists">
+                        <option value="{{ list.title }}">{{ list.title }}</option>
+                    </ng-container>
+                </select>
+                <button (click)="addToList()" class="m-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md">
+                    Confirm
+                </button>
+                <button (click)="closeModal()" class="m-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <select class="mt-4 bg-white hover:bg-white-700 text-black border-2 font-bold py-2 px-4 rounded-md" id="type" name="type">
+        <option value="undefined" disabled selected>Add to list:</option>
+        <ng-container *ngFor="let list of lists">
+            <option value="{{ list.title }}">{{ list.title }}</option>
+        </ng-container>
+    </select> -->

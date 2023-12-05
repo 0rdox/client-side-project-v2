@@ -44,10 +44,8 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
 
     this.userService.read(this.user?._id ?? null).subscribe((user) => {
       this.user = user;
-      console.log(user, 'USER FROM API');
     });
 
-    console.log(this.user, 'USER FROM LOCAL STORAGE');
     
     //check whether user has gallery
     this.subscription = this.route.params

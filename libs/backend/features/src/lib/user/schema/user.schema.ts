@@ -12,7 +12,7 @@ export type UserDocument = User & Document;
 @Schema()
 export class User implements IUser {
    
-    role!: UserRole;
+   
    
     
     @Prop({
@@ -57,12 +57,12 @@ export class User implements IUser {
     })
     profilePicture!: string;
 
-    // @Prop({
-    //     required: false,
-    //     type: String,
-    //     default: UserRole.Guest
-    // })
-    // role: UserRole = UserRole.Guest;
+    @Prop({
+        required: false,
+        type: String,
+        default: UserRole.User
+    })
+    role: UserRole = UserRole.User;
 
     
     //token?: string | undefined;  
