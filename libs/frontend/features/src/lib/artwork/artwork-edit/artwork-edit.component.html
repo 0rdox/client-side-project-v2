@@ -2,42 +2,50 @@
 
     <div class="flex items-center justify-center h-screen">
         <div class="w-full max-w-md">
-            <form #form="ngForm"class="bg-gray-100 shadow-md rounded px-8 pt-6 pb-8 m-5">
+            <form #form="ngForm" class="bg-gray-100 shadow-md rounded px-8 pt-6 pb-8 m-5">
                 <h2 *ngIf="isEditing" class="text-4xl font-bold text-center">Editing</h2>
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
                         Artwork Title
                     </label>
-                    <input [(ngModel)]="title" #titleField="ngModel" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="title" name="title" type="text" placeholder="Artwork name" />
+                    <input [(ngModel)]="title" #titleField="ngModel" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="title" name="title" type="text" placeholder="Artwork Title" required/>
                     <div *ngIf="titleField.invalid && (titleField.dirty || titleField.touched)" class="text-red-500 text-xs mt-1">
-                        <span *ngIf="titleField.errors && titleField.errors['required']">Gallery Name is required.</span>
+                        <span *ngIf="titleField.errors && titleField.errors['required']">Title is required.</span>
                     </div>
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="description">
                         Description
                     </label>
-                    <input [(ngModel)]="description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" name="description" type="text" placeholder="Artwork description" />
+                    <input [(ngModel)]="description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" name="description" type="text" placeholder="Artwork Description" />
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="type">
                         Type
                     </label>
-                    <select [(ngModel)]="type" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="type" name="type">
+                    <select [(ngModel)]="type"  #typeField="ngModel" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="type" name="type">
                         <option value="undefined" disabled selected>Choose an option:</option>
                         <option value="painting">Painting</option>
                         <option value="sculpture">Sculpture</option>
                         <option value="photography">Photography</option>
                     </select>
+                    <div *ngIf="typeField.dirty || typeField.touched" class="text-red-500 text-xs mt-1">
+                        <span *ngIf="type === 'undefined'">Type is required.</span>
+                    </div>
+               
+                  
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="image">
                         Image
                     </label>
-                    <input [(ngModel)]="image" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="image" name="image" type="text" placeholder="Image URL" />
+                    <input [(ngModel)]="image" #imageField="ngModel" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="image" name="image" type="text" placeholder="Image URL" />
+                    <div *ngIf="imageField.invalid && (imageField.dirty || imageField.touched)" class="text-red-500 text-xs mt-1">
+                        <span *ngIf="imageField.errors && imageField.errors['required']">Image is required.</span>
+                    </div>
                 </div>
                 <div class="flex items-center justify-between">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" (click)="saveArtwork()">
+                    <button [disabled]="form.invalid || type==='undefined'" [class.bg-blue-500]="!form.invalid || type==='undefined'" [class.bg-gray-500]="form.invalid || type==='undefined'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" (click)="saveArtwork()">
                         Save
                     </button>
                     <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#" routerLink="/home">
@@ -47,7 +55,7 @@
             </form>
         </div>
         <div class="m-5 w-full max-w-md">
-            <img [src]="image" alt="Artwork Image" class="w-full" *ngIf="image" />
+            <img [src]="image" alt="Artwork Image" class="mt-4" *ngIf="image" />
         </div>
     </div>
 </div>
