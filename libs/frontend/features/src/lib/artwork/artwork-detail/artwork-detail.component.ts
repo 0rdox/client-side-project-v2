@@ -27,6 +27,9 @@ export class ArtworkDetailComponent implements OnInit, OnDestroy {
 admin = false;
   canEdit = false;
 
+
+  loggedIn = false;
+
 lists!: IList[];
 
 
@@ -47,7 +50,9 @@ lists!: IList[];
     this.user = userString ? JSON.parse(userString) : undefined;
     
 
-
+if (this.user != undefined ) {
+  this.loggedIn = true;
+}
 
     this.listService.listForUser(this.user?._id!).subscribe((lists) => {
       if (lists) {
