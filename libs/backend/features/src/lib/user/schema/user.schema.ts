@@ -12,9 +12,7 @@ export type UserDocument = User & Document;
 @Schema()
 export class User implements IUser {
    
-   
-   
-    
+       
     @Prop({
         required: true,
         type: Boolean,
@@ -64,6 +62,15 @@ export class User implements IUser {
     })
     role: UserRole = UserRole.User;
 
+
+    
+@Prop({
+    required: true,
+    type: [{ type: MongooseSchema.Types.ObjectId, ref: 'User' }],
+})
+friends!: IUser[];
+
+   
     
     //token?: string | undefined;  
 }

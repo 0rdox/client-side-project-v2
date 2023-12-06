@@ -74,6 +74,7 @@ export class UserEditComponent implements OnInit {
       profilePicture: this.profilePicture,
       hasGallery: this.user.hasGallery,
       role: this.user.role,
+      friends: this.user.friends,
     };
     this.userService.updateUser(updatedUser).subscribe(() => {
       this.router.navigate(['/user/' + this.user._id]);
@@ -117,6 +118,7 @@ export class UserEditComponent implements OnInit {
       _id: new Types.ObjectId().toString(),
       hasGallery: false,
       role: UserRole.User,
+      friends: []
     };
     this.userService.register(newUser).subscribe(() => {
       this.router.navigate(['/user']);

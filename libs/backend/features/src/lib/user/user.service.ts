@@ -103,12 +103,14 @@ export class UserService {
     async create(user: Pick<IUser, 'name' | 'email' | 'password'>): Promise<IUser> {
         Logger.log('create', this.TAG);
         var id = new mongoose.Types.ObjectId();
+        console.log();
         
         const newUser: IUser = {
             ...user,
-            _id: id.toString(),
+            _id: id.toString(), 
             hasGallery: false,
             role: UserRole.User,
+            friends: [],
         };
 
         Logger.log(newUser, "newUser")

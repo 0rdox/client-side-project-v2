@@ -23,6 +23,7 @@ export interface IUser {
     profilePicture?: string;
     hasGallery: boolean;
     role: UserRole;
+    friends: IUser[];
 }
 
 
