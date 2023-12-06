@@ -34,6 +34,9 @@ export class ListEditComponent implements OnInit {
       this.isEditing = true;
       this.listService.read(listId).subscribe((list: IList) => {
         this.list = list;
+        this.title = list.title;
+        this.description = list.description;
+        this.image = list.image;
       });
     }
   }
@@ -72,10 +75,11 @@ const user = userString ? JSON.parse(userString) : undefined;
 
     const updatedList: IList = {
       _id: this.list._id,
-      title: this.list.title,
-      description: this.list.description,
+      title: this.title,
+      artworks: this.list.artworks,
+      description: this.description,
       userId: this.list.userId,
-      image: this.list.image,
+      image: this.image,
     };
 
     console.log(updatedList)

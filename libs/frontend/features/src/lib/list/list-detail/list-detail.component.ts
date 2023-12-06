@@ -82,51 +82,19 @@ export class ListDetailComponent implements OnInit, OnDestroy {
     if (this.subscription) this.subscription.unsubscribe();
   }
 
-  // onDelete() {
-  //   if (this.list) {
-  //     this.listService.removeList(this.list._id).subscribe(() => console.log("List Deleted"));
-  //   }
-  //   this.router.navigate(['/list']);
-  // }
-
-  onLeave() {
-    // if (this.list && this.user) {
-    //   this.list.userId = null;
-    //   //remove items?
-    //   this.list.items = null;
-
-
-    //   this.owned = false;
-    //   this.user.hasList = false;
-
-    //   this.userService
-    //     .updateUser(this.user)
-    //     .subscribe(() => console.log('User updated'));
-
-    //   this.listService
-    //     .updateList(this.list)
-    //     .subscribe(() => console.log('List updated'));
-    // }
-    // this.router.navigate(['/list']);
+  onDelete() {
+    if (this.list) {
+      this.listService.removeList(this.list._id).subscribe(() => {
+        console.log("List Deleted");
+        this.router.navigate(['/list']);
+      });
+    }
   }
 
-  onClaim() {
-    // if (this.list && this.user) {
-    //   this.list.userId = this.user?._id;
-    //   this.list.items = [];
+onUpdate(){
+  
+}
 
-    //   this.owned = true;
-
-    //   this.user.hasList = true;
-    //   this.userService
-    //     .updateUser(this.user)
-    //     .subscribe(() => console.log('User updated'));
-    //   this.listService
-    //     .updateList(this.list)
-    //     .subscribe(() => console.log('List updated'));
-    // }
-    // // this.router.navigate(['/list']);
-  }
 
   getUserById(id: string): Observable<IUser> {
     console.log(this.userService.read(id), 'USER FROM LIST');

@@ -162,20 +162,21 @@ if (this.user != undefined ) {
     const galleryId = this.artwork?.galleryId;
 
     if (this.artwork) {
+      // Remove from artwork db
       this.artworkService.removeArtwork(this.artwork._id).subscribe(() => {
         console.log("Artwork Deleted");
 
         if (galleryId) {
+          // Remove the artwork from the gallery
           this.galleryService.read(galleryId).subscribe((gallery: IGallery) => {
             // Remove the artwork from the gallery
             const artworkIndex = gallery.artworks!.findIndex((artwork: IArtwork) => artwork._id === this.artwork!._id);
-           
+
             console.log(artworkIndex, "ARTWORK INDEX")
             console.log(gallery.artworks, "GALLERY ARTWORKS")
             if (artworkIndex !== -1) {
               gallery.artworks!.splice(artworkIndex, 1);
             }
-
 
             console.log(gallery.artworks, "GALLERY ARTWORKS AFTER SPLICE")
             // Update the gallery
@@ -184,10 +185,29 @@ if (this.user != undefined ) {
             });
           });
         }
+
+        // Remove from list
+        const userString = localStorage.getItem('user');
+        const user = userString ? JSON.parse(userString) : undefined;
+        const userId = this.user?._id ?? null;
+
+        console.log(user, "USER WHEN DELETING")
+        this.listService.listForUser(user._id).subscribe((lists) => {
+          console.log(lists, "LISTS");
+          lists?.forEach((list) => {
+            const artworkIndex = list.artworks?.findIndex((artwork: IArtwork) => artwork._id === this.artwork!._id);
+           console.log(artworkIndex, "ARTWORK INDEX");
+            if (artworkIndex !== -1) {
+              list.artworks = list.artworks?.filter((artwork: IArtwork, index: number) => index !== artworkIndex);
+              this.listService.updateList(list).subscribe(() => {
+                console.log("Artwork removed from list");
+              });
+            }
+          });
+        });
       });
     }
-
-   }
+  }
 
   getUserById(id: string): Observable<IUser> {
     console.log(this.userService.read(id), 'USER FROM ARTWORK');
