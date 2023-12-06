@@ -24,6 +24,7 @@ export class ListDetailComponent implements OnInit, OnDestroy {
 
   admin = false;
 
+  isLoading = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,6 +36,7 @@ export class ListDetailComponent implements OnInit, OnDestroy {
   //TODO: SHOULD ONLY BE ABLE TO CLAIM 1 LIST
 
   ngOnInit(): void {
+    this.isLoading = true;
     //get user from local storage
     const userString = localStorage.getItem('user');
     this.user = userString ? JSON.parse(userString) : undefined;
@@ -73,10 +75,30 @@ export class ListDetailComponent implements OnInit, OnDestroy {
             this.owned = true;
           }
 
+          this.isLoading = false;
         }
       });
 
   }
+
+
+removeArtwork(artworkId: string) {
+
+  console.log(artworkId);
+  
+  if (this.list) {
+    const updatedList = { ...this.list };
+
+console.log(updatedList, 'UPDATED LIST');
+console.log(updatedList.artworks, 'UPDATED LIST ARTWORKS');
+
+    updatedList.artworks = updatedList.artworks!.filter((artwork) => artwork._id !== artworkId);
+    this.listService.updateList(updatedList).subscribe((updatedList) => {
+      console.log("Artwork removed");
+      this.list = updatedList;
+    });
+  }
+}
 
   ngOnDestroy(): void {
     if (this.subscription) this.subscription.unsubscribe();

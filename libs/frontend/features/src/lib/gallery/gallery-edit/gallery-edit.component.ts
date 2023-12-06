@@ -31,7 +31,7 @@ export class GalleryEditComponent implements OnInit {
   private gallery!: IGallery;
 
   ngOnInit() {
-    this.isLoading = true;
+    
     const galleryId = this.route.snapshot.paramMap.get('id');
     
     if (galleryId) {
@@ -45,6 +45,8 @@ export class GalleryEditComponent implements OnInit {
         this.description = gallery.description ?? '';
         this.isLoading = false;
       });
+
+    
     }
   }
   

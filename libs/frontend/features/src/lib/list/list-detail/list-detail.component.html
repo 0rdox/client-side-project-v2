@@ -1,3 +1,8 @@
+<div *ngIf="isLoading" class="flex items-center justify-center" style="height: 100vh;">
+    <client-side-project-spinner></client-side-project-spinner>
+</div>
+
+
 <h2 class="text-2xl font-bold mt-8 text-center">
     Artworks</h2>
    
@@ -5,12 +10,21 @@
     <p *ngIf="admin" class="text-center text-gray-700 mb-4">{{list?.userId}}</p>
 
 <div class="grid grid-cols-3 gap-4 mt-4">
-    <a *ngFor="let artwork of list?.artworks" [routerLink]="['/artwork', artwork._id]" class="bg-white p-4 rounded-lg shadow-md">
-        <img [src]="artwork.image" alt="Artwork" class="w-full h-48 object-cover mb-4">
+    <a *ngFor="let artwork of list?.artworks"  class="bg-white p-4 rounded-lg shadow-md m-3" style="position: relative;">
+    <a [routerLink]="['/artwork', artwork._id]">
+        <img [src]="artwork.image" alt="Artwork" class="w-full h-48 object-cover">
         <p class="text-lg font-bold">{{ artwork.title }}</p>
         <p class="text-gray-700">{{ artwork.type }}</p>
         <p class="text-gray-700">{{ artwork.description }}</p>
     </a>
+        <button class="delete-btn absolute bottom-3 right-3" (click)="removeArtwork(artwork._id)">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-11 h-11 text-red-500">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+        </button>
+    </a>
+
+    
 </div>
 <div class="text-center space-x-4">
     <button *ngIf="owned || admin" routerLink="/list/{{list?._id}}/edit" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">

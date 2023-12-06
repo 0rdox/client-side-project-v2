@@ -12,6 +12,7 @@ export class ListListComponent implements OnInit, OnDestroy {
   lists: IList[] | null = null;
   subscription: Subscription | undefined;
   isLoading = false;
+  artworkCount = 0; // Counter for amount of artworks in list
 
   user!: IUser;
   admin = false;
@@ -27,24 +28,37 @@ export class ListListComponent implements OnInit, OnDestroy {
 
     this.isLoading = true;
     if(this.admin) {   
-    this.subscription = this.listService.list().subscribe((results) => {
-      console.log(`results: ${results}`);
-      this.lists = results;
-      this.isLoading = false;
+      this.subscription = this.listService.list().subscribe((results) => {
+        console.log(`results: ${results}`);
+        this.lists = results;
+        this.artworkCount = this.calculateArtworkCount(); // Update artwork count
+        this.isLoading = false;
 
-      console.log(this.lists, 'LISTS');
-    });
-  } else {
-    this.subscription = this.listService.listForUser(this.user._id).subscribe((results) => {
-      console.log(`results: ${results}`);
-      this.lists = results;
-      this.isLoading = false;
+        console.log(this.lists, 'LISTS');
+      });
+    } else {
+      this.subscription = this.listService.listForUser(this.user._id).subscribe((results) => {
+        console.log(`results: ${results}`);
+        this.lists = results;
+        this.artworkCount = this.calculateArtworkCount(); // Update artwork count
+        this.isLoading = false;
 
-      console.log(this.lists, 'LISTS');
-    });
+        console.log(this.lists, 'LISTS');
+      });
+    }
   }
-  }
+
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
+  }
+
+  private calculateArtworkCount(): number {
+    let count = 0;
+    if (this.lists) {
+      for (const list of this.lists) {
+        count += list.artworks!.length;
+      }
+    }
+    return count;
   }
 }
