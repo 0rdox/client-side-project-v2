@@ -14,16 +14,27 @@ export class ListListComponent implements OnInit, OnDestroy {
   isLoading = false;
 
   user!: IUser;
-  
+  admin = false;
   constructor(private listService: ListService) {}
 
   ngOnInit(): void {
     const userString = localStorage.getItem('user');
     this.user = userString ? JSON.parse(userString) : null;
    
-
+    if (this.user?.role === 'Admin') {
+      this.admin = true;
+    }
 
     this.isLoading = true;
+    if(this.admin) {   
+    this.subscription = this.listService.list().subscribe((results) => {
+      console.log(`results: ${results}`);
+      this.lists = results;
+      this.isLoading = false;
+
+      console.log(this.lists, 'LISTS');
+    });
+  } else {
     this.subscription = this.listService.listForUser(this.user._id).subscribe((results) => {
       console.log(`results: ${results}`);
       this.lists = results;
@@ -32,7 +43,7 @@ export class ListListComponent implements OnInit, OnDestroy {
       console.log(this.lists, 'LISTS');
     });
   }
-
+  }
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
   }

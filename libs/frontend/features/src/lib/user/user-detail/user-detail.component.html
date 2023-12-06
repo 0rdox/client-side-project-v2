@@ -14,7 +14,7 @@
     </div>
 </div>
 
-<div *ngIf="canEdit" class="flex justify-center space-x-4">
+<div *ngIf="canEdit || admin" class="flex justify-center space-x-4">
     <button class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">
         <a routerLink="/user/{{users?._id}}/edit">Edit User</a>
     </button>

@@ -20,6 +20,8 @@ export class GalleryEditComponent implements OnInit {
 
   isEditing = false; // Add a flag to track if editing or creating
 
+
+  isLoading = false;
   constructor(
     private route: ActivatedRoute,
     private galleryService: GalleryService,
@@ -29,6 +31,7 @@ export class GalleryEditComponent implements OnInit {
   private gallery!: IGallery;
 
   ngOnInit() {
+    this.isLoading = true;
     const galleryId = this.route.snapshot.paramMap.get('id');
     
     if (galleryId) {
@@ -40,6 +43,7 @@ export class GalleryEditComponent implements OnInit {
         this.userId = gallery.userId ?? '';
         this.image = gallery.image ?? '';
         this.description = gallery.description ?? '';
+        this.isLoading = false;
       });
     }
   }

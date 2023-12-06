@@ -25,6 +25,8 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
   admin = false;
   hasGallery = false;
 
+  isLoading = false; 
+
   constructor(
     private route: ActivatedRoute,
     private galleryService: GalleryService,
@@ -35,6 +37,7 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
   //TODO: SHOULD ONLY BE ABLE TO CLAIM 1 GALLERY
 
   ngOnInit(): void {
+    this.isLoading = true;
     //get user from local storage
     const userString = localStorage.getItem('user');
     this.user = userString ? JSON.parse(userString) : undefined;
@@ -55,6 +58,7 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe((results) => {
+        this.isLoading = false;
         this.gallery = results;
         if (this.gallery && this.gallery.userId) {
           this.getUserById(this.gallery.userId).subscribe((user) => {
@@ -68,12 +72,7 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
             this.owned = true;
           }
 
-          console.log(this.user?._id, 'USER ID');
-          console.log(this.gallery?.userId, 'GALLERY USER ID');
      
-
-          console.log(this.gallery.artworks![0]._id, 'ARTWORK ID!!!!!!!!!!!!!!!!!');
-          console.log(this.gallery.artworks, 'ARTWORKS');
         }
       });
 

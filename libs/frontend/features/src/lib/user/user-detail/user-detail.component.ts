@@ -14,7 +14,7 @@ export class UserDetailComponent implements OnInit, OnDestroy {
   users: IUser | null = null;
   subscription: Subscription | undefined = undefined;
   canEdit: boolean = false; // Add isEdit property
-
+  admin = false;
   constructor(
     private route: ActivatedRoute, 
     private UserService: UserService,
@@ -32,8 +32,11 @@ export class UserDetailComponent implements OnInit, OnDestroy {
     ).subscribe((results) => {
       console.log(`results: ${JSON.stringify(results)}`);
       this.users = results;
-      console.log(this.user?.role, 'USER ROLE')
-      console.log(this.user, 'USER');
+
+      if (this.user?.role === 'Admin') {
+        this.admin = true;
+      }
+      
       this.canEdit = this.users?._id === this.user?._id || this.user?.role === 'admin';
     });
   }

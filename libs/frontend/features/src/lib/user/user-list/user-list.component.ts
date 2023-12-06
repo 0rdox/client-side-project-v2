@@ -13,12 +13,15 @@ export class UserListComponent implements OnInit, OnDestroy {
   users: IUser[] | null = null;
   subscription: Subscription | undefined = undefined;
 
+  isLoading = false;
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
+    this.isLoading = true;
       this.subscription = this.userService.list().subscribe((results) => {
           console.log(`results: ${results}`);
           this.users = results;
+          this.isLoading = false;
       });
   }
 
