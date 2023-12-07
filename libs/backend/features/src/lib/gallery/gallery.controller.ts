@@ -1,14 +1,18 @@
-import { Controller, Delete, Get, Param, Post, Body, Put } from '@nestjs/common';
+import { Controller, Delete, Get, Param, Post, Body, Put, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiResponse, ApiParam, ApiBody, ApiOperation } from '@nestjs/swagger';
 import { GalleryService } from './gallery.service';
 import { IGallery } from '@client-side-project/shared/api';
 import { CreateGalleryDto, UpdateGalleryDto } from '@client-side-project/backend/dto';
+import { Public } from 'libs/backend/auth/src/lib/decorators/decorators';
+import { AuthGuard } from 'libs/backend/auth/src/lib/auth/auth.guards'; 
+
 
 @ApiTags('gallery')
 @Controller('gallery')
 export class GalleryController {
     constructor(private readonly galleryService: GalleryService) {}
 
+    @Public()
     @Get()
     @ApiOperation({ summary: 'Get all Galleries' })
     @ApiResponse({ status: 200, description: 'Returns all Galleries.'})

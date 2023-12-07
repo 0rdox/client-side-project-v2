@@ -11,15 +11,6 @@ export type UserDocument = User & Document;
 
 @Schema()
 export class User implements IUser {
-   
-       
-    @Prop({
-        required: true,
-        type: Boolean,
-        default: false
-    })
-    hasGallery!: boolean;
-    
     @IsMongoId()
     _id!: string;
 
@@ -35,6 +26,14 @@ export class User implements IUser {
         type: String
     })
     password = '';
+
+     
+    @Prop({
+        required: true,
+        type: Boolean,
+        default: false
+    })
+    hasGallery!: boolean;
 
     @Prop({
         required: true,
@@ -66,7 +65,8 @@ export class User implements IUser {
     
 @Prop({
     required: true,
-    type: [{ type: MongooseSchema.Types.ObjectId, ref: 'User' }],
+    type: [ MongooseSchema.Types.ObjectId],
+    ref: 'User' 
 })
 friends!: IUser[];
 
@@ -76,3 +76,5 @@ friends!: IUser[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
+
+

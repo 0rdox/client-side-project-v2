@@ -1,7 +1,6 @@
 <div class="bg-gray-100 p-4 rounded-lg mx-80 mt-10">
     <div class="bg-white p-4 rounded-lg shadow-md">
         <div class="flex justify-center">
-
             <img src="{{ users?.profilePicture }}" alt="User Profile Picture" class="rounded-full h-24 w-auto">
         </div>
         <div class="text-center mt-4">
@@ -10,6 +9,8 @@
             <p class="text-gray-700">
                 {{ users?.hasGallery ? "does have a gallery" : "doesn't have a gallery" }}
             </p>
+            <p class="text-gray-700">Friends: {{ users?.friends }}</p>
+            <!-- Added field for friends -->
         </div>
     </div>
 </div>

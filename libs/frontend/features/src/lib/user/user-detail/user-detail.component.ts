@@ -15,29 +15,53 @@ export class UserDetailComponent implements OnInit, OnDestroy {
   subscription: Subscription | undefined = undefined;
   canEdit: boolean = false; // Add isEdit property
   admin = false;
+
+  friends!: IUser[];
   constructor(
-    private route: ActivatedRoute, 
+    private route: ActivatedRoute,
     private UserService: UserService,
-    private router: Router,
-  ) { }
+    private router: Router
+  ) {}
   userString = localStorage.getItem('user');
   user = this.userString ? JSON.parse(this.userString) : undefined;
 
   ngOnInit(): void {
-    console.log("INIT")
-    this.subscription = this.route.params.pipe(
-      switchMap(params => {
-        return this.UserService.read(params['id']);
-      })
-    ).subscribe((results) => {
-      console.log(`results: ${JSON.stringify(results)}`);
-      this.users = results;
+    console.log('INIT');
+    this.subscription = this.route.params
+      .pipe(
+        switchMap((params) => {
+          return this.UserService.read(params['id']);
+        })
+      )
+      .subscribe((results) => {
+        console.log(`results: ${JSON.stringify(results)}`);
+        this.users = results;
 
-      if (this.user?.role === 'Admin') {
-        this.admin = true;
-      }
-      
-      this.canEdit = this.users?._id === this.user?._id || this.user?.role === 'admin';
+        if (this.user?.role === 'Admin') {
+          this.admin = true;
+        }
+
+        this.canEdit =
+          this.users?._id === this.user?._id || this.user?.role === 'admin';
+      });
+
+    console.log(this.user, 'USER');
+    console.log(this.user?._id);
+
+    //get friends with neo4j
+    this.UserService.getFriends(this.user?._id).subscribe((results) => {
+      console.log(`results: ${JSON.stringify(results)}`);
+
+      var i = 0;
+
+      results.forEach((friend: any) => {
+        console.log(friend, "FRIEND");
+        this.UserService.read(friend.toString()).subscribe((user) => {
+          this.friends[i] = user;
+          console.log(this.friends, );
+          i++;
+        });
+      });
     });
   }
 
@@ -49,17 +73,17 @@ export class UserDetailComponent implements OnInit, OnDestroy {
     if (this.users) {
       if (this.users._id === this.user._id) {
         localStorage.removeItem('user');
-        
+
         this.UserService.removeUser(this.users._id).subscribe(() => {
-          console.log("user deleted");
+          console.log('user deleted');
           //TODO: this
           window.location.href = '/';
           // this.router.navigate(['/user']);
         });
       } else {
         this.UserService.removeUser(this.users._id).subscribe(() => {
-          console.log("user deleted");
-        this.router.navigate(['/user']);
+          console.log('user deleted');
+          this.router.navigate(['/user']);
         });
       }
     }

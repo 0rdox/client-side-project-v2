@@ -33,3 +33,5 @@ export type ICreateUser = Pick<
 >;
 export type IUpdateUser = Partial<Omit<IUser, 'id'>>;
 export type IUpsertUser = IUser;
+
+

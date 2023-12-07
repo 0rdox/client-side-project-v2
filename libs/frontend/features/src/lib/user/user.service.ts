@@ -12,10 +12,21 @@ import { BehaviorSubject } from 'rxjs';
 import { environment } from '@client-side-project/shared/util-env';
 import { OperatorFunction } from 'rxjs';
 
+
+
+const user = localStorage.getItem('user');
+const userString = user ? JSON.parse(user) : undefined;
+
 export const httpOptions = {
   observe: 'body',
   responseType: 'json',
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${userString?.token}`,
+  },
 };
+
+
 
 @Injectable()
 export class UserService {
@@ -52,6 +63,32 @@ export class UserService {
   public createUser(user: IUser, options?: any): Observable<boolean> {
     return this.http
       .post<ApiResponse<IUser>>(`${this.endpoint}`, user, {
+        ...options,
+        ...httpOptions,
+      })
+      .pipe(
+        tap(console.log),
+        map((response: any) => response.results),
+        catchError(this.handleError)
+      );
+  }
+
+  public addFriend(user: IUser, friendId: string, options?: any): Observable<void> {
+    return this.http
+      .post<ApiResponse<IUser>>(`${this.endpoint}/${user._id}/friend/${friendId}`, {
+        ...options,
+        ...httpOptions,
+      })
+      .pipe(
+        tap(console.log),
+        map((response: any) => response.results),
+        catchError(this.handleError)
+      );
+  }
+
+  public getFriends(userId: string, options?: any): Observable<IUser[]> {
+    return this.http
+      .get<ApiResponse<IUser[]>>(`${this.endpoint}/${userId}/friend`, {
         ...options,
         ...httpOptions,
       })

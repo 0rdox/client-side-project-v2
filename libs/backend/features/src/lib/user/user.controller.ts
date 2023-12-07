@@ -1,21 +1,27 @@
-import { Controller } from '@nestjs/common';
+import { Controller, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { Get, Param, Post, Body, Delete, Put } from '@nestjs/common';
 import { IUser } from '@client-side-project/shared/api';
 import { CreateUserDto, UpdateUserDto } from '@client-side-project/backend/dto';
 import { ApiTags, ApiResponse, ApiParam, ApiBody, ApiHeader, ApiOperation } from '@nestjs/swagger';
+import { Public } from '@client-side-project/backend/auth';
+import { AuthGuard } from 'libs/backend/auth/src/lib/auth/auth.guards';
 
 @ApiTags('user')
 @Controller('user')
 export class UserController {
     constructor(private UserService: UserService) {}
 
-
     @Get('')
+    @UseGuards(AuthGuard)
+    @ApiHeader({
+        name: 'Authorization',
+        description: 'Bearer <token>',
+    })
     @ApiOperation({ summary: 'Get all Users' })
     @ApiResponse({ status: 200, description: 'Returns all Users.'})
     @ApiResponse({ status: 400, description: 'Bad Request.'})
-   async getAll(): Promise<IUser[]> {
+    async getAll(): Promise<IUser[]> {
         return await this.UserService.findAll();
     }
 
@@ -32,6 +38,23 @@ export class UserController {
     @ApiResponse({ status: 200, description: 'Returns a User by ID.'})
     async getOne(@Param('id') id: string): Promise<IUser> {
         return this.UserService.getOne(id);
+    }
+
+
+    @Get(':id/friend')
+    @ApiOperation({ summary: 'Get friends from a User' })
+    @ApiParam({ name: 'id', description: 'The ID of the User to retrieve', type: 'string'})
+    @ApiResponse({ status: 200, description: 'Returns friends from a User by ID.'})
+    async getFriends(@Param('id') id: string): Promise<IUser[]> {
+        return this.UserService.getFriends(id);
+    }
+
+    @Post(':id/friend/:friendId')
+    @ApiOperation({ summary: 'Add a friend to a User' })
+    @ApiBody({ type: String })
+    @ApiResponse({ status: 200, description: 'Adds a friend to a User by ID.'})
+    async addFriend(@Param('id') id: string, @Param('friendId') friendId:string): Promise<void> {
+        return this.UserService.addFriend(id, friendId);
     }
 
     @Post('')
