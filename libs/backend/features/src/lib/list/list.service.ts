@@ -10,7 +10,8 @@ export class ListService {
     TAG = 'ListService';
 
     //db connection in service
-    constructor(@InjectModel('list') private readonly listModel: Model<IList>) { }
+    constructor(
+        @InjectModel('list') private readonly listModel: Model<IList>) { }
 
     async getAll(): Promise<IList[]> {
         Logger.log('getAll DataBase', this.TAG);

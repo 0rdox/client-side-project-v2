@@ -1,6 +1,5 @@
 import { Route } from '@angular/router';
 
-import { NxWelcomeComponent } from './nx-welcome.component';
 import { AboutComponent, DashboardComponent } from '@client-side-project/frontend/features';
 import {  UserEditComponent } from '@client-side-project/frontend/features';
 
