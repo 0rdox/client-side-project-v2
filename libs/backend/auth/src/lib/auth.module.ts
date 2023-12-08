@@ -6,9 +6,11 @@ import { User, UserSchema, UserModule } from '@client-side-project/backend/featu
 import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/auth.guards';
 import { APP_GUARD} from '@nestjs/core';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
     imports: [
+        ConfigModule,
         MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
         UserModule,
         JwtModule.register({
