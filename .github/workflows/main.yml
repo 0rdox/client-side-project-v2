@@ -63,6 +63,11 @@ jobs:
       - name: Unzip artifact for deployment
         run: |
           unzip client-side-project-release.zip
+
+      - name: log package.json
+        run: |
+          cat package.json
+          cat package-lock.json
         
         
       - name: Deploy to static azure web app
