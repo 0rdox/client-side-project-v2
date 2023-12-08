@@ -103,6 +103,7 @@ export class GalleryService {
     }
 
 
+    //change this to get gallery from userId?
     async hasClaimedGallery(userId: string): Promise<boolean> {
         Logger.log(`hasClaimedGallery(${userId})`, this.TAG);
         const gallery = await this.galleryModel.findOne({ userId }).exec();

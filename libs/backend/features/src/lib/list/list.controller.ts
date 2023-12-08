@@ -6,8 +6,8 @@ import { CreateListDto, UpdateListDto } from '@client-side-project/backend/dto';
 import { AuthGuard } from 'libs/backend/auth/src/lib/auth/auth.guards';
 
 @ApiTags('list')
-@ApiBearerAuth('JWT')
 @UseGuards(AuthGuard)
+@ApiBearerAuth('JWT')
 @Controller('list')
 export class ListController {
     constructor(private readonly listService: ListService) {}

@@ -1,4 +1,4 @@
-import { Controller, UseGuards } from '@nestjs/common';
+import { Controller, Req, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { Get, Param, Post, Body, Delete, Put } from '@nestjs/common';
 import { IUser, IUserNoPassword } from '@client-side-project/shared/api';
@@ -26,9 +26,9 @@ export class UserController {
   @ApiOperation({ summary: 'Get all Users' })
   @ApiResponse({ status: 200, description: 'Returns all Users.' })
   @ApiResponse({ status: 400, description: 'Bad Request.' })
-  async getAll(): Promise<IUserNoPassword[] | IUser[]> {
+  async getAll(@Req() req: Request & {user:IUser}): Promise<IUserNoPassword[] | IUser[]> {
    
-    return await this.UserService.findAll();
+    return await this.UserService.findAll(req.user);
   }
 
 
@@ -41,8 +41,10 @@ export class UserController {
     type: 'string',
   })
   @ApiResponse({ status: 200, description: 'Returns a User by ID.' })
-  async getOne(@Param('id') id: string): Promise<IUser> {
-    return this.UserService.getOne(id);
+  async getOne(@Param('id') id: string, @Req() req: Request & {user:IUser}): Promise<IUser | IUserNoPassword> {
+
+
+    return this.UserService.getOne(id, req.user);
 
 
   }

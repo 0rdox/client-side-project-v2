@@ -21,10 +21,8 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
 
   user: IUser | undefined;
   owned = false;
-
   admin = false;
   hasGallery = false;
-
   isLoading = false; 
 
   constructor(
@@ -33,6 +31,8 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private router: Router
   ) {}
+
+  galleryUser!: IUser;
 
   //TODO: SHOULD ONLY BE ABLE TO CLAIM 1 GALLERY
 
@@ -60,9 +60,12 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
       .subscribe((results) => {
         this.isLoading = false;
         this.gallery = results;
-        if (this.gallery && this.gallery.userId) {
+
+        
+        if (this.gallery.userId != null) {
+       
           this.getUserById(this.gallery.userId).subscribe((user) => {
-            this.user = user;
+            this.galleryUser = user;
           });
 
           if (this.user?.role === 'Admin') {

@@ -17,23 +17,51 @@ export class UserService {
     private readonly neo4jService: Neo4jService
   ) {}
 
-  async findAll(): Promise<IUserNoPassword[]> {
-    const items = await this.userModel.find().sort({ name: 1 });
-    return items;
+  async findAll(user: any): Promise<IUser[] | IUserNoPassword[]> {
+    const items = await this.userModel.find().sort({ name: 1 }).select('-password');
+
+    if (!user || user.user_role !== UserRole.Admin) {
+      return items as IUserNoPassword[];
+    }
+
+    return items as IUser[];
+
+    // Code for admin user role
+
   }
 
-  async findAllAdmin(): Promise<IUser[]> {
-    const items = await this.userModel.find().sort({ name: 1 });
-    return items;
-  }
 
-  async getOne(_id: string): Promise<IUser> {
+
+  async getOne(_id: string, user: any): Promise<IUser | IUserNoPassword> {
     Logger.log(`getOne(${_id})`, this.TAG);
-    const user = await this.userModel.findOne({ _id }).exec();
-    if (!user) {
+    
+    const userDB = await this.userModel.findOne({ _id }).exec();
+    Logger.log(userDB, "USERDB");
+
+    if (!userDB) {
       throw new NotFoundException(`User not found!`);
     }
-    return user;
+
+    Logger.log(user, "USER")
+    
+    
+    if (!user) {
+      const {password, ...userNoPassword} = userDB.toObject();
+      return userNoPassword as IUserNoPassword;
+    }
+    
+
+
+    if ((userDB._id.toString() === user.user_id.toString()) || (user.user_role === UserRole.Admin)) {
+      return userDB as IUser;
+    }
+
+  
+    
+
+    const {password, ...userNoPassword} = userDB.toObject();
+    return userNoPassword as IUserNoPassword;
+    
   }
 
   
@@ -98,11 +126,11 @@ export class UserService {
     const friendNames: string[] = [];
 
     for (const friendId of friendIds) {
-      const friend = await this.getOne(friendId);
-      friendNames.push(friend.name);
+      // const friend = await this.getOne(friendId);
+      // friendNames.push(friend.name);
     }
 
-    return friendNames;
+    return friendIds;
   }
 
 

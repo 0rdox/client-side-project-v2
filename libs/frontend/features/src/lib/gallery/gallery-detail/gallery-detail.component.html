@@ -5,7 +5,7 @@
 <div class="bg-gray-100 p-4 rounded-lg mx-80 mt-10">
     <div class="bg-white p-4 rounded-lg shadow-md">
         <p class="text-lg font-bold mb-2">{{ gallery?.name }} [{{gallery?._id}}]</p>
-        <p class="text-gray-700">User: {{ gallery?.userId ? user?.name : 'No user found' }} <span *ngIf="gallery?.userId">[{{gallery?.userId}}]</span></p>
+        <p class="text-gray-700">User: {{ galleryUser.name }} <span *ngIf="gallery?.userId">[{{gallery?.userId}}]</span></p>
         <p class="text-gray-700">{{ gallery?.location }}</p>
         <p class="text-gray-700">{{ gallery?.description }}</p>
     </div>

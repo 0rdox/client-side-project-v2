@@ -57,7 +57,7 @@ export class GalleryController {
     }
 
 
-    //maybe change this to get gallery from user?
+    //remove
     @Get('user/:userId/')
     @ApiOperation({ summary: 'Check if a user has a claimed gallery' })
     @ApiParam({ name: 'userId', description: 'The ID of the user', type: 'string'})

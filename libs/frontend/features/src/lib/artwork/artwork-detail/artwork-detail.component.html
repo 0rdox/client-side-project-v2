@@ -1,12 +1,13 @@
 <div class="bg-gray-100 p-4 rounded-lg mx-80 mt-10">
     <div class="bg-white p-4 rounded-lg shadow-md">
         <div class="flex justify-center">
-            <img src="{{ artwork?.image }}" alt="Artwork Profile Picture" class="rounded-full h-24 w-auto">
+            <img src="{{ artwork?.image }}" alt="Artwork Image" class="h-40 w-auto">
         </div>
         <div class="text-center mt-4">
             <p class="text-lg font-bold mb-2">{{ artwork?.title }} [{{artwork?._id}}]</p>
-            <p class="text-gray-700">{{ artwork?.creationDate }}</p>
+            <p class="text-gray-700">Creation Date: {{ artwork?.creationDate }}</p>
             <p class="text-gray-700">UserId: {{ artwork?.userId }}</p>
+            <p class="text-gray-700">Type: {{ artwork?.type }}</p>
         </div>
     </div>
 </div>

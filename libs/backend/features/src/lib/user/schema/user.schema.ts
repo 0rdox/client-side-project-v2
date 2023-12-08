@@ -22,7 +22,7 @@ export class User implements IUser {
 
     @Prop({
         required: true,
-        select: true, // do not return password in select statements
+        select: true, 
         type: String
     })
     password = '';

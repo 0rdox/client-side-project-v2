@@ -10,10 +10,15 @@ import { environment } from "@client-side-project/shared/util-env";
 /**
  * See https://angular.io/guide/http#requesting-data-from-a-server
  */
+const token = localStorage.getItem('token');
+
 export const httpOptions = {
     observe: 'body',
     responseType: 'json',
-
+    headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
 };
 
 
