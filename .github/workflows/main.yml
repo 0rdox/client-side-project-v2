@@ -63,13 +63,7 @@ jobs:
       - name: Unzip artifact for deployment
         run: |
           unzip client-side-project-release.zip
-
-      - name: log package.json
-        run: |
-          cat package.json
-          cat package-lock.json
-        
-        
+                
       - name: Deploy to static azure web app
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
@@ -101,6 +95,11 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
+      - name: log package.json
+        run: |
+          cat package.json
+          cat package-lock.json
+      
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
