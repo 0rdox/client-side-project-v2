@@ -25,9 +25,6 @@ export class UserService {
     }
 
     return items as IUser[];
-
-    // Code for admin user role
-
   }
 
 

@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { IGallery } from '@client-side-project/shared/api';
+import { IArtwork, IGallery } from '@client-side-project/shared/api';
 import { BehaviorSubject } from 'rxjs';
 import { Logger } from '@nestjs/common';
 import mongoose, { Model } from 'mongoose';
@@ -103,6 +103,32 @@ export class GalleryService {
     }
 
 
+    //todo use
+async addArtwork(galleryId: string, artwork: Partial<IArtwork>): Promise<IGallery> {
+    Logger.log(`addArtwork(${galleryId})`, this.TAG);
+    const updatedGallery = await this.galleryModel.findOneAndUpdate(
+        { _id: galleryId },
+        { $push: { artworks: artwork } },
+        { new: true }
+    ).exec();
+    if (!updatedGallery) {
+        throw new NotFoundException(`Gallery not found!`);
+    }
+    return updatedGallery;
+}
+//todo use
+async deleteArtwork(galleryId: string, artworkId: string): Promise<IGallery> {
+    Logger.log(`deleteArtwork(${galleryId}, ${artworkId})`, this.TAG);
+    const updatedGallery = await this.galleryModel.findOneAndUpdate(
+        { _id: galleryId },
+        { $pull: { artworks: { _id: artworkId } } },
+        { new: true }
+    ).exec();
+    if (!updatedGallery) {
+        throw new NotFoundException(`Gallery not found!`);
+    }
+    return updatedGallery;
+}
     //change this to get gallery from userId?
     async hasClaimedGallery(userId: string): Promise<boolean> {
         Logger.log(`hasClaimedGallery(${userId})`, this.TAG);

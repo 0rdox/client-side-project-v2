@@ -57,6 +57,8 @@ export class GalleryController {
     }
 
 
+
+
     //remove
     @Get('user/:userId/')
     @ApiOperation({ summary: 'Check if a user has a claimed gallery' })

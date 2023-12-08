@@ -17,6 +17,7 @@ import { AuthGuard } from 'libs/backend/auth/src/lib/auth/auth.guards';
 
 @ApiTags('user')
 @ApiBearerAuth('JWT')
+@UseGuards(AuthGuard)
 @Controller('user')
 export class UserController {
   constructor(private UserService: UserService) {}

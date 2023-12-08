@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { IList } from '@client-side-project/shared/api';
+import { IArtwork, IList } from '@client-side-project/shared/api';
 import { BehaviorSubject } from 'rxjs';
 import { Logger } from '@nestjs/common';
 import mongoose, { Model } from 'mongoose';
@@ -57,15 +57,34 @@ export class ListService {
         await this.listModel.deleteOne({ _id: id }).exec();
     }
 
+    async addListItem(listId: string, item: IArtwork): Promise<IList> {
+        Logger.log(`addListItem(${listId}, ${item})`, this.TAG);
+        const updatedList = await this.listModel.findOneAndUpdate(
+            { _id: listId },
+            { $push: { items: item } },
+            { new: true }
+        ).exec();
+        if (!updatedList) {
+            throw new NotFoundException(`List could not be found!`);
+        }
+        return updatedList;
+    }
 
+    async removeListItem(listId: string, itemId: string): Promise<IList> {
+        Logger.log(`removeListItem(${listId}, ${itemId})`, this.TAG);
+        const updatedList = await this.listModel.findOneAndUpdate(
+            { _id: listId },
+            { $pull: { items: { _id: itemId } } },
+            { new: true }
+        ).exec();
+        if (!updatedList) {
+            throw new NotFoundException(`List could not be found!`);
+        }
+        return updatedList;
+    }
 
     async getAllListsForUser(userId: string): Promise<IList[]> {
         Logger.log(`getAllListForUser(${userId})`, this.TAG);
         return await this.listModel.find({ userId }).exec();
     }
 }
-
-
-    
-    
-

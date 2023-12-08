@@ -1,7 +1,7 @@
 import { Controller, Delete, Get, Param, Post, Body, Put, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiResponse, ApiParam, ApiBody, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { ListService } from './list.service';
-import { IList } from '@client-side-project/shared/api';
+import { IArtwork, IList } from '@client-side-project/shared/api';
 import { CreateListDto, UpdateListDto } from '@client-side-project/backend/dto';
 import { AuthGuard } from 'libs/backend/auth/src/lib/auth/auth.guards';
 
@@ -55,6 +55,24 @@ export class ListController {
         await this.listService.delete(id);
     }
 
+    @Post(':id/item')
+    @ApiOperation({ summary: 'Add an item to a List' })
+    @ApiParam({ name: 'id', description: 'The ID of the List to add the item to', type: 'string'})
+    @ApiBody({ type: UpdateListDto })
+    @ApiResponse({ status: 201, description: 'Adds an item to a List.'})
+    async addItemToList(@Param('id') id: string, @Body() data: IArtwork): Promise<IList> {
+        return await this.listService.addListItem(id, data);
+    }
+
+
+    @Delete(':id/item/:itemId')
+    @ApiOperation({ summary: 'Delete an item from a List' })
+    @ApiParam({ name: 'id', description: 'The ID of the List to delete the item from', type: 'string'})
+    @ApiParam({ name: 'itemId', description: 'The ID of the item to delete', type: 'string'})
+    @ApiResponse({ status: 200, description: 'Deletes an item from a List.'})
+    async deleteItemFromList(@Param('id') id: string, @Param('itemId') itemId: string): Promise<void> {
+        await this.listService.removeListItem(id, itemId);
+    }
 
     @Get('user/:userId/')
     @ApiOperation({ summary: 'Get all Lists for a user' })
