@@ -66,6 +66,6 @@ export class GalleryController {
         return this.galleryService.hasClaimedGallery(userId);
     }
 }
-
+ 
     
 

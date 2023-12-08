@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { IUser, UserRole } from '@client-side-project/shared/api';
+import { IUser, IUserNoPassword, UserRole } from '@client-side-project/shared/api';
 
 import { BehaviorSubject } from 'rxjs';
 import { Logger } from '@nestjs/common';
@@ -17,7 +17,12 @@ export class UserService {
     private readonly neo4jService: Neo4jService
   ) {}
 
-  async findAll(): Promise<IUser[]> {
+  async findAll(): Promise<IUserNoPassword[]> {
+    const items = await this.userModel.find().sort({ name: 1 });
+    return items;
+  }
+
+  async findAllAdmin(): Promise<IUser[]> {
     const items = await this.userModel.find().sort({ name: 1 });
     return items;
   }
@@ -30,6 +35,8 @@ export class UserService {
     }
     return user;
   }
+
+  
 
   async create(
     user: Pick<IUser, 'name' | 'email' | 'password'>
@@ -50,6 +57,20 @@ export class UserService {
     return createdUser;
   }
 
+  async removeFriend(id: string, friendId: string): Promise<void> {
+    await this.neo4jService
+      .write(
+        `MATCH (user1:User {_id: '${id}'})-[r:FRIENDS_WITH]->(user2:User {_id: '${friendId}'}) DELETE r`
+      )
+      .then((result) => {
+        console.log(result, 'RESULT');
+      });
+
+    await this.userModel.findByIdAndUpdate(id, {
+      $pull: { friends: friendId },
+    });
+  }
+  
   async addFriend(id: string, friendId: string): Promise<void> {
     await this.neo4jService
       .write(
@@ -59,18 +80,56 @@ export class UserService {
         console.log(result, 'RESULT');
       });
 
+      
+      Logger.debug(friendId, "FRIENDID");
     await this.userModel.findByIdAndUpdate(id, {
       $push: { friends: friendId },
     });
   }
 
-  async getFriends(id: string): Promise<IUser[]> {
+  async getFriends(id: string): Promise<string[]> {
     Logger.debug(`[${this.TAG}] getFriends(${id})`);
 
     const result = await this.neo4jService.read(
       `MATCH (u1:User {_id: '${id}'})-[:FRIENDS_WITH]->(u2:User) RETURN u2`
     );
-    return result.records.map((record) => record.get('u2').properties);
+
+    const friendIds = result.records.map((record) => record.get('u2').properties._id);
+    const friendNames: string[] = [];
+
+    for (const friendId of friendIds) {
+      const friend = await this.getOne(friendId);
+      friendNames.push(friend.name);
+    }
+
+    return friendNames;
+  }
+
+
+  async getRecommendedFriends(id: string): Promise<any[]> {
+    Logger.debug(`[${this.TAG}] getRecommendedFriends(${id})`);
+
+    const result = await this.neo4jService.read(
+      `MATCH (user:User { _id: '${id}' })-[:FRIENDS_WITH]-(friend)-[:FRIENDS_WITH]-(friend_of_friend)
+      WHERE NOT (user)-[:FRIENDS_WITH]-(friend_of_friend)
+      RETURN friend_of_friend.name AS Name, friend_of_friend._id AS ID, COUNT(DISTINCT friend) AS Common_Friends
+      ORDER BY Common_Friends DESC`
+    );
+
+    const recommendedFriends: any[] = [];
+
+    if (result) {
+      result.records.forEach((record) => {
+        const recommendedFriend = {
+          name: record.get('Name'),
+          id: record.get('ID'),
+          commonFriends: record.get('Common_Friends'),
+        };
+        recommendedFriends.push(recommendedFriend);
+      });
+    }
+
+    return recommendedFriends;
   }
 
   //todo: double check if this is correct

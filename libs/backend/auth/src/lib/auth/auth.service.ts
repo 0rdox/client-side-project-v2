@@ -54,9 +54,13 @@ export class AuthService {
         if (user && user.password === credentials.password) {
           const payload = {
             user_id: user._id,
+            user_name: user.name,
+            user_email: user.email,
+            user_role: user.role,
           };
           this.currentUser$.next(user);
           return {
+            //todo remove this:
             _id: user._id,
             name: user.name,
             email: user.email,

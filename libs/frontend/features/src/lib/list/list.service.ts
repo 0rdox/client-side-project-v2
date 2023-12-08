@@ -13,6 +13,7 @@ import { environment } from "@client-side-project/shared/util-env";
 export const httpOptions = {
     observe: 'body',
     responseType: 'json',
+
 };
 
 

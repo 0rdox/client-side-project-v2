@@ -49,6 +49,7 @@ lists!: IList[];
     const userString = localStorage.getItem('user');
     this.user = userString ? JSON.parse(userString) : undefined;
     
+    
 
 if (this.user != undefined ) {
   this.loggedIn = true;
@@ -126,30 +127,30 @@ if (this.user != undefined ) {
     console.log(this.selectedList, 'SELECTED LIST');
     this.showModal = false;
 
-
-
     const userString = localStorage.getItem('user');
     const user = userString ? JSON.parse(userString) : undefined;
-    
 
     const userId = this.user?._id ?? null;
     console.log(userId, "USER ID CONST");
 
-
     this.listService.listForUser(user._id).subscribe((lists) => {
-      const matchingList = lists!.find((list) => list.title = this.selectedList);
+      const matchingList = lists!.find((list) => list.title === this.selectedList);
 
       console.log(lists, "LISTS");
-
 
       console.log(matchingList, "MATCHING LIST")
       if (matchingList) {
         console.log("list match")
         console.log(this.artwork, "ARTWORK");
-        matchingList.artworks?.push(this.artwork!);
-        this.listService.updateList(matchingList).subscribe(() => {
+        const artworkExists = matchingList.artworks?.some((artwork) => artwork._id === this.artwork?._id);
+        if (!artworkExists) {
+          matchingList.artworks?.push(this.artwork!);
+          this.listService.updateList(matchingList).subscribe(() => {
 
-        });
+          });
+        } else {
+          console.log("Artwork already exists in the list");
+        }
       }
     });
   }

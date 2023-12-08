@@ -1,10 +1,13 @@
-import { Controller, Delete, Get, Param, Post, Body, Put } from '@nestjs/common';
-import { ApiTags, ApiResponse, ApiParam, ApiBody, ApiOperation } from '@nestjs/swagger';
+import { Controller, Delete, Get, Param, Post, Body, Put, UseGuards } from '@nestjs/common';
+import { ApiTags, ApiResponse, ApiParam, ApiBody, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { ListService } from './list.service';
 import { IList } from '@client-side-project/shared/api';
 import { CreateListDto, UpdateListDto } from '@client-side-project/backend/dto';
+import { AuthGuard } from 'libs/backend/auth/src/lib/auth/auth.guards';
 
 @ApiTags('list')
+@ApiBearerAuth('JWT')
+@UseGuards(AuthGuard)
 @Controller('list')
 export class ListController {
     constructor(private readonly listService: ListService) {}

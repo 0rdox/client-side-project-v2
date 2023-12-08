@@ -20,6 +20,14 @@ export class ArtworkController {
         return await this.artworkService.getAll();
     }
 
+    @Post('')
+    @ApiOperation({ summary: 'Create a new Artwork' })
+    @ApiBody({ type: CreateArtworkDto })
+    @ApiResponse({ status: 201, description: 'Creates a new Artwork.'})
+    async create(@Body() data: CreateArtworkDto): Promise<IArtwork> {
+        return await this.artworkService.create(data);
+    }
+    
     @Get(':id')
     @ApiOperation({ summary: 'Get a Artwork by ID' })
     @ApiParam({ name: 'id', description: 'The ID of the Artwork to retrieve', type: 'string'})
@@ -28,13 +36,7 @@ export class ArtworkController {
         return await this.artworkService.getOne(id);
     }
 
-    @Post('')
-    @ApiOperation({ summary: 'Create a new Artwork' })
-    @ApiBody({ type: CreateArtworkDto })
-    @ApiResponse({ status: 201, description: 'Creates a new Artwork.'})
-    async create(@Body() data: CreateArtworkDto): Promise<IArtwork> {
-        return await this.artworkService.create(data);
-    }
+ 
 
     @Put(':id')
     @ApiOperation({ summary: 'Update a Artwork by ID' })

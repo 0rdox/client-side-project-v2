@@ -12,7 +12,7 @@ import { Public } from '../decorators/decorators';
 import { IUser, IUserCredentials } from '@client-side-project/shared/api';
 import { CreateUserDto } from '@client-side-project/backend/dto';
 import { UserExistGuard } from '@client-side-project/backend/features';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiParam } from '@nestjs/swagger';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -28,13 +28,17 @@ export class AuthController {
         return 'hello';
     }
 
+    //TODO:
     @Public()
     @Post('login')
+    @ApiParam({ name: 'email', description: 'The email of the User to login', type: 'string'})
+    @ApiParam({ name: 'password', description: 'The password of the User to login', type: 'string'})
     @ApiOperation({ summary: 'Login' })
     async login(@Body() credentials: IUserCredentials): Promise<IUser> {
         this.logger.log('Login');
         return await this.authService.login(credentials);
     }
+
 
     @Public()
     @UseGuards(UserExistGuard)

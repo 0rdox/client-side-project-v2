@@ -27,6 +27,17 @@ export interface IUser {
 }
 
 
+export interface IUserNoPassword {
+    _id: Id;
+    name: string;
+    email: string;
+    profilePicture?: string;
+    hasGallery: boolean;
+    role: UserRole;
+    friends: IUser[];
+}
+
+
 export type ICreateUser = Pick<
     IUser,
     'name' | 'email' | 'password' 

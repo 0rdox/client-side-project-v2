@@ -16,13 +16,15 @@ import { OperatorFunction } from 'rxjs';
 
 const user = localStorage.getItem('user');
 const userString = user ? JSON.parse(user) : undefined;
+const token = localStorage.getItem('token');
+
 
 export const httpOptions = {
   observe: 'body',
   responseType: 'json',
   headers: {
     'Content-Type': 'application/json',
-    Authorization: `Bearer ${userString?.token}`,
+    Authorization: `Bearer ${token}`,
   },
 };
 
@@ -73,6 +75,21 @@ export class UserService {
       );
   }
 
+  public getRecommendations(id: string, options?:any): Observable<any> {
+    return this.http
+      .get<ApiResponse<IUser>>(`${this.endpoint}/${id}/friend/recommendation`, {
+        ...options,
+        ...httpOptions,
+      })
+      .pipe(
+        tap(console.log),
+        map((response: any) => response.results),
+        catchError(this.handleError)
+      );
+  }
+
+
+
   public addFriend(user: IUser, friendId: string, options?: any): Observable<void> {
     return this.http
       .post<ApiResponse<IUser>>(`${this.endpoint}/${user._id}/friend/${friendId}`, {
@@ -86,7 +103,7 @@ export class UserService {
       );
   }
 
-  public getFriends(userId: string, options?: any): Observable<IUser[]> {
+  public getFriends(userId: string, options?: any): Observable<string[]> {
     return this.http
       .get<ApiResponse<IUser[]>>(`${this.endpoint}/${userId}/friend`, {
         ...options,
@@ -160,4 +177,20 @@ export class UserService {
   public handleError(error: HttpErrorResponse): Observable<any> {
     return throwError(() => new Error(error.message));
   }
+
+
+  // getHttpOptions() {
+  //   const user = localStorage.getItem('user');
+  //   const userString = user ? JSON.parse(user) : undefined;
+  
+  //   return {
+  //     observe: 'body',
+  //     responseType: 'json',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       Authorization: `Bearer ${userString?.token}`,
+  //     },
+  //   };
+  // }
 }
+

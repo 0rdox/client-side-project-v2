@@ -94,7 +94,9 @@ export class UserEditComponent implements OnInit {
       (user: IUser | null) => {
         if (user) {
           console.log(user, 'USER');
+          //todo: this
           localStorage.setItem('user', JSON.stringify(user));
+          localStorage.setItem('token', user.token!);
           // this.router.navigate(['/user']);
           window.location.href = '/';
         } else {
@@ -121,7 +123,7 @@ export class UserEditComponent implements OnInit {
       friends: []
     };
     this.userService.register(newUser).subscribe(() => {
-      this.router.navigate(['/user']);
+      this.router.navigate(['/home']);
     });
   }
 }
