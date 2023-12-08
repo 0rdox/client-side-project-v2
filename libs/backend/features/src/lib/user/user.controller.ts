@@ -12,12 +12,11 @@ import {
   ApiOperation,
   ApiBearerAuth,
 } from '@nestjs/swagger';
-import { Public } from '@client-side-project/backend/auth';
+import { Public } from 'libs/backend/auth/src/lib/decorators/decorators';
 import { AuthGuard } from 'libs/backend/auth/src/lib/auth/auth.guards';
 
 @ApiTags('user')
 @ApiBearerAuth('JWT')
-@UseGuards(AuthGuard)
 @Controller('user')
 export class UserController {
   constructor(private UserService: UserService) {}
@@ -67,11 +66,7 @@ export class UserController {
 
   //todo why not work??
 
-  // @UseGuards(AuthGuard)
-  // @ApiHeader({
-  //     name: 'Authorization',
-  //     description: 'Bearer <token>',
-  // })
+  @Public()
   @Post(':id/friend/:friendId')
   @ApiOperation({ summary: 'Add a friend to a User' })
   @ApiBody({ type: String })

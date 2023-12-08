@@ -11,11 +11,11 @@ import { JwtModule } from '@nestjs/jwt';
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     Neo4jModule.forRootAsync({
       useFactory: () => ({
-        scheme: 'neo4j',
-        host: 'localhost',
+        scheme: 'neo4j+s',
+        host: '89526472.databases.neo4j.io',
         port: 7687,
         username: 'neo4j',
-        password: 'janko123',
+        password: 'xal58z1V4pO2rovTy5VN3MC72cDOuuCIJ2PjIXHvJIM',
       }),
     }),
     JwtModule.register({
