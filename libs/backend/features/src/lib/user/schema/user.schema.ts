@@ -20,6 +20,8 @@ export class User implements IUser {
     })
     name!: string;
 
+
+    
     @Prop({
         required: true,
         select: true, 

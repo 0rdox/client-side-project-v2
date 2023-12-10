@@ -5,8 +5,6 @@ import { UserService } from '../user.service';
 import { Subscription, switchMap } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 
-
-
 @Component({
   selector: 'client-side-project-user-detail',
   templateUrl: './user-detail.component.html',
@@ -17,7 +15,7 @@ export class UserDetailComponent implements OnInit, OnDestroy {
   subscription: Subscription | undefined = undefined;
   canEdit: boolean = false; // Add isEdit property
   admin = false;
-loggedIn = false;
+  loggedIn = false;
   friends!: string[];
 
   constructor(
@@ -25,7 +23,7 @@ loggedIn = false;
     private UserService: UserService,
     private router: Router
   ) {}
-  
+
   userString = localStorage.getItem('user');
   userToken = localStorage.getItem('token');
   loggedInUser = this.userString ? JSON.parse(this.userString) : undefined;
@@ -42,11 +40,10 @@ loggedIn = false;
         console.log(`results: ${JSON.stringify(results)}`);
         this.users = results;
 
-
-        if (this.loggedInUser != undefined ) {
-        this.loggedIn = true;
+        if (this.loggedInUser != undefined) {
+          this.loggedIn = true;
         }
-        
+
         // const decodedToken = jwt.decode(userToken)
 
         if (this.loggedInUser?.role === 'Admin') {
@@ -54,12 +51,12 @@ loggedIn = false;
         }
 
         this.canEdit =
-          this.users?._id === this.loggedInUser?._id || this.loggedInUser?.role === 'admin';
+          this.users?._id === this.loggedInUser?._id ||
+          this.loggedInUser?.role === 'admin';
 
         //get friends with neo4j
         this.UserService.getFriends(this.users?._id).subscribe((results) => {
           console.log(`My friends: ${JSON.stringify(results)}`);
-          
 
           // this.friends = results;
           this.friends = [];
@@ -74,18 +71,20 @@ loggedIn = false;
           }
         });
       });
-      
   }
 
-
   recommendations = '' as any;
-
+  recommendationsLoaded = false;
   getRecommmendations(id: string) {
     this.UserService.getRecommendations(id).subscribe((results) => {
-      this.recommendations = results.map((result: any) => ({
-        ...result,
-        commonFriends: result.commonFriends ? result.commonFriends.low : 0,
-      }));
+      this.recommendations = results
+        .filter((result: any) => result.id !== this.loggedInUser?._id)
+        .map((result: any) => ({
+          ...result,
+          commonFriends: result.commonFriends ? result.commonFriends.low : 0,
+        }));
+
+      this.recommendationsLoaded = true;
     });
   }
 
@@ -98,9 +97,11 @@ loggedIn = false;
       return;
     }
 
-    this.UserService.addFriend(this.loggedInUser, friendId!).subscribe((results) => {
-      console.log(`results: ${JSON.stringify(results)}`);
-    });
+    this.UserService.addFriend(this.loggedInUser, friendId!).subscribe(
+      (results) => {
+        console.log(`results: ${JSON.stringify(results)}`);
+      }
+    );
   }
 
   ngOnDestroy(): void {

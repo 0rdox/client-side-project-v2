@@ -1,16 +1,11 @@
 import { Schema} from 'mongoose';
 import { ArtworkSchema } from '../../artwork/schema/artwork.schema';
 export const GallerySchema = new Schema({
-    _id: Schema.Types.ObjectId,
-    name: String,
+    _id: { type: Schema.Types.ObjectId, required: true },
+    name: { type: String, required: true },
     description: String,
-    location: String,
-    image: String,
+    location: { type: String, required: true },
+    image: { type: String, required: true },
     userId: { type: Schema.Types.ObjectId, ref: 'User' },
-    // artworks: [{ type: Schema.Types.ObjectId, ref: 'Artwork' }]
     artworks: [ArtworkSchema]
 })
-
-
-
-
