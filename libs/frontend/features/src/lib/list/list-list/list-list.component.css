@@ -1,0 +1,7 @@
+.list-box {
+    transition: all .5s;
+}
+
+.list-box:hover {
+    transform: scale(1.01);
+}

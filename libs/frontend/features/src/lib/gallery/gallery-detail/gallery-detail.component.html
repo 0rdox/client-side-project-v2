@@ -4,10 +4,15 @@
 
 <div class="bg-gray-100 p-4 rounded-lg mx-80 mt-10">
     <div class="bg-white p-4 rounded-lg shadow-md">
-        <p class="text-lg font-bold mb-2">{{ gallery?.name }} [{{gallery?._id}}]</p>
-        <p class="text-gray-700">User: <span *ngIf="gallery?.userId">{{galleryUser.name}} [{{gallery?.userId}}]</span></p>
-        <p class="text-gray-700">{{ gallery?.location }}</p>
+        <p class="text-lg font-bold mb-2">{{ gallery?.name }} </p>
+        <a [routerLink]="'/user/' + gallery?.userId" class="text-gray-700">User: <span *ngIf="gallery?.userId">{{galleryUser.name}} [{{gallery?.userId}}]</span>
+        </a>
         <p class="text-gray-700">{{ gallery?.description }}</p>
+
+
+        <div class="text-right">
+            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">{{gallery?.location}}</span>
+        </div>
     </div>
 </div>
 
@@ -22,7 +27,7 @@
     </button>
 
     <button *ngIf="admin" class="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md" (click)="onLeave()">
-    Remove User
+        Remove User
     </button>
 
     <button *ngIf="owned && !admin" class="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md" (click)="onLeave()">
@@ -36,11 +41,13 @@
 
 <h2 class="text-2xl font-bold mt-8 text-center">Artworks</h2>
 
-<div class="grid grid-cols-3 gap-4 mt-4">
-    <a *ngFor="let artwork of gallery?.artworks" [routerLink]="['/artwork', artwork._id]" class="bg-white p-4 rounded-lg shadow-md">
+<div class="grid grid-cols-3 gap-4 m-4">
+    <a *ngFor="let artwork of gallery?.artworks" [routerLink]="['/artwork', artwork._id]" class="bg-white p-4 rounded-lg border-2 shadow-md">
         <img [src]="artwork.image" alt="Artwork" class="w-full h-48 object-cover mb-4">
         <p class="text-lg font-bold">{{ artwork.title }}</p>
-        <p class="text-gray-700">{{ artwork.type }}</p>
         <p class="text-gray-700">{{ artwork.description }}</p>
+        <div class="text-right">
+            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">{{artwork.type}}</span>
+        </div>
     </a>
 </div>

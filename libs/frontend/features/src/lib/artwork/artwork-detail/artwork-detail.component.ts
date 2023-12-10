@@ -49,7 +49,7 @@ lists!: IList[];
     const userString = localStorage.getItem('user');
     this.user = userString ? JSON.parse(userString) : undefined;
     
-    
+
 
 if (this.user != undefined ) {
   this.loggedIn = true;
@@ -86,14 +86,22 @@ if (this.user != undefined ) {
         this.artwork = results;
         console.log(this.artwork, "ARTWORK");
         if (this.artwork && this.artwork.userId) {
-          this.getUserById(this.artwork.userId).subscribe((user) => {
-            this.user = user;
+          // this.getUserById(this.artwork.userId).subscribe((user) => {
+          //   this.user = user;
+          // });
+
+          this.userService.read(this.artwork.userId).subscribe((user) => {
+          this.user=user;
           });
+
+          
 
           if (this.user?._id === this.artwork?.userId) {
             this.owned = true;
             this.canEdit = true
           }
+
+
 
           console.log(this.user?.role, 'USER ROLE');
           if (this.user?.role === 'Admin') {

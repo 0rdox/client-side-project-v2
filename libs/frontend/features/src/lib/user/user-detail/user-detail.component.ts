@@ -55,6 +55,7 @@ export class UserDetailComponent implements OnInit, OnDestroy {
         this.UserService.getFriends(this.users?._id).subscribe((results) => {
           console.log(`My friends: ${JSON.stringify(results)}`);
           
+
           // this.friends = results;
           this.friends = [];
           for (let i = 0; i < results.length; i++) {
