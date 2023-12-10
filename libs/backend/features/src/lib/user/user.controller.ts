@@ -49,7 +49,7 @@ export class UserController {
 
   }
 
-
+  @Public()
   @Get(':id/friend')
   @ApiOperation({ summary: 'Get friends from a User' })
   @ApiParam({
@@ -65,7 +65,6 @@ export class UserController {
     return this.UserService.getFriends(id);
   }
 
-  //todo why not work??
 
   @Public()
   @Post(':id/friend/:friendId')
@@ -88,7 +87,7 @@ export class UserController {
   }
 
 
-
+  @Public()
   @Get(':id/friend/recommendation')
   @ApiOperation({ summary: 'Get recommendations for friends' })
   @ApiParam({

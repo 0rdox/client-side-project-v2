@@ -62,7 +62,7 @@ export class UserService {
   }
 
   
-
+//Delete?
   async create(
     user: Pick<IUser, 'name' | 'email' | 'password'>
   ): Promise<IUser> {
@@ -97,6 +97,12 @@ export class UserService {
   }
   
   async addFriend(id: string, friendId: string): Promise<void> {
+    const existingFriend = await this.userModel.findOne({ _id: id, friends: friendId });
+
+    if (existingFriend) {
+      throw new Error('Friend already exists');
+    }
+
     await this.neo4jService
       .write(
         `MATCH (user1:User {_id: '${id}'}), (user2:User {_id: '${friendId}'}) CREATE (user1)-[:FRIENDS_WITH]->(user2)`
@@ -105,8 +111,7 @@ export class UserService {
         console.log(result, 'RESULT');
       });
 
-      
-      Logger.debug(friendId, "FRIENDID");
+    Logger.debug(friendId, "FRIENDID");
     await this.userModel.findByIdAndUpdate(id, {
       $push: { friends: friendId },
     });

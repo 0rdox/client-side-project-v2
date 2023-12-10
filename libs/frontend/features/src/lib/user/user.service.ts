@@ -19,6 +19,8 @@ const userString = user ? JSON.parse(user) : undefined;
 const token = localStorage.getItem('token');
 
 
+
+
 export const httpOptions = {
   observe: 'body',
   responseType: 'json',
@@ -91,11 +93,16 @@ export class UserService {
 
 
   public addFriend(user: IUser, friendId: string, options?: any): Observable<void> {
+    console.log(httpOptions.headers.Authorization, "TOKEN");
+
+    const updatedOptions = {
+      ...httpOptions,
+      observe: 'body' as const,
+      responseType: 'json' as const,
+    };
+
     return this.http
-      .post<ApiResponse<IUser>>(`${this.endpoint}/${user._id}/friend/${friendId}`, {
-        ...options,
-        ...httpOptions,
-      })
+      .post<ApiResponse<IUser>>(`${this.endpoint}/${user._id}/friend/${friendId}`, options, updatedOptions)
       .pipe(
         tap(console.log),
         map((response: any) => response.results),

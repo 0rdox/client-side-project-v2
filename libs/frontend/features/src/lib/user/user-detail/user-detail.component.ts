@@ -52,20 +52,20 @@ export class UserDetailComponent implements OnInit, OnDestroy {
           this.users?._id === this.user?._id || this.user?.role === 'admin';
 
         //get friends with neo4j
-        this.UserService.getFriends(this.user?._id).subscribe((results) => {
+        this.UserService.getFriends(this.users?._id).subscribe((results) => {
           console.log(`My friends: ${JSON.stringify(results)}`);
           
-          this.friends = results;
-          // this.friends = [];
-          // for (let i = 0; i < results.length; i++) {
-          //   const friend = results[i];
-          //   console.log(friend, 'FRIEND');
+          // this.friends = results;
+          this.friends = [];
+          for (let i = 0; i < results.length; i++) {
+            const friend = results[i];
+            console.log(friend, 'FRIEND');
 
-          //   this.UserService.read(friend._id).subscribe((user: IUser) => {
-          //     this.friends.push(user?.name);
-          //     console.log(this.friends, 'FRIENDS');
-          //   });
-          // }
+            this.UserService.read(friend).subscribe((user: IUser) => {
+              this.friends.push(user?.name);
+              console.log(this.friends, 'FRIENDS');
+            });
+          }
         });
       });
   }
@@ -73,16 +73,31 @@ export class UserDetailComponent implements OnInit, OnDestroy {
 
   recommendations = '' as any;
 
+  // getRecommmendations(id: string) {
+  //   this.UserService.getRecommendations(id).subscribe((results) => {
+  //     console.log(`results: ${JSON.stringify(results)}`);
+  //     console.log(results, 'RESULTS BUT NORMAL')
+  //     // this.recommendations = JSON.stringify(results);
+      
+
+  //     const stringified = JSON.stringify(results);
+
+  //     console.log(results.commonFriends.low, 'COMMON FRIENDS');
+
+  //     this.recommendations = results;
+
+
+  //   });
+  // }
+
   getRecommmendations(id: string) {
     this.UserService.getRecommendations(id).subscribe((results) => {
-      console.log(`results: ${JSON.stringify(results)}`);
-      console.log(results, 'RESULTS BUT NORMAL')
-      // this.recommendations = JSON.stringify(results);
-      this.recommendations = results;
-
+      this.recommendations = results.map((result: any) => ({
+        ...result,
+        commonFriends: result.commonFriends ? result.commonFriends.low : 0,
+      }));
     });
   }
-
 
   addFriend(friendId: string | undefined) {
     console.log(friendId, 'FRIENDID');

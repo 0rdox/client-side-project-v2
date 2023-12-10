@@ -9,6 +9,7 @@ import { IUser } from '@client-side-project/shared/api';
 import { Observable } from 'rxjs';
 //import { GalleryService as backendGalleryService } from 'libs/backend/features/src/lib/gallery/gallery.service';
 import mongoose from 'mongoose';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'client-side-project-gallery-detail',
@@ -19,7 +20,7 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
   gallery: IGallery | null = null;
   subscription: Subscription | undefined = undefined;
 
-  user: IUser | undefined;
+  user!: IUser ;
   owned = false;
   admin = false;
   hasGallery = false;
@@ -61,12 +62,15 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
         this.isLoading = false;
         this.gallery = results;
 
-        
+        console.log(results, "GALLERY?")
+
+
         if (this.gallery.userId != null) {
-       
+
           this.getUserById(this.gallery.userId).subscribe((user) => {
             this.galleryUser = user;
           });
+
 
           if (this.user?.role === 'Admin') {
             this.admin = true;
@@ -128,11 +132,20 @@ export class GalleryDetailComponent implements OnInit, OnDestroy {
         .updateGallery(this.gallery)
         .subscribe(() => console.log('Gallery updated'));
     }
+
+    this.galleryUser = this.user;
     // this.router.navigate(['/gallery']);
   }
 
+
   getUserById(id: string): Observable<IUser> {
+    console.log("testing");
     console.log(this.userService.read(id), 'USER FROM GALLERY');
-    return this.userService.read(id);
+    return this.userService.read(id).pipe(
+      tap((user: IUser) => {
+        console.log(user, " USER IN METHOD?")
+        this.galleryUser = user;
+      })
+    );
   }
 }

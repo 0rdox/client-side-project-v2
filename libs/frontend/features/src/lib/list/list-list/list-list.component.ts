@@ -12,13 +12,16 @@ export class ListListComponent implements OnInit, OnDestroy {
   lists: IList[] | null = null;
   subscription: Subscription | undefined;
   isLoading = false;
-  artworkCount = 0; // Counter for amount of artworks in list
+  artworkCounts: { [listId: string]: number } = {}; // Object to store artwork counts for each list
 
   user!: IUser;
   admin = false;
   constructor(private listService: ListService) {}
 
   ngOnInit(): void {
+
+
+
     const userString = localStorage.getItem('user');
     this.user = userString ? JSON.parse(userString) : null;
    
@@ -31,7 +34,7 @@ export class ListListComponent implements OnInit, OnDestroy {
       this.subscription = this.listService.list().subscribe((results) => {
         console.log(`results: ${results}`);
         this.lists = results;
-        this.artworkCount = this.calculateArtworkCount(); // Update artwork count
+        this.calculateArtworkCounts(); // Update artwork counts
         this.isLoading = false;
 
         console.log(this.lists, 'LISTS');
@@ -40,8 +43,10 @@ export class ListListComponent implements OnInit, OnDestroy {
       this.subscription = this.listService.listForUser(this.user._id).subscribe((results) => {
         console.log(`results: ${results}`);
         this.lists = results;
-        this.artworkCount = this.calculateArtworkCount(); // Update artwork count
+        this.calculateArtworkCounts(); // Update artwork counts
         this.isLoading = false;
+
+        console.log(this.artworkCounts, 'ARTWORK COUNTS')
 
         console.log(this.lists, 'LISTS');
       });
@@ -52,13 +57,12 @@ export class ListListComponent implements OnInit, OnDestroy {
     this.subscription?.unsubscribe();
   }
 
-  private calculateArtworkCount(): number {
-    let count = 0;
+  private calculateArtworkCounts(): void {
+    this.artworkCounts = {}; // Reset artwork counts
     if (this.lists) {
       for (const list of this.lists) {
-        count += list.artworks!.length;
+        this.artworkCounts[list._id] = list.artworks!.length;
       }
     }
-    return count;
   }
 }
