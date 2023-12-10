@@ -25,6 +25,7 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     localStorage.removeItem('user');
+    localStorage.removeItem('token');
     //TODO: this
     window.location.href = '/';
   }

@@ -28,7 +28,7 @@ export class AuthController {
         return 'hello';
     }
 
-    //TODO:
+
     @Public()
     @Post('login')
     @ApiParam({ name: 'email', description: 'The email of the User to login', type: 'string'})

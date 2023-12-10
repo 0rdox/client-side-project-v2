@@ -49,12 +49,14 @@ export class UserService {
     
 
 
+    Logger.debug(userDB._id.toString(), "USERDBID");
+    Logger.debug(user.user_id.toString(), "USERID");
+    Logger.debug(userDB._id.toString() === user.user_id.toString(), "USERID");
+    
     if ((userDB._id.toString() === user.user_id.toString()) || (user.user_role === UserRole.Admin)) {
       return userDB as IUser;
     }
 
-  
-    
 
     const {password, ...userNoPassword} = userDB.toObject();
     return userNoPassword as IUserNoPassword;

@@ -25,7 +25,7 @@
     </button>
 </div>
 <div *ngIf="!canEdit" class="flex justify-center">
-    <button (click)="addFriend(users?._id)" class="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md">
+    <button *ngIf="loggedIn" (click)="addFriend(users?._id)" class="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md">
         Add as friend
     </button>
 </div>

@@ -17,7 +17,7 @@ export class UserDetailComponent implements OnInit, OnDestroy {
   subscription: Subscription | undefined = undefined;
   canEdit: boolean = false; // Add isEdit property
   admin = false;
-
+loggedIn = false;
   friends!: string[];
 
   constructor(
@@ -28,7 +28,7 @@ export class UserDetailComponent implements OnInit, OnDestroy {
   
   userString = localStorage.getItem('user');
   userToken = localStorage.getItem('token');
-  user = this.userString ? JSON.parse(this.userString) : undefined;
+  loggedInUser = this.userString ? JSON.parse(this.userString) : undefined;
 
   ngOnInit(): void {
     console.log('INIT');
@@ -42,14 +42,19 @@ export class UserDetailComponent implements OnInit, OnDestroy {
         console.log(`results: ${JSON.stringify(results)}`);
         this.users = results;
 
+
+        if (this.loggedInUser != undefined ) {
+        this.loggedIn = true;
+        }
+        
         // const decodedToken = jwt.decode(userToken)
 
-        if (this.user?.role === 'Admin') {
+        if (this.loggedInUser?.role === 'Admin') {
           this.admin = true;
         }
 
         this.canEdit =
-          this.users?._id === this.user?._id || this.user?.role === 'admin';
+          this.users?._id === this.loggedInUser?._id || this.loggedInUser?.role === 'admin';
 
         //get friends with neo4j
         this.UserService.getFriends(this.users?._id).subscribe((results) => {
@@ -69,27 +74,11 @@ export class UserDetailComponent implements OnInit, OnDestroy {
           }
         });
       });
+      
   }
 
 
   recommendations = '' as any;
-
-  // getRecommmendations(id: string) {
-  //   this.UserService.getRecommendations(id).subscribe((results) => {
-  //     console.log(`results: ${JSON.stringify(results)}`);
-  //     console.log(results, 'RESULTS BUT NORMAL')
-  //     // this.recommendations = JSON.stringify(results);
-      
-
-  //     const stringified = JSON.stringify(results);
-
-  //     console.log(results.commonFriends.low, 'COMMON FRIENDS');
-
-  //     this.recommendations = results;
-
-
-  //   });
-  // }
 
   getRecommmendations(id: string) {
     this.UserService.getRecommendations(id).subscribe((results) => {
@@ -102,14 +91,14 @@ export class UserDetailComponent implements OnInit, OnDestroy {
 
   addFriend(friendId: string | undefined) {
     console.log(friendId, 'FRIENDID');
-    console.log(this.user?._id, 'USERID');
+    console.log(this.loggedInUser?._id, 'USERID');
 
     if (this.friends.includes(friendId!)) {
       console.log('Friend already exists');
       return;
     }
 
-    this.UserService.addFriend(this.user, friendId!).subscribe((results) => {
+    this.UserService.addFriend(this.loggedInUser, friendId!).subscribe((results) => {
       console.log(`results: ${JSON.stringify(results)}`);
     });
   }
@@ -120,7 +109,7 @@ export class UserDetailComponent implements OnInit, OnDestroy {
 
   onDelete() {
     if (this.users) {
-      if (this.users._id === this.user._id) {
+      if (this.users._id === this.loggedInUser._id) {
         localStorage.removeItem('user');
 
         this.UserService.removeUser(this.users._id).subscribe(() => {

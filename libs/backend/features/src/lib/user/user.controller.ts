@@ -17,22 +17,23 @@ import { AuthGuard } from 'libs/backend/auth/src/lib/auth/auth.guards';
 
 @ApiTags('user')
 @ApiBearerAuth('JWT')
-@UseGuards(AuthGuard)
 @Controller('user')
 export class UserController {
   constructor(private UserService: UserService) {}
 
+
+@UseGuards(AuthGuard)
   @Get('')
   @ApiOperation({ summary: 'Get all Users' })
   @ApiResponse({ status: 200, description: 'Returns all Users.' })
   @ApiResponse({ status: 400, description: 'Bad Request.' })
-  async getAll(@Req() req: Request & {user:IUser}): Promise<IUserNoPassword[] | IUser[]> {
-   
+  async getAll(
+    @Req() req: Request & { user: IUser }
+  ): Promise<IUserNoPassword[] | IUser[]> {
     return await this.UserService.findAll(req.user);
   }
 
-
-
+  @Public()
   @Get(':id')
   @ApiOperation({ summary: 'Get a User by ID' })
   @ApiParam({
@@ -41,12 +42,11 @@ export class UserController {
     type: 'string',
   })
   @ApiResponse({ status: 200, description: 'Returns a User by ID.' })
-  async getOne(@Param('id') id: string, @Req() req: Request & {user:IUser}): Promise<IUser | IUserNoPassword> {
-
-
+  async getOne(
+    @Param('id') id: string,
+    @Req() req: Request & { user: IUser }
+  ): Promise<IUser | IUserNoPassword> {
     return this.UserService.getOne(id, req.user);
-
-
   }
 
   @Public()
@@ -65,7 +65,6 @@ export class UserController {
     return this.UserService.getFriends(id);
   }
 
-
   @Public()
   @Post(':id/friend/:friendId')
   @ApiOperation({ summary: 'Add a friend to a User' })
@@ -78,6 +77,7 @@ export class UserController {
     return this.UserService.addFriend(id, friendId);
   }
 
+  @UseGuards(AuthGuard)
   @Post('')
   @ApiOperation({ summary: 'Create a new User' })
   @ApiBody({ type: CreateUserDto })
@@ -103,7 +103,7 @@ export class UserController {
     return this.UserService.getRecommendedFriends(id);
   }
 
-
+  @UseGuards(AuthGuard)
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a User by ID' })
   @ApiParam({
@@ -116,7 +116,7 @@ export class UserController {
     await this.UserService.delete(id);
   }
 
-
+  @UseGuards(AuthGuard)
   @Put(':id')
   @ApiOperation({ summary: 'Update a User by ID' })
   @ApiParam({

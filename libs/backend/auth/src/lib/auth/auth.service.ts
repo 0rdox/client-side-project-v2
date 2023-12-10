@@ -60,7 +60,6 @@ export class AuthService {
           };
           this.currentUser$.next(user);
           return {
-            //todo remove this, use only token
             _id: user._id,
             name: user.name,
             email: user.email,
