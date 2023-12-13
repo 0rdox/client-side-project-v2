@@ -15,124 +15,250 @@
         <table class="table-auto border-collapse border border-gray-400 mt-4 mb-4 mx-2">
             <thead>
                 <tr class="bg-gray-200">
-                    <th class="px-4 py-2">#</th>
-                    <th class="px-4 py-2">Requirement</th>
-                    <th class="px-4 py-2">Toelichting</th>
-                    <th class="px-4 py-2">Moscow</th>
+                    <th class="px-2 py-2 w-20">ID</th>
+                    <th class="px-8 py-2 w-96">Requirement</th>
+                    <th class="px-16 py-2 w-130">Acceptatiecriteria</th>
+                    <th class="px-2 py-2 w-16">Prioriteit</th>
                 </tr>
             </thead>
             <tbody>
+                <!-- Row 1 -->
                 <tr class="hover:bg-gray-100">
-                    <td class="border px-4 py-2">1</td>
-                    <td class="border px-4 py-2">Gebruikersregistratie</td>
-                    <td class="border px-4 py-2">Gebruikers moeten zich kunnen registreren.</td>
-                    <td class="border px-4 py-2">M</td>
+                    <td class="border px-4 py-2">F-01</td>
+                    <td class="border px-4 py-2">Als gebruiker wil ik een account kunnen aanmaken en inloggen met het gemaakte account, zodat ik toegang heb tot de applicatie.</td>
+                    <td class="border px-10 py-2">
+                        <ul class="list-disc">
+                            <li>Gebruikers moeten een account kunnen aanmaken.</li>
+                            <li>Gebruikers moeten kunnen inloggen.</li>
+                            <li>Als gebruikers inloggen moet meer van de applicatie beschikbaar worden.</li>
+                        </ul>
+                    </td>
+                    <td class="border px-4 py-2">Must</td>
+                </tr>
+
+                <!-- Row 2 -->
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">F-02</td>
+                    <td class="border px-4 py-2">Als gebruiker wil ik een lijst van galerijen zien, zodat ik weet welke galerijen bestaan en beschikbaar zijn.</td>
+                    <td class="border px-10 py-2">
+                        <ul class="list-disc">
+                            <li>Er moet een lijst van galerijen weergegeven worden.</li>
+                            <li>De naam en locatie van een galerij moet weergegeven worden.</li>
+                            <li>Er moet een afbeelding van de galerij getoond worden.</li>
+                        </ul>
+                    </td>
+                    <td class="border px-4 py-2">Must</td>
+                </tr>
+
+                <!-- Row 3 -->
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">F-03</td>
+                    <td class="border px-4 py-2">Als gebruiker wil ik een galerij kunnen claimen, zodat het specifiek mijn galerij is.</td>
+                    <td class="border  px-10 py-2">
+                        <ul class="list-disc">
+                            <li>Binnen een galerij moet een 'CLAIM' knop zitten.</li>
+                            <li>Als de gebruiker op 'CLAIM' klikt, dan wordt de gallerij gelinkt aan de ingelogde gebruiker.
+                            </li>
+                        </ul>
+                    </td>
+                    <td class="border px-4 py-2">Must</td>
+                </tr>
+
+                <!-- Row 4 -->
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">F-04</td>
+                    <td class="border px-4 py-2">Als gebruiker wil ik mijn eigen galerij kunnen beheren, zodat ik eventueel aanpassingen kan maken aan de galerij. </td>
+                    <td class="border  px-10 py-2">
+                        <ul class="list-disc">
+                            <li>Als de galerij van de ingelogde gebruiker is, moeten de knoppen 'EDIT' en 'DELETE' getoond worden.</li>
+                            <li>De gebruiker kan met de genoemde knoppen de galerij editen of deleten.</li>
+                        </ul>
+                    </td>
+                    <td class="border px-4 py-2">Must</td>
+                </tr>
+
+                <!-- Row 5 -->
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">F-05</td>
+                    <td class="border px-4 py-2">Als gebruiker wil ik kunstwerken kunnen toevoegen aan mijn galerij en deze ook terug zien.</td>
+                    <td class="border  px-10 py-2">
+                        <ul class="list-disc">
+                            <li>Als de galerij van de ingelogde gebruiker is, moet de knop 'ADD ARTWORK' getoond worden.
+                            </li>
+                            <li>De gebruiker kan met de genoemde knop kunstwerken aan de galerij toevoegen.</li>
+                            <li>De kunstwerken moeten getoond worden binnen de galerij met de naam en type van het kunstwerk.
+                            </li>
+                        </ul>
+                    </td>
+                    <td class="border px-4 py-2">Must</td>
+                </tr>
+
+                <!-- Row 6 -->
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">F-06</td>
+                    <td class="border px-4 py-2">Als gebruiker wil ik lijsten kunnen aanmaken, om hier vervolgens kunstwerken in op te slaan.</td>
+                    <td class="border  px-10 py-2">
+                        <ul class="list-disc">
+                            <li>Een gebruiker moet in staat zijn meerdere lijsten aan te kunnen maken, maar niet twee met dezelfde naam.</li>
+                            <li>Een gebruiker moet de gemaakte lijsten kunnen zien met de naam en hoeveelheid kunstwerken van de lijst.</li>
+                        </ul>
+                    </td>
+                    <td class="border px-4 py-2">Must</td>
+                </tr>
+
+                <!-- Row 7 -->
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">F-07</td>
+                    <td class="border px-4 py-2">Als gebruiker wil ik bij elk kunstwerk de optie om het toe te voegen aan mijn gemaakte lijsten.</td>
+                    <td class="border  px-10 py-2">
+                        <ul class="list-disc">
+                            <li>Binnen een kunstwerk moet de knop 'ADD TO ARTWORK' getoond worden.</li>
+                            <li>Als de gebruiker de knop 'ADD TO ARTWORK' klikt, wordt er een dropdown getoond van de beschikbare lijsten.</li>
+                            <li>Een kunstwerk kan niet twee keer aan dezelfde lijst worden toegevoegd.</li>
+                        </ul>
+                    </td>
+                    <td class="border px-4 py-2">Must</td>
+                </tr>
+
+                <!-- Row 8 -->
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">F-08</td>
+                    <td class="border px-4 py-2">Als gebruiker wil ik mijn lijsten kunnen beheren, zodat ik eventueel aanpassingen kan maken aan een lijst.</td>
+                    <td class="border  px-10 py-2">
+                        <ul class="list-disc">
+                            <li>Binnen een lijst moeten knoppen 'EDIT' en 'DELETE' getoond zijn.</li>
+                            <li>De gebruiker moet de lijst kunnen editen of deleten met de genoemde knoppen.</li>
+                        </ul>
+                    </td>
+                    <td class="border px-4 py-2">Must</td>
+                </tr>
+
+                <!-- Row 9 -->
+                <tr class="hover:bg-gray-100">
+                    <td class="border px-4 py-2">F-09</td>
+                    <td class="border px-4 py-2">Als gebruiker wil ik andere gebruikers kunnen toevoegen als vriend, en hier ook aanbevelingen voor krijgen.</td>
+                    <td class="border  px-10 py-2">
+                        <ul class="list-disc">
+                            <li>Binnen het profiel van een gebruiker moet er een onderdeel voor 'friends:' terug te vinden zijn.</li>
+                            <li>Als de gebruiker naar andere users gaat, is er een knop voor 'ADD TO FRIEND'</li>
+                            <li>Binnen het profiel van de gebruiker moet de knop 'FRIEND RECOMMENDATIONS' getoond worden.
+                            </li>
+                            <li>Als de gebruiker op genoemde knop klikt, komt er een lijst tevoorschijn op basis van de vrienden van de gebruiker.</li>
+                        </ul>
+                    </td>
+                    <td class="border px-4 py-2">Should</td>
                 </tr>
                 <tr class="hover:bg-gray-100">
-                    <td class="border px-4 py-2">2</td>
-                    <td class="border px-4 py-2">Galerijen bekijken</td>
-                    <td class="border px-4 py-2">Gebruikers moeten alle galerijen kunnen bekijken, als ze op een galerij klikken zien ze alle kunstwerken.</td>
-                    <td class="border px-4 py-2">M</td>
+                    <td class="border px-4 py-2">F-10</td>
+                    <td class="border px-4 py-2">Als gebruiker wil ik galerijen kunnen filteren op of ze gehuurd zijn of niet, zodat ik snel gewilde info kan vinden.</td>
+                    <td class="border  px-10 py-2">
+                        <ul class="list-disc">
+                            <li>Binnen het overzicht van galerijen, moet er bovenaan een sectie zijn filters voor status, aantal kunstwerken en locatie</li>
+                            <li>De getoonde galerijen moeten updaten op basis van de gekozen filters.</li>
+                        </ul>
+                    </td>
+                    <td class="border px-4 py-2">Could</td>
                 </tr>
                 <tr class="hover:bg-gray-100">
-                    <td class="border px-4 py-2">3</td>
-                    <td class="border px-4 py-2">Galerij huren</td>
-                    <td class="border px-4 py-2">Gebruikers moeten een galerij kunnen huren binnen de app.</td>
-                    <td class="border px-4 py-2">M</td>
-                </tr>
-                <tr class="hover:bg-gray-100">
-                    <td class="border px-4 py-2">4</td>
-                    <td class="border px-4 py-2">Galerij beheer</td>
-                    <td class="border px-4 py-2">De gebruiker kan zijn eigen galerij bekijken en kan daar vervolgens zijn eigen kunstwerken aan toevoegen. De gebruiker kan zich ook afmelden van een galerij.</td>
-                    <td class="border px-4 py-2">M</td>
-                </tr>
-                <tr class="hover:bg-gray-100">
-                    <td class="border px-4 py-2">5</td>
-                    <td class="border px-4 py-2">Kunstwerken bekijken</td>
-                    <td class="border px-4 py-2">Als een gebruiker op een kunstwerk klikt, moet er informatie over dat kunstwerk worden getoond.</td>
-                    <td class="border px-4 py-2">M</td>
-                </tr>
-                <tr class="hover:bg-gray-100">
-                    <td class="border px-4 py-2">6</td>
-                    <td class="border px-4 py-2">Lijsten aanmaken</td>
-                    <td class="border px-4 py-2">Een gebruiker moet in staat zijn meerdere lijsten aan te kunnen maken.</td>
-                    <td class="border px-4 py-2">M</td>
-                </tr>
-                <tr class="hover:bg-gray-100">
-                    <td class="border px-4 py-2">7</td>
-                    <td class="border px-4 py-2">Aan lijsten toevoegen</td>
-                    <td class="border px-4 py-2">Een gebruiker moet kunstwerken kunnen toevoegen aan lijsten.</td>
-                    <td class="border px-4 py-2">M</td>
-                </tr>
-                <tr class="hover:bg-gray-100">
-                    <td class="border px-4 py-2">8</td>
-                    <td class="border px-4 py-2">Splitsing galerijen</td>
-                    <td class="border px-4 py-2">De galerijen moeten gesplitst worden op basis van of ze gehuurd zijn of niet.</td>
-                    <td class="border px-4 py-2">S</td>
-                </tr>
-                <tr class="hover:bg-gray-100">
-                    <td class="border px-4 py-2">9</td>
-                    <td class="border px-4 py-2">Dashboard</td>
-                    <td class="border px-4 py-2">De opstartpagina moet een dashboard zijn waarmee de gebruiker de applicatie kan navigeren.</td>
-                    <td class="border px-4 py-2">S</td>
-                </tr>
-                <tr class="hover:bg-gray-100">
-                    <td class="border px-4 py-2">10</td>
-                    <td class="border px-4 py-2">Delen</td>
-                    <td class="border px-4 py-2">Een gebruiker kan de gemaakte lijsten delen met andere gebruikers.</td>
-                    <td class="border px-4 py-2">C</td>
+                    <td class="border px-4 py-2">F-11</td>
+                    <td class="border px-4 py-2">Als gebruiker wil ik in staat zijn om mijn lijsten te delen met anderen.
+                    </td>
+                    <td class="border  px-10 py-2">
+                        <ul class="list-disc">
+                            <li>Binnen de lijsten van de gebruiker moet er een knop 'SHARE LIST' getoond worden.</li>
+                            <li>Als de gebruiker op de genoemde knop klikt, komt er een pop-up voor hoe de lijst gedeeld moet worden.</li>
+                        </ul>
+                    </td>
+                    <td class="border px-4 py-2">Could</td>
                 </tr>
             </tbody>
         </table>
     </div>
 
+
+
     <h2 class="text-xl font-bold">Non-Functional Requirements</h2>
+
     <div class="overflow-x-auto">
         <table class="table-auto border-collapse border border-gray-400 mt-4 mb-4 mx-2">
             <thead>
                 <tr class="bg-gray-200">
-                    <th class="px-4 py-2">#</th>
-                    <th class="px-4 py-2">Requirement</th>
-                    <th class="px-4 py-2">Toelichting</th>
-                    <th class="px-4 py-2">Moscow</th>
+                    <th class="px-2 py-2 w-20">ID</th>
+                    <th class="px-8 py-2 w-96">Requirement</th>
+                    <th class="px-16 py-2 w-130">Acceptatiecriteria</th>
+                    <th class="px-2 py-2 w-16">Prioriteit</th>
                 </tr>
             </thead>
             <tbody>
                 <tr class="hover:bg-gray-100">
-                    <td class="border px-4 py-2">1</td>
-                    <td class="border px-4 py-2">Prestaties</td>
-                    <td class="border px-4 py-2">De applicatie moet responsief en snel zijn.</td>
-                    <td class="border px-4 py-2">M</td>
+                    <td class="border px-4 py-2">NF-01</td>
+                    <td class="border px-4 py-2">Als gebruiker wil ik dat de applicatie snel en responsief is.</td>
+                    <td class="border px-10 py-2">
+                        <ul class="list-disc">
+                            <li>De applicatie moet niet te lang duren om data te laden.</li>
+                            <li>De applicatie moet visuele feedback geven als iets aan het laden is.</li>
+                        </ul>
+                    </td>
+                    <td class="border px-4 py-2">Must</td>
                 </tr>
                 <tr class="hover:bg-gray-100">
-                    <td class="border px-4 py-2">2</td>
-                    <td class="border px-4 py-2">Gebruikersvriendelijkheid</td>
-                    <td class="border px-4 py-2">Het gebruikersinterface moet intuïtief zijn, door een duidelijke navigatie te gebruiken.</td>
-                    <td class="border px-4 py-2">M</td>
+                    <td class="border px-4 py-2">NF-02</td>
+                    <td class="border px-4 py-2">Als gebruiker wil ik dat de applicatie duidelijk en makkelijk te navigeren is.</td>
+                    <td class="border px-10 py-2">
+                        <ul class="list-disc">
+                            <li>De applicatie moet geen lastig te vinden onderdelen hebben.</li>
+                            <li>De applicatie moet een duidelijke navigatie en overzichtelijke hebben.</li>
+                        </ul>
+                    </td>
+                    <td class="border px-4 py-2">Must</td>
                 </tr>
                 <tr class="hover:bg-gray-100">
-                    <td class="border px-4 py-2">3</td>
-                    <td class="border px-4 py-2">Design</td>
-                    <td class="border px-4 py-2">De applicatie moet een aantrekkelijke vormgeving hebben.</td>
-                    <td class="border px-4 py-2">M</td>
+                    <td class="border px-4 py-2">NF-03</td>
+                    <td class="border px-4 py-2">Als gebruiker wil ik een aantrekkelijke applicatie gebruiken.</td>
+                    <td class="border px-10 py-2">
+                        <ul class="list-disc">
+                            <li>De applicatie moet een mooi design hebben.</li>
+                            <li>De kleuren en vormen binnen de applicatie moeten consequent blijven.</li>
+                        </ul>
+                    </td>
+                    <td class="border px-4 py-2">Must</td>
                 </tr>
                 <tr class="hover:bg-gray-100">
-                    <td class="border px-4 py-2">4</td>
-                    <td class="border px-4 py-2">Beschikbaarheid</td>
-                    <td class="border px-4 py-2">De applicatie moet beschikbaar zijn op browsers.</td>
-                    <td class="border px-4 py-2">M</td>
+                    <td class="border px-4 py-2">NF-04</td>
+                    <td class="border px-4 py-2">Als gebruiker wil ik dat mijn gegevens veilig worden opgeslagen.</td>
+                    <td class="border px-10 py-2">
+                        <ul class="list-disc">
+                            <li>De applicatie moet een veilige verbinding met de database hebben.</li>
+                            <li>De database moet niet zomaar toegankelijk zijn.</li>
+                        </ul>
+                    </td>
+                    <td class="border px-4 py-2">Must</td>
                 </tr>
                 <tr class="hover:bg-gray-100">
-                    <td class="border px-4 py-2">5</td>
-                    <td class="border px-4 py-2">Security</td>
-                    <td class="border px-4 py-2">Gebruikersgegevens moeten veilig worden opgeslagen en overgedragen.</td>
-                    <td class="border px-4 py-2">M</td>
+                    <td class="border px-4 py-2">NF-05</td>
+                    <td class="border px-4 py-2">Als programmeur wil ik dat er een Swagger-documentatie beschikbaar is voor de API, zodat ik gemakkelijk de endpoints en parameters kan begrijpen en gebruiken.</td>
+                    <td class="border px-10 py-2">
+                        <ul class="list-disc">
+                            <li>De API moet een Swagger-documentatie hebben.</li>
+                            <li>De Swagger-documentatie moet up-to-date zijn.</li>
+                            <li>De Swagger-documentatie moet gesorteerd worden in categorieën.</li>
+                        </ul>
+                    </td>
+                    <td class="border px-4 py-2">Should</td>
                 </tr>
                 <tr class="hover:bg-gray-100">
-                    <td class="border px-4 py-2">6</td>
-                    <td class="border px-4 py-2">Swagger</td>
-                    <td class="border px-4 py-2">Er moet een swagger documentatie zijn over de API</td>
-                    <td class="border px-4 py-2">S</td>
+                    <td class="border px-4 py-2">NF-06</td>
+                    <td class="border px-4 py-2">Als gebruiker wil ik dat de applicatie beschikbaar is op elk toestel.
+                    </td>
+                    <td class="border px-10 py-2">
+                        <ul class="list-disc">
+                            <li>De applicatie moet beschikbaar zijn op een PC.</li>
+                            <li>De applicatie moet kunnen runnen op elke browser.</li>
+                            <li>De applicatie moet beschikbaar zijn op een mobiele telefoon.</li>
+
+                        </ul>
+                    </td>
+                    <td class="border px-4 py-2">Should</td>
                 </tr>
             </tbody>
         </table>
