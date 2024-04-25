@@ -1,3 +1,6 @@
+Dit project is gemaakt voor periode 2.2. Hierbij had ik een Angular X NextJs monorepo opgesteld. De opdracht was een eigen gemaakte casus waarin ik het mogelijk wilde maken voor kunstenaars om hun gallerijen online te tonen.
+
+
 # ClientSideProject
 
 <a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
